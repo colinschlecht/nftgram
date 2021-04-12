@@ -1,3 +1,15 @@
+###Description
+nftgram is a virtual art gallery, where a user can view virtual art created by various artists, many of which is being sold as nft's. This is not directly a location for trading art, but can be a great place to start the communication between users. User stories:
+
+A user can add art to their personal collection if they are the owner of the art, creating their own virtual art gallery.
+
+An artist can show off their art sold and or
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
@@ -42,3 +54,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
