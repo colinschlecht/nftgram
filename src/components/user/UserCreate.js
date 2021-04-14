@@ -1,13 +1,13 @@
 import React from "react";
-import { connect } from "react-redux"
-import LoginForm from "./LoginForm"
+import { connect } from "react-redux";
+import LoginForm from "./LoginForm";
 import { createUser } from "../../actions";
 
 class UserCreate extends React.Component {
-  onSubmit = async (formValues) =>  {
-    console.log(formValues)
+  onSubmit = async (formValues) => {
+    console.log(formValues);
     await this.props.createUser(formValues).then((res) => {
-      console.log(res)
+      console.log(res);
       if (res.status === 201) {
         this.props.history.push("/");
       }

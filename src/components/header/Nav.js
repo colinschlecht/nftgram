@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LogOut from '../user/LogOut'
+import LogOut from "../user/LogOut";
 
 export default function Nav() {
   return (
@@ -19,9 +19,6 @@ export default function Nav() {
           Log in
         </Link>
         <LogOut />
-        {/* <Link to="/account/login" className="item">
-          Sign Out
-        </Link> */}
       </div>
     </div>
   );

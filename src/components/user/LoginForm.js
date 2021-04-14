@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
           {(props) => (
             <form
               onSubmit={(e) => props.handleSubmit(e)}
-              className="ui form error" 
+              className="ui form error"
             >
               <Field
                 name="username"
