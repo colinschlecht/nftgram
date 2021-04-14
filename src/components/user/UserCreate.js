@@ -5,13 +5,11 @@ import { createUser } from "../../actions";
 
 class UserCreate extends React.Component {
   onSubmit = (formValues) => {
-    console.log(formValues)
-
-    // this.props.createUser(formValues).then((res) => {
-    //   if (res.status === 201) {
-    //     this.props.history.push("/");
-    //   }
-    // });
+    this.props.createUser(formValues).then((res) => {
+      if (res.status === 201) {
+        this.props.history.push("/");
+      }
+    });
   };
 
   render() {
