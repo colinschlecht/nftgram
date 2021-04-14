@@ -7,8 +7,19 @@ import UserDelete from "./user/UserDelete";
 import UserEdit from "./user/UserEdit";
 import Profile from "./user/Profile";
 import Nav from "./header/Nav";
+import { getUser } from "../actions";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { HEADERS } from "../api";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  //!re-auth on page refresh
+  useEffect(() => {
+    dispatch(getUser(HEADERS));
+  }, []);
+
   return (
     <div>
       <BrowserRouter>

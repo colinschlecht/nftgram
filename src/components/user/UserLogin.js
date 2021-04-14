@@ -4,10 +4,10 @@ import LoginForm from "./LoginForm";
 import { loginUser } from "../../actions";
 
 class UserLogin extends React.Component {
+
   onSubmit = async (formValues) => {
-    console.log(formValues);
     await this.props.loginUser(formValues).then((res) => {
-      console.log(res);
+      localStorage.setItem("token", res.data.jwt);
       if (res.status === 202) {
         this.props.history.push("/");
       }

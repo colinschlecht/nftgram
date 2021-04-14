@@ -7,6 +7,7 @@ class UserCreate extends React.Component {
   onSubmit = async (formValues) => {
     console.log(formValues);
     await this.props.createUser(formValues).then((res) => {
+      localStorage.setItem("token", res.data.jwt)
       console.log(res);
       if (res.status === 201) {
         this.props.history.push("/");
@@ -25,3 +26,4 @@ class UserCreate extends React.Component {
 }
 
 export default connect(null, { createUser })(UserCreate);
+
