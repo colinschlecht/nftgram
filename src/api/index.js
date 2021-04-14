@@ -5,7 +5,7 @@ export default axios.create({
 });
 
 ////! Needed for re-auth on page refresh
-const TOKEN = localStorage.token;
+export const TOKEN = localStorage.token;
 export const HEADERS = {
   headers: {
     Authorization: "Bearer " + TOKEN,

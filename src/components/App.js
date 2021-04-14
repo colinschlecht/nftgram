@@ -10,15 +10,15 @@ import Nav from "./header/Nav";
 import { getUser } from "../actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { HEADERS } from "../api";
+import { HEADERS, TOKEN } from "../api";
 
 const App = () => {
   const dispatch = useDispatch();
 
   //!re-auth on page refresh
   useEffect(() => {
-    dispatch(getUser(HEADERS));
-  }, []);
+    dispatch(getUser(HEADERS, TOKEN));
+  },);
 
   return (
     <div>

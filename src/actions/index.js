@@ -17,10 +17,12 @@ export const loginUser = (formValues) => async (dispatch) => {
     return response;
 };
 //checks for user token
-export const getUser = (header) => async (dispatch) => {
+export const getUser = (header, TOKEN) => async (dispatch) => {
+    if(TOKEN && TOKEN !== "undefined"){
     const response = await API_BASE.get("/getuser", { ...header });
     dispatch({ type: GET_USER, payload: response.data });
     return response;
+    }
 };
 //log out user
 export const logOut = () => {
