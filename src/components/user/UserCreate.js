@@ -4,8 +4,10 @@ import LoginForm from "./LoginForm"
 import { createUser } from "../../actions";
 
 class UserCreate extends React.Component {
-  onSubmit = (formValues) => {
-    this.props.createUser(formValues).then((res) => {
+  onSubmit = async (formValues) =>  {
+    console.log(formValues)
+    await this.props.createUser(formValues).then((res) => {
+      console.log(res)
       if (res.status === 201) {
         this.props.history.push("/");
       }

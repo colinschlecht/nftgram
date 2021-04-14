@@ -31,17 +31,17 @@ class LoginForm extends React.Component {
         <Form onSubmit={onSubmit}>
           {(props) => (
             <form
-              onSubmit={() => props.handleSubmit()}
+              onSubmit={(e) => props.handleSubmit(e)}
               className="ui form error" 
             >
               <Field
-                name="Username"
+                name="username"
                 component={this.renderInput}
                 label={"Enter Username"}
                 validate={required}
               />
               <Field
-                name="Password"
+                name="password"
                 component={this.renderInput}
                 label={"Enter Password"}
                 validate={required}
