@@ -6,22 +6,26 @@ import { LoadingArt } from "./LoadingArt";
 
 const ArtList = () => {
   const dispatch = useDispatch();
+  //state incremented with every fetch
   const page = useSelector((state) => state.art.page);
+  //indicates if a fetch was initiated, changed during loadingArts and explore actions
   const loading = useSelector((state) => state.art.loading);
+  //when api fetch < art per page fetch
   const allLoaded = useSelector((state) => state.art.allLoaded);
+  //array of art objects
   const arts = useSelector((state) => state.art.arts);
 
-  // initial fetch
+  // initial fetch for comonent mounting
   useEffect(() => {
     if (page === 0) dispatch(explore(page));
   });
 
-  //checks if element is at the bottom of the page
+  //checks if art-container element bottom is within window height
   const isBottom = (el) =>
     el.getBoundingClientRect().bottom <= window.innerHeight ||
     el.getBoundingClientRect().bottom - window.innerHeight < 1;
 
-  //callback for fetch
+  //callback for whether or not to fetch during scroll
   const trackScroll = useCallback(() => {
     const wrappedElement = document.getElementById("arts-container");
     if (isBottom(wrappedElement) && !loading) {
@@ -30,7 +34,7 @@ const ArtList = () => {
     }
   }, [page, dispatch, loading]);
 
-  //fetch more art if not loading and element fully in screen
+  //add or remove event listener for scrolling
   useEffect(() => {
     if (!allLoaded) document.addEventListener("scroll", trackScroll);
     return () => {
@@ -38,7 +42,7 @@ const ArtList = () => {
     };
   }, [trackScroll, allLoaded, dispatch]);
 
-  //reset event listener if there is no more to load
+  //reset state on component unmount
   useEffect(() => {
     return () => dispatch(resetAllLoaded());
   }, [dispatch]);
