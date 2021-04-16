@@ -10,7 +10,7 @@ export default function Nav() {
       </Link>
       <div className="right menu">
         <Link to="/" className="item">
-          Also Home
+          also home
         </Link>
         <Link to="/account/new" className="item">
           Sign Up

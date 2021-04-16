@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./Home";
+import Explore from "./Explore";
 import UserCreate from "./user/UserCreate";
 import UserLogin from "./user/UserLogin";
 import UserDelete from "./user/UserDelete";
@@ -17,7 +17,7 @@ const App = () => {
 
   //!re-auth on page refresh
   useEffect(() => {
-    dispatch(getUser(HEADERS, TOKEN));
+    dispatch(getUser(HEADERS, TOKEN)).then(res => console.log(res));
   },);
 
   return (
@@ -26,7 +26,7 @@ const App = () => {
         <div>
           <Nav />
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={Explore} />
             <Route path="/account/login" exact component={UserLogin} />
             <Route path="/account/new" exact component={UserCreate} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
