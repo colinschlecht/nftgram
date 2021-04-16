@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
+import { CommentSection } from "./CommentSection";
 
 
 export const ArtCard = (props) => {
-  const [{art}, setArt] = useState( props );
+  const [{art}/*, setArt*/] = useState( props );
   return (
     <>
       <Card fluid>
@@ -29,6 +30,7 @@ export const ArtCard = (props) => {
             <a className="explore art card">{art.attributes.user.username}</a>
             </span> &nbsp; {art.attributes.caption}
           </p>
+          <CommentSection art={art}/>
         </Card.Content>
       </Card>
     </>

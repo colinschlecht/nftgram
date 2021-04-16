@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { explore, resetAllLoaded, loadingArts } from "../../actions";
 import { ArtCard } from "./ArtCard";
 import { LoadingArt } from "./LoadingArt";
+import { FullLoaded } from "./FullLoaded";
 
 const ArtList = () => {
   const dispatch = useDispatch();
@@ -55,10 +56,11 @@ const ArtList = () => {
             {arts.map((art) => (
               <ArtCard page={page} key={art.id} art={art} />
             ))}
+          {allLoaded && <FullLoaded />}
           </div>
         </div>
+        {loading && <LoadingArt />}
       </div>
-      {loading && <LoadingArt />}
     </>
   );
 };
