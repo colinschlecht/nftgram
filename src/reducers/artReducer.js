@@ -26,7 +26,7 @@ const artReducer = (state = INITIAL_STATE, action) => {
         ...state,
         arts: [...state.arts, ...fetchedArts],
         page: state.page + 1,
-        allLoaded: fetchedArts.length < 20 ? true : false,
+        allLoaded: fetchedArts.length < 21 ? true : false,
         loading: false
       };
       case RESET_ALL_LOADED:
