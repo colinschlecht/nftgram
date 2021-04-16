@@ -18,10 +18,8 @@ const ArtList = () => {
 
   //checks if element is at the bottom of the page
   const isBottom = (el) =>
-    el.getBoundingClientRect().bottom <= window.innerHeight || el.getBoundingClientRect().bottom - window.innerHeight < 1;
-
-    // const isBottom = (el) =>
-    // el.getBoundingClientRect().bottom - window.innerHeight < 1;
+    el.getBoundingClientRect().bottom <= window.innerHeight ||
+    el.getBoundingClientRect().bottom - window.innerHeight < 1;
 
   //callback for fetch
   const trackScroll = useCallback(() => {
@@ -29,7 +27,7 @@ const ArtList = () => {
     if (isBottom(wrappedElement) && !loading) {
       dispatch(loadingArts());
       dispatch(explore(page)).then((res) => console.log(res));
-    } 
+    }
   }, [page, dispatch, loading]);
 
   //fetch more art if not loading and element fully in screen
@@ -50,9 +48,9 @@ const ArtList = () => {
       <div id="arts-container">
         <div className="ui two column centered grid">
           <div className="column">
-          {arts.map((art) => (
-            <ArtCard page={page} key={art.id} art={art} />
-          ))}
+            {arts.map((art) => (
+              <ArtCard page={page} key={art.id} art={art} />
+            ))}
           </div>
         </div>
       </div>
