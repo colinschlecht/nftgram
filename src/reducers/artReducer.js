@@ -21,8 +21,8 @@ const artReducer = (state = INITIAL_STATE, action) => {
       case LOADING_ARTS:
       return {...state, loading: true };
     case FETCH_ARTS_INF_SCROLL:
-      let fetchedArts = action.payload.data;
-      return {
+      let fetchedArts = action.payload;
+      return  {
         ...state,
         arts: [...state.arts, ...fetchedArts],
         page: state.page + 1,

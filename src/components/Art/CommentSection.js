@@ -14,8 +14,7 @@ export const CommentSection = (props) => {
                 <span>2 days ago</span>
               </Comm.Metadata>
               <Comm.Text>
-                I'm very interested in this motherboard. Do you know if it'd
-                work in a Intel LGA775 CPU socket?
+                this is a comment
               </Comm.Text>
               <Comm.Actions>
                 <a>Reply</a>

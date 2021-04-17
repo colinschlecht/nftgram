@@ -18,7 +18,7 @@ const ArtList = () => {
 
   // initial fetch for comonent mounting
   useEffect(() => {
-    if (page === 0) dispatch(explore(page));
+    if (page === 0) dispatch(explore(page)).then(console.log);
   });
 
   //checks if art-container element bottom is within window height

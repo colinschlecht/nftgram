@@ -21,14 +21,14 @@ export const ArtCard = (props) => {
             <a className="explore art card" href="/">
               <span className="explore art card username">Elon Tusk</span> and{" "}
               <span className="explore art card likes">
-                {art.attributes.likes} others
+                {art.likes} others
               </span>
             </a>{" "}
           </p>
           <p className="explore art card">
             <span className="explore art card username">
-            <a className="explore art card">{art.attributes.user.username}</a>
-            </span> &nbsp; {art.attributes.caption}
+            <a className="explore art card">{art.user.username}</a>
+            </span> &nbsp; {art.caption}
           </p>
           <CommentSection art={art}/>
         </Card.Content>
