@@ -2,41 +2,9 @@ import React, { useState } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 
-export const ArtCard = (props) => {
-  const [{ art } /*, setArt*/] = useState(props);
+export const ArtCard = ({ art, page }) => {
+  const [thisart, setArt] = useState(art);
 
-  const likesHeader1 = (
-    <p className="explore art card">
-      liked by{" "}
-      <a className="explore art card" href="/">
-        <span className="explore art card username">{art.likes[0]}</span> and{" "}
-        <span className="explore art card likes">
-          {art.likes.length - 1} others
-        </span>
-      </a>{" "}
-    </p>
-  );
-  const likesHeader2 =
-    art.likes.length > 1 ? (
-      <p className="explore art card">
-        liked by{" "}
-        <a className="explore art card" href="/">
-          <span className="explore art card username">{art.likes[0]}</span> and{" "}
-          <span className="explore art card username">{art.likes[1]}</span>
-          <span className="explore art card likes"></span>
-        </a>{" "}
-      </p>
-    ) : (
-      <p className="explore art card">
-        liked by{" "}
-        <a className="explore art card" href="/">
-          <span className="explore art card username">
-            {art.likes[0] || "nobody..."}
-          </span>
-          <span className="explore art card likes"></span>
-        </a>{" "}
-      </p>
-    );
   return (
     <>
       <Card fluid>
@@ -49,23 +17,54 @@ export const ArtCard = (props) => {
             <Icon name="like" />
             <Icon name="comment" />
           </Card.Header>
-          {art.likes.length >= 3 ? likesHeader1 : likesHeader2}
-          {/* <p className="explore art card">
-            liked by{" "}
-            <a className="explore art card" href="/">
-              <span className="explore art card username">Elon Tusk</span> and{" "}
-              <span className="explore art card likes">
-                {art.likes.length} others
-              </span>
-            </a>{" "}
-          </p> */}
+          {thisart.likes.length > 3 ? (
+            <p className="explore art card">
+              liked by{" "}
+              <a className="explore art card" href="/">
+                <span className="explore art card username">
+                  {thisart.likes[0].user.username}
+                </span>{" "}
+                and{" "}
+                <span className="explore art card likes">
+                  {thisart.likes.length - 1} others
+                </span>
+              </a>{" "}
+            </p>
+          ) : thisart.likes.length > 1 ? (
+            <p className="explore art card">
+              liked by{" "}
+              <a className="explore art card" href="/">
+                <span className="explore art card username">
+                  {thisart.likes[0].user.username}
+                </span>{" "}
+                and{" "}
+                <span className="explore art card username">
+                  {thisart.likes[1].user.username}
+                </span>
+                <span className="explore art card likes"></span>
+              </a>{" "}
+            </p>
+          ) : (
+            <p className="explore art card">
+              liked by{" "}
+              <a className="explore art card" href="/">
+                <span className="explore art card username">
+                  {thisart.likes.length > 0
+                    ? thisart.likes[0].user.username
+                    : "nobody..."}
+                </span>
+                <span className="explore art card likes"></span>
+              </a>{" "}
+            </p>
+          )}
+
           <p className="explore art card">
             <span className="explore art card username">
               <a href="/" className="explore art card username">
-                {art.user.username}
+                {thisart.user.username}
               </a>
             </span>
-            &nbsp;&nbsp;{art.caption}
+            &nbsp;&nbsp;{thisart.caption}
           </p>
           <CommentSection art={art} />
         </Card.Content>
