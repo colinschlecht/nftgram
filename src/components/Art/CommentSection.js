@@ -1,50 +1,32 @@
 import React, { useState } from "react";
-import { Checkbox, Comment as Comm } from 'semantic-ui-react'
+import { Checkbox, Comment as Comm } from "semantic-ui-react";
+import { Comment } from "./Comment";
 
 export const CommentSection = (props) => {
-    const [{art}/*, setArt*/] = useState( props )
-    const [{Comment}/*, setArt*/] = useState( props )
-    return (
-        <Comm.Group>
-        <>
-        <Comm>
-            <Comm.Content>
-              <Comm.Author as='a'>Christian Rocha</Comm.Author>
-              <Comm.Metadata>
-                <span>2 days ago</span>
-              </Comm.Metadata>
-              <Comm.Text>
-                this is a comment
-              </Comm.Text>
-              <Comm.Actions>
-                <a>Reply</a>
-              </Comm.Actions>
-            </Comm.Content>
-            </Comm>
-            <br></br>
-        <Checkbox
-        defaultChecked
-        label='Collapse Comms'
-        // onChange={this.handleCheckbox}
-      />
-      </>
-          <Comm>
-            <Comm.Avatar as='a' src='/images/avatar/small/christian.jpg' />
-            <Comm.Content>
-              <Comm.Author as='a'>Christian Rocha</Comm.Author>
-              <Comm.Metadata>
-                <span>2 days ago</span>
-              </Comm.Metadata>
-              <Comm.Text>
-                I'm very interested in this motherboard. Do you know if it'd
-                work in a Intel LGA775 CPU socket?
-              </Comm.Text>
-              <Comm.Actions>
-                <a>Reply</a>
-              </Comm.Actions>
+  const [{ art } /*, setArt*/] = useState(props);
+  const [artComments /*, setComments*/] = useState(art.comments);
 
-            </Comm.Content>
-            </Comm>
-            </Comm.Group>
-    )
-}
+  const expand = (e) => {
+    e.preventDefault();
+    //expands the comment section
+    //displays more comments
+    //text changes to "collapse"
+  };
+
+  return (
+    <Comm.Group id={"comment-section"}>
+      <>
+        {artComments.length > 0 && artComments.length > 2 ? (
+          <>
+            <a className="reply comment expand" href="/" onClick={(e) => expand(e)}>
+              View all {artComments.length} comments
+            </a>
+            <Comment />
+          </>
+        ) : (
+          <Comment />
+        )}
+      </>
+    </Comm.Group>
+  );
+};

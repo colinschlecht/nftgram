@@ -1,5 +1,6 @@
 .explore.art.card{
     color:black;
+    
 }
 .explore.art.card.username{
     color:black;
@@ -8,4 +9,33 @@
 .explore.art.card.likes{
     color:black;
     font-weight:bold
+}
+.explore.art.card.username:hover{
+    transition: color .1s ease;
+    color:rgba(0, 0, 0, 0.653)!important;
+    font-weight:bold
+}
+.explore.art.card.likes:hover{
+    transition: color .1s ease;
+    color:rgba(0, 0, 0, 0.653);
+    font-weight:bold
+}
+
+.reply.comment.expand{
+    color: rgba(0,0,0,.4);
+    
+}
+.reply.comment.expand:hover{
+    color: rgba(0, 0, 0, 0.721);
+    transition: color .1s ease;
+    
+}
+
+#small-like-btn{
+    font-size: 0.73em;
+    float: right;
+}
+
+.comment.text{
+    max-width: 75%;
 }
