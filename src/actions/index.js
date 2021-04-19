@@ -9,6 +9,7 @@ import {
   FETCH_ARTS_INF_SCROLL,
   LOADING_ARTS,
   RESET_ALL_LOADED,
+  CREATE_ART_COMMENT
 } from "./types";
 
 //!user actions!//
@@ -72,4 +73,12 @@ export const loadingArts = () => {
   return {
     type: LOADING_ARTS,
   };
+};
+
+
+//!Comment Actions
+export const createComment = (formValues) => async (dispatch) => {
+  const response = await API_BASE.post("/comments", { ...formValues });
+  dispatch({ type: CREATE_ART_COMMENT, payload: response.data })
+  return response.data;
 };

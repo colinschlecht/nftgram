@@ -1,7 +1,7 @@
 import { GET_USER, SIGN_IN, SIGN_OUT, SIGN_UP } from "../actions/types";
 
 const INITIAL_STATE = {
-  isSignedIn: null,
+  isSignedIn: false,
   user: null,
 };
 

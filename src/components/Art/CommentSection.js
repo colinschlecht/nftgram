@@ -1,55 +1,113 @@
-import React, { useState } from "react";
-import { Comment as Comm, Divider} from "semantic-ui-react";
+import React, { useState  } from "react";
+import { Comment as Comm, Divider } from "semantic-ui-react";
 import { Comment } from "./Comment";
-import { CommentForm } from "./CommentForm"
+import { CommentForm } from "./CommentForm";
+import { useSelector, useDispatch } from "react-redux";
+import { createComment } from "../../actions";
 
 export const CommentSection = ({ art }) => {
-  const [thisart, setArt] = useState(art);
-  const [artComments, setComments] = useState(art.comments);
+  const dispatch = useDispatch();
 
-  const expand = (e) => {
+  const [thisart, setArt] = useState(art);
+  const [expanded, setExpanded] = useState(false);
+  const [artComments, setComments] = useState(art.comments);
+  const user = useSelector((state) => state.auth.user.user);
+
+
+  
+
+  //expands the comment section
+  const handleExpandClick = (e) => {
     e.preventDefault();
-    //expands the comment section
-    //displays more comments
-    //text changes to "collapse"
+    setExpanded(!expanded);
   };
 
-
-  const onSubmit = async (formValues) => {
-    console.log(formValues);
-    
-    // await this.props.createUser(formValues).then((res) => {
-    //   localStorage.setItem("token", res.data.jwt)
-    //   console.log(res);
-    //   if (res.status === 201) {
-    //     this.props.history.push("/");
-    //   }
-    // });
+  //handles comment submission
+  const onSubmit = (formValues) => {
+    dispatch(
+      createComment({
+        ...formValues,
+        user_id: user.id,
+        commentable_id: thisart.id,
+        commentable_type: "Art",
+      })
+    );
   };
 
   return (
     <Comm.Group id={"comment-section"}>
-      <>
-        {artComments.length > 0 && artComments.length > 2 ? (
+      {!expanded ? (
+        <>
+          {artComments.length > 0 && artComments.length < 3 ? (
+            <>
+              <a
+                className="reply comment expand"
+                href="/"
+                onClick={(e) => handleExpandClick(e)}
+              >
+                View all {artComments.length} comments
+              </a>
+              {artComments.map((com) => (
+                <Comment
+                  handleExpandClick={() => handleExpandClick}
+                  key={com.id}
+                  comment={com}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {artComments.length > 0 ? (
+                <>
+                  <a
+                    className="reply comment expand"
+                    href="/"
+                    onClick={(e) => handleExpandClick(e)}
+                  >
+                    View all {artComments.length} comments
+                  </a>
+                  {artComments.slice(-2).map((com) => (
+                    <Comment
+                      handleExpandClick={() => handleExpandClick}
+                      comment={com}
+                    />
+                  ))}
+                </>
+              ) : null}
+            </>
+          )}
+          <Divider />
+          <CommentForm art={art} commentType={"Art"} onSubmit={onSubmit} />
+        </>
+      ) : (
+        <>
           <>
             <a
               className="reply comment expand"
               href="/"
-              onClick={(e) => expand(e)}
+              onClick={(e) => handleExpandClick(e)}
             >
-              View all {artComments.length} comments
+              Collapse Comments
             </a>
-            <Comment comment={artComments[0]}/>
-            <Comment comment={artComments[1]}/>
+            {artComments.map((com) => (
+              <Comment
+                handleExpandClick={() => handleExpandClick}
+                key={com.id}
+                comment={com}
+              />
+            ))}
           </>
-        ) : (
-          <>
-            <Comment comment={artComments[1]}/>
-          </>
-        )}
-        <Divider />
-        <CommentForm onSubmit={onSubmit}/>
-      </>
+          <a
+            className="reply comment expand"
+            href="/"
+            onClick={(e) => handleExpandClick(e)}
+          >
+            Collapse Comments
+          </a>
+          <Divider />
+          <CommentForm art={art} commentType={"Art"} onSubmit={onSubmit} />
+        </>
+      )}
     </Comm.Group>
   );
 };

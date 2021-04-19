@@ -43,7 +43,7 @@ const ArtList = () => {
     };
   }, [trackScroll, allLoaded, dispatch]);
 
-  //reset state on component unmount
+  // reset state on component unmount
   useEffect(() => {
     return () => dispatch(resetAllLoaded());
   }, [dispatch]);
