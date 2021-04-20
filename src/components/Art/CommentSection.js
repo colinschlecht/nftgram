@@ -22,6 +22,8 @@ export const CommentSection = ({ art }) => {
   };
 
   //handles comment submission
+
+  //!try passing e
   const onSubmit = (formValues) => {
     dispatch(
       createComment({

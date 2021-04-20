@@ -21,10 +21,10 @@ const App = () => {
   },);
 
   return (
-    <div>
+    <>
       <BrowserRouter>
-        <div>
           <Nav />
+        <div className="ui centered grid">
           <Switch>
             <Route path="/" exact component={Explore} />
             <Route path="/account/login" exact component={UserLogin} />
@@ -35,7 +35,7 @@ const App = () => {
           </Switch>
         </div>
       </BrowserRouter>
-    </div>
+    </>
   );
 };
 
