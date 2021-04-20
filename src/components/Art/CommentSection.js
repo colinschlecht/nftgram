@@ -8,9 +8,8 @@ import { createComment } from "../../actions";
 export const CommentSection = ({ art }) => {
   const dispatch = useDispatch();
 
-  const [thisart, setArt] = useState(art);
   const [expanded, setExpanded] = useState(false);
-  const [artComments, setComments] = useState(art.comments);
+  const [artComments, /*setArtComments*/] = useState(art.comments);
   const user = useSelector((state) => state.auth.user.user);
 
 
@@ -28,10 +27,10 @@ export const CommentSection = ({ art }) => {
       createComment({
         ...formValues,
         user_id: user.id,
-        commentable_id: thisart.id,
+        commentable_id: art.id,
         commentable_type: "Art",
       })
-    );
+    )
   };
 
   return (
@@ -49,7 +48,6 @@ export const CommentSection = ({ art }) => {
               </a>
               {artComments.map((com) => (
                 <Comment
-                  handleExpandClick={() => handleExpandClick}
                   key={com.id}
                   comment={com}
                 />
@@ -68,8 +66,8 @@ export const CommentSection = ({ art }) => {
                   </a>
                   {artComments.slice(-2).map((com) => (
                     <Comment
-                      handleExpandClick={() => handleExpandClick}
                       comment={com}
+                      key={com.id}
                     />
                   ))}
                 </>

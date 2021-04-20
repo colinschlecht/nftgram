@@ -4,6 +4,11 @@ import {
   LOADING_ARTS,
   RESET_ALL_LOADED,
   CREATE_ART_COMMENT,
+  CREATE_COMMENT_COMMENT,
+  CREATE_ART_LIKE,
+  CREATE_COMMENT_LIKE,
+  DESTROY_ART_LIKE,
+  DESTROY_COMMENT_LIKE,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -45,9 +50,102 @@ const artReducer = (state = INITIAL_STATE, action) => {
           }
         }),
       };
+    case CREATE_COMMENT_COMMENT:
+      return {
+        ...state,
+        arts: state.arts.map((item) => {
+          item.comments.map((com) => {
+            if (com.id !== action.payload.commentable_id) {
+              return com;
+            } else {
+              let newCom = { ...com };
+              newCom.comments.push(action.payload);
+              return {
+                ...newCom,
+              };
+            }
+          });
+          return item;
+        }),
+      };
+
     case RESET_ALL_LOADED:
       return { ...INITIAL_STATE };
 
+    case CREATE_ART_LIKE:
+      return {
+        ...state,
+        arts: state.arts.map((art) => {
+          if (art.id !== action.payload.likeable_id) {
+            return art;
+          } else {
+            let newArt = { ...art };
+            newArt.likes.push(action.payload);
+            return {
+              ...newArt,
+            };
+          }
+        }),
+      };
+    case DESTROY_ART_LIKE:
+      return {
+        ...state,
+        arts: state.arts.map((art) => {
+          if (art.id !== action.payload.likeable_id) {
+            return art;
+          } else {
+            let newArt = { ...art };
+            newArt.likes.map((like, index) => {
+              if (like.id === action.payload.id) {
+                newArt.likes.splice(index, 1);
+              }
+            });
+            return {
+              ...newArt,
+            };
+          }
+        }),
+      };
+    case CREATE_COMMENT_LIKE:
+      return {
+        ...state,
+        arts: state.arts.map((art) => {
+          art.comments.map((com) => {
+            if (com.id !== action.payload.likeable_id) {
+              return com;
+            } else {
+              let newCom = { ...com };
+              newCom.likes.push(action.payload);
+              return {
+                ...newCom,
+              };
+            }
+          });
+          return art;
+        }),
+      };
+    case DESTROY_COMMENT_LIKE:
+      return {
+        ...state,
+        arts: state.arts.map((art) => {
+          art.comments.map((com) => {
+            if (com.id !== action.payload.likeable_id) {
+              return com;
+            } else {
+              let newCom = { ...com };
+              newCom.likes.map((like, index) => {
+                if (like.id === action.payload.id) {
+                  newCom.likes.splice(index, 1);
+                }
+              });
+              return {
+                ...newCom,
+              };
+            }
+          });
+          return art;
+        }),
+      };
     default:
       return state;
   }

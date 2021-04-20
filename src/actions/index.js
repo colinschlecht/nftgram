@@ -9,7 +9,12 @@ import {
   FETCH_ARTS_INF_SCROLL,
   LOADING_ARTS,
   RESET_ALL_LOADED,
-  CREATE_ART_COMMENT
+  CREATE_ART_COMMENT,
+  CREATE_COMMENT_COMMENT,
+  CREATE_ART_LIKE,
+  CREATE_COMMENT_LIKE,
+  DESTROY_ART_LIKE,
+  DESTROY_COMMENT_LIKE
 } from "./types";
 
 //!user actions!//
@@ -80,5 +85,35 @@ export const loadingArts = () => {
 export const createComment = (formValues) => async (dispatch) => {
   const response = await API_BASE.post("/comments", { ...formValues });
   dispatch({ type: CREATE_ART_COMMENT, payload: response.data })
+  return response.data;
+};
+export const createCommentComment = (formValues) => async (dispatch) => {
+  const response = await API_BASE.post("/comments", { ...formValues });
+  dispatch({ type: CREATE_COMMENT_COMMENT, payload: response.data })
+  return response.data;
+};
+
+
+//!Like Actions
+//create
+export const createArtLike = (values) => async (dispatch) => {
+  const response = await API_BASE.post("/likes", { ...values });
+  dispatch({ type: CREATE_ART_LIKE, payload: response.data })
+  return response.data;
+};
+export const createCommentLike = (values) => async (dispatch) => {
+  const response = await API_BASE.post("/likes", { ...values });
+  dispatch({ type: CREATE_COMMENT_LIKE, payload: response.data })
+  return response.data;
+};
+//destroy
+export const destroyArtLike = (id, disLike) => async (dispatch) => {
+  const response = await API_BASE.delete(`/likes/${id}`);
+  dispatch({ type: DESTROY_ART_LIKE, payload: disLike })
+  return response.data;
+};
+export const destroyCommentLike = (id, dislike) => async (dispatch) => {
+  const response = await API_BASE.delete(`/likes/${id}`);
+  dispatch({ type: DESTROY_COMMENT_LIKE, payload: dislike })
   return response.data;
 };

@@ -1,72 +1,150 @@
 import React, { useState } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
+import { createArtLike, destroyArtLike } from "../../actions";
+import { useSelector, useDispatch } from "react-redux";
 
-export const ArtCard = ({ art, page }) => {
-  const [thisart, setArt] = useState(art);
+export const ArtCard = ({ art }) => {
+  const dispatch = useDispatch();
+
+  const [liked, setLiked] = useState(false);
+  const user = useSelector((state) => state.auth.user.user);
+
+  //!\///////// like a post/artwork or unlike /////////////
+  const handleLike = (e) => {
+    e.preventDefault();
+    if (!liked) {
+      setLiked(!liked);
+      dispatch(
+        createArtLike({
+          user_id: user.id,
+          likeable_type: "Art",
+          likeable_id: art.id,
+        })
+      );
+    } else {
+      setLiked(!liked);
+      let disLike = art.likes.find((like) => like.user_id === user.id);
+      console.log(disLike);
+      dispatch(destroyArtLike(disLike.id, disLike));
+    }
+  };
+  //!\///////////////////////////////////////////////
+
+
+
+  //!\///////// select a user profile or list /////////////
+  const handleUserClick = (e) => {
+    e.preventDefault();
+    //pull up the selected user profile
+  };
+
+  const handleLikeCountClick = (e) => {
+    e.preventDefault();
+    //pull up all users who liked
+  };
+  //!\///////////////////////////////////////////////
 
   return (
     <>
-      <Card fluid>
+      <Card fluid id="art-card">
         <Image
           src="https://react.semantic-ui.com/images/wireframe/image.png"
           fluid
         />
         <Card.Content>
           <Card.Header>
-            <Icon name="like" />
-            <Icon name="comment" />
+            <>
+              <a
+                href="/"
+                className="like button icon"
+                onClick={(e) => handleLike(e)}
+              >
+                <Icon name="fire" />
+              </a>
+            </>
           </Card.Header>
-          {thisart.likes.length > 3 ? (
-            <p className="explore art card">
-              liked by{" "}
-              <a className="explore art card" href="/">
-                <span className="explore art card username">
-                  {thisart.likes[0].user.username}
-                </span>{" "}
+          <>
+            {art.likes.length > 3 ? (
+              <p className="explore art card">
+                liked by{" "}
+                <a
+                  className="explore art card"
+                  href="/"
+                  onClick={(e) => handleUserClick(e)}
+                >
+                  <span className="explore art card username">
+                    {art.likes[0].user.username}
+                  </span>{" "}
+                </a>
                 and{" "}
                 <span className="explore art card likes">
-                  {thisart.likes.length - 1} others
+                  <a
+                    className="explore art card"
+                    href="/"
+                    onClick={(e) => handleLikeCountClick(e)}
+                  >
+                    {art.likes.length - 1} others
+                  </a>{" "}
                 </span>
-              </a>{" "}
-            </p>
-          ) : thisart.likes.length > 1 ? (
-            <p className="explore art card">
-              liked by{" "}
-              <a className="explore art card" href="/">
-                <span className="explore art card username">
-                  {thisart.likes[0].user.username}
-                </span>{" "}
+              </p>
+            ) : art.likes.length > 1 ? (
+              <p className="explore art card">
+                liked by{" "}
+                <a
+                  className="explore art card"
+                  href="/"
+                  onClick={(e) => handleUserClick(e)}
+                >
+                  <span className="explore art card username">
+                    {art.likes[0].user.username}
+                  </span>{" "}
+                </a>
                 and{" "}
+                <a
+                  className="explore art card"
+                  href="/"
+                  onClick={(e) => handleUserClick(e)}
+                >
+                  <span className="explore art card username">
+                    {art.likes[1].user.username}
+                  </span>
+                </a>
+                <span className="explore art card likes"></span>{" "}
+              </p>
+            ) : (
+              <p className="explore art card">
+                liked by{" "}
                 <span className="explore art card username">
-                  {thisart.likes[1].user.username}
+                  {art.likes.length > 0 ? (
+                    <a
+                      className="explore art card"
+                      href="/"
+                      onClick={(e) => handleUserClick(e)}
+                    >
+                      {art.likes[0].user.username}
+                    </a>
+                  ) : (
+                    "nobody... yet!"
+                  )}
                 </span>
-                <span className="explore art card likes"></span>
-              </a>{" "}
-            </p>
-          ) : (
-            <p className="explore art card">
-              liked by{" "}
-              <a className="explore art card" href="/">
-                <span className="explore art card username">
-                  {thisart.likes.length > 0
-                    ? thisart.likes[0].user.username
-                    : "nobody..."}
-                </span>
-                <span className="explore art card likes"></span>
-              </a>{" "}
-            </p>
-          )}
+              </p>
+            )}
 
-          <p className="explore art card">
-            <span className="explore art card username">
-              <a href="/" className="explore art card username">
-                {thisart.user.username}
-              </a>
-            </span>
-            &nbsp;&nbsp;{thisart.caption}
-          </p>
-          <CommentSection art={art} />
+            <p className="explore art card">
+              <span className="explore art card username">
+                <a
+                  href="/"
+                  className="explore art card username"
+                  onClick={(e) => handleUserClick(e)}
+                >
+                  {art.user.username}
+                </a>
+              </span>
+              &nbsp;&nbsp;{art.caption}
+            </p>
+            <CommentSection art={art} />
+          </>
         </Card.Content>
       </Card>
     </>

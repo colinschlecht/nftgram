@@ -1,3 +1,4 @@
+
 .explore.art.card{
     color:black;
     
@@ -35,7 +36,30 @@
     font-size: 0.73em;
     float: right;
 }
+#reply-count{
+    float: right;
+}
+#small-like-count{
+    float: right;
+    margin-left: 3px;
+    
+}
 
-.comment.text{
-    max-width: 75%;
+#art-card{
+   max-width: 600px;
+} 
+#art-container{
+position:absolute;
+   margin-left: 50%;
+   display: flex;
+   width: 1200px;
+} 
+.column{
+    display:flex;
+    justify-content: center;
+}
+
+
+#comment-reply{
+    font-size: 1em;
 }

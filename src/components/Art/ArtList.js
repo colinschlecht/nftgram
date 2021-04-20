@@ -51,7 +51,7 @@ const ArtList = () => {
   return (
     <>
       <div id="arts-container">
-        <div className="ui two column centered grid">
+        <div className="ui column centered grid">
           <div className="column">
             {arts.map((art) => (
               <ArtCard page={page} key={art.id} art={art} />

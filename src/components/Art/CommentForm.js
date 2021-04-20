@@ -7,7 +7,7 @@ import { TextArea } from "semantic-ui-react";
 export const CommentForm = (props) => {
   const { onSubmit, art, commentType, comment } = props;
   return (
-    <div>
+    <>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -44,6 +44,6 @@ export const CommentForm = (props) => {
           </form>
         )}
       />
-    </div>
+    </>
   );
 };
