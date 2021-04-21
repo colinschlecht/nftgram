@@ -10,7 +10,7 @@ class LoginForm extends React.Component {
     if (touched && error) {
       return (
         <div className="ui error message">
-          <div className="header">{error}</div>
+          {/* <div className="header">{error}</div> */}
         </div>
       );
     }
@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
     const required = (value) => (value ? undefined : "Required");
     const { onSubmit } = this.props;
     return (
-      <div>
+      <div stacked centered>
         <Form onSubmit={onSubmit}>
           {(props) => (
             <form
@@ -40,10 +40,12 @@ class LoginForm extends React.Component {
             >
               <Field
                 name="username"
+                placeholder={"username"}
                 component={this.renderInput}
                 label={"Enter Username"}
                 validate={required}
               />
+
               <Field
                 name="password"
                 component={this.renderInput}

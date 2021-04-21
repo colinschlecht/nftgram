@@ -26,8 +26,8 @@ const App = () => {
           <Nav />
         <div className="ui centered grid">
           <Switch>
-            <Route path="/" exact component={Explore} />
             <Route path="/account/login" exact component={UserLogin} />
+            <Route path="/" exact component={Explore} />
             <Route path="/account/new" exact component={UserCreate} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
             <Route path="/account/delete/:id" exact component={UserDelete} />

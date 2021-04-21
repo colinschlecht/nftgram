@@ -1,29 +1,33 @@
 import React from "react";
-import { connect } from "react-redux";
 import LoginForm from "./LoginForm";
-import { createUser } from "../../actions";
+import { createUser,  } from "../../actions";
+import { useDispatch } from "react-redux";
 
-class UserCreate extends React.Component {
-  onSubmit = async (formValues) => {
+
+const UserCreate = (props) => {
+  const dispatch = useDispatch();
+
+
+  const onSubmit = (formValues) => {
     console.log(formValues);
-    await this.props.createUser(formValues).then((res) => {
+    dispatch(createUser(formValues)).then((res) => {
       localStorage.setItem("token", res.data.jwt)
       console.log(res);
       if (res.status === 201) {
-        this.props.history.push("/");
+       props.history.push("/");
       }
     });
   };
 
-  render() {
+  
     return (
       <div>
         <h3>Create an Account</h3>
-        <LoginForm onSubmit={this.onSubmit} />
+        <LoginForm onSubmit={onSubmit} />
       </div>
     );
-  }
+  
 }
 
-export default connect(null, { createUser })(UserCreate);
+export default UserCreate;
 
