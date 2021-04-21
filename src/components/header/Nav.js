@@ -9,7 +9,7 @@ export default function Nav() {
         Home
       </Link>
       <div className="right menu">
-        <Link to="/" className="item">
+        <Link to="/art/new" className="item">
           also home
         </Link>
         <Link to="/account/new" className="item">

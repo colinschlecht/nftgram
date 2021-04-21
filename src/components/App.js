@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Explore from "./Explore";
 import UserCreate from "./user/UserCreate";
+import CreateArt from "./Art/CreateArt";
 import UserLogin from "./user/UserLogin";
 import UserDelete from "./user/UserDelete";
 import UserEdit from "./user/UserEdit";
@@ -28,6 +29,7 @@ const App = () => {
           <Switch>
             <Route path="/account/login" exact component={UserLogin} />
             <Route path="/" exact component={Explore} />
+            <Route path="/art/new" exact component={CreateArt} />
             <Route path="/account/new" exact component={UserCreate} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
             <Route path="/account/delete/:id" exact component={UserDelete} />
