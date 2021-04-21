@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React/*, { useEffect } */from "react";
 import LoginForm from "./LoginForm";
-import { loginUser, getUser } from "../../actions";
+import { loginUser/*, getUser */} from "../../actions";
 import { useDispatch } from "react-redux";
-import { HEADERS, TOKEN } from "../../api";
+// import { HEADERS, TOKEN } from "../../api";
 
 
 
@@ -10,9 +10,9 @@ const UserLogin = (props) => {
   
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
-  },);
+  // useEffect(() => {
+  //   dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
+  // },);
 
 
  const onSubmit = (formValues) => {
