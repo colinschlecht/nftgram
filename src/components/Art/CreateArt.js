@@ -1,10 +1,11 @@
 import React from 'react'
-import ArtForm from 'react'
+import ArtForm from './ArtForm'
+
 
 const CreateArt = () => {
     return (
         <div>
-            art
+            <ArtForm />
         </div>
     )
 }
