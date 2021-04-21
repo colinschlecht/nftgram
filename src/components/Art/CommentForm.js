@@ -11,7 +11,10 @@ export const CommentForm = (props) => {
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, form, submitting, pristine, values, reset }) => (
-          <form onSubmit={(e) => handleSubmit(e)} className="ui form error">
+          <form onSubmit={(e) => {
+            handleSubmit(e)
+            form.reset()
+            }} className="ui form error">
             <Field name="comment">
               {(props) => (
                 <>

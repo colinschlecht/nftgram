@@ -96,21 +96,21 @@ export const Comment = ({ comment }) => {
               {comment.comments.length} Reply
             </a>
           )}
+                  </Comm.Actions>
           {replyClick ? (
             <>
+                  <CommentForm
+                    comment={comment}
+                    commentType={"Comment Reply"}
+                    onSubmit={onSubmit}
+                  />
               {comment.comments.map((com) => (
                 <div id="comment-reply">
                   <Comment comment={com} key={com.id} />
                 </div>
               ))}
-              <CommentForm
-                comment={comment}
-                commentType={"Comment Reply"}
-                onSubmit={onSubmit}
-              />
             </>
           ) : null}
-        </Comm.Actions>
       </Comm.Content>
     </Comm>
   );

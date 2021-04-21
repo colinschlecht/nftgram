@@ -1,27 +1,35 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
 import LoginForm from "./LoginForm";
-import { loginUser } from "../../actions";
+import { loginUser, getUser } from "../../actions";
+import { useDispatch } from "react-redux";
+import { HEADERS, TOKEN } from "../../api";
 
-class UserLogin extends React.Component {
 
-  onSubmit = async (formValues) => {
-    await this.props.loginUser(formValues).then((res) => {
+
+const UserLogin = (props) => {
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
+  },);
+
+
+ const onSubmit = (formValues) => {
+     dispatch(loginUser(formValues)).then((res) => {
       localStorage.setItem("token", res.data.jwt);
       if (res.status === 202) {
-        this.props.history.push("/");
+        props.history.push("/");
       }
     });
   };
 
-  render() {
-    return (
-      <div>
-        <h3>Log In</h3>
-        <LoginForm onSubmit={this.onSubmit} />
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h3>Log In</h3>
+      <LoginForm onSubmit={onSubmit} />
+    </div>
+  );
+};
 
-export default connect(null, { loginUser })(UserLogin);
+export default UserLogin;

@@ -51,6 +51,7 @@ export const ArtCard = ({ art }) => {
         <Image
           src="https://react.semantic-ui.com/images/wireframe/image.png"
           fluid
+          onClick={(e) => handleLike(e)}
         />
         <Card.Content>
           <Card.Header>
