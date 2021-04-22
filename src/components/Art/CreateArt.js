@@ -4,7 +4,7 @@ import ArtForm from './ArtForm'
 
 const CreateArt = () => {
     return (
-        <div>
+        <div id="arts-container">
             <ArtForm />
         </div>
     )
