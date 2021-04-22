@@ -2,6 +2,7 @@ import React/*, { useEffect } */from "react";
 import LoginForm from "./LoginForm";
 import { loginUser/*, getUser */} from "../../actions";
 import { useDispatch } from "react-redux";
+import  MainLogin  from "./MainLogin";
 // import { HEADERS, TOKEN } from "../../api";
 
 
@@ -25,10 +26,11 @@ const UserLogin = (props) => {
   };
 
   return (
-    <div>
+    <>
       <h3>Log In</h3>
+      <MainLogin />
       <LoginForm onSubmit={onSubmit} />
-    </div>
+    </>
   );
 };
 

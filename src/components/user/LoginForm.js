@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
     const required = (value) => (value ? undefined : "Required");
     const { onSubmit } = this.props;
     return (
-      <div stacked centered>
+      <div className="stacked centered">
         <Form onSubmit={onSubmit}>
           {(props) => (
             <form
