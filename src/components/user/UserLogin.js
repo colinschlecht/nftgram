@@ -19,12 +19,13 @@ const UserLogin = (props) => {
 
 
  const onSubmit = (formValues) => {
-     dispatch(loginUser(formValues)).then((res) => {
-      localStorage.setItem("token", res.data.jwt);
-      if (res.status === 202) {
-        props.history.push("/");
-      }
-    });
+   console.log(formValues)
+  //    dispatch(loginUser(formValues)).then((res) => {
+  //     localStorage.setItem("token", res.data.jwt);
+  //     if (res.status === 202) {
+  //       props.history.push("/");
+  //     }
+  //   });
   };
 
   return (

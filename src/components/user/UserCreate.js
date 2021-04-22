@@ -10,14 +10,15 @@ const UserCreate = (props) => {
 
 
   const onSubmit = (formValues) => {
-    console.log(formValues);
-    dispatch(createUser(formValues)).then((res) => {
-      localStorage.setItem("token", res.data.jwt)
-      console.log(res);
-      if (res.status === 201) {
-       props.history.push("/");
-      }
-    });
+    console.log(formValues)
+    // console.log(formValues);
+    // dispatch(createUser(formValues)).then((res) => {
+    //   localStorage.setItem("token", res.data.jwt)
+    //   console.log(res);
+    //   if (res.status === 201) {
+    //    props.history.push("/");
+    //   }
+    // });
   };
 
   

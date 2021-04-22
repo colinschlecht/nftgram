@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UserLogin from "./UserLogin";
 import UserCreate from "./UserCreate";
-import { Redirect } from "react-router-dom";
 import { HEADERS, TOKEN } from "../../api";
 import { getUser } from "../../actions";
 import { useDispatch } from "react-redux";
-import { Button, Divider, Form, Grid, Segment } from "semantic-ui-react";
 
 // import { useSelector } from "react-redux";
 
