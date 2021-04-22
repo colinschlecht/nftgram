@@ -1,64 +1,41 @@
 import React from "react";
-import { Form, Field } from "react-final-form";
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+
 
 //! this form is used for user account creation and user login !//
 
-class LoginForm extends React.Component {
+
+const LoginForm = ( props ) => (
 
   
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="ui error message">
-          {/* <div className="header">{error}</div> */}
-        </div>
-      );
-    }
-  }
 
-  renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""} `;
-    return (
-      <div className={className}>
-        <label>{label}</label>
-        <input {...input} />
-        {this.renderError(meta)}
-      </div>
-    );
-  };
+  <div id="outer-login">
+  <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+    <Grid.Column style={{ maxWidth: 450 }}>
 
-  render() {
-    const required = (value) => (value ? undefined : "Required");
-    const { onSubmit } = this.props;
-    return (
-      <div className="stacked centered">
-        <Form onSubmit={onSubmit}>
-          {(props) => (
-            <form
-              onSubmit={(e) => props.handleSubmit(e)}
-              className="ui form error"
-            >
-              <Field
-                name="username"
-                placeholder={"username"}
-                component={this.renderInput}
-                label={"Enter Username"}
-                validate={required}
-              />
+      <Form size='large'>
+        <Segment stacked>
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' />
+          <Form.Input
+            fluid
+            icon='lock'
+            iconPosition='left'
+            placeholder='Password'
+            type='password'
+          />
 
-              <Field
-                name="password"
-                component={this.renderInput}
-                label={"Enter Password"}
-                validate={required}
-              />
-              <button type="submit">Submit</button>
-            </form>
-          )}
-        </Form>
-      </div>
-    );
-  }
-}
+          <Button fluid size='large' onClick={()=>props.onSubmit()}>
+            {props.loginPage ?
+            "Login"
+            :
+            "Sign Up"
+            }
+          </Button>
+        </Segment>
+      </Form>
+    </Grid.Column>
+  </Grid>
+  </div>
+)
 
 export default LoginForm;

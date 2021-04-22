@@ -12,10 +12,10 @@ export default function Nav() {
         <Link to="/art/new" className="item">
           also home
         </Link>
-        <Link to="/account/new" className="item">
+        <Link to="/account/Login" className="item">
           Sign Up
         </Link>
-        <Link to="/account/login" className="item">
+        <Link to="/account/Login" className="item">
           Log in
         </Link>
         <LogOut />

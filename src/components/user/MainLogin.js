@@ -1,19 +1,71 @@
-import React from 'react'
-import UserLogin from "./user/UserLogin";
-import UserCreate from "./user/UserCreate";
+import React, { useEffect, useState } from "react";
+import UserLogin from "./UserLogin";
+import UserCreate from "./UserCreate";
+import { Redirect } from "react-router-dom";
+import { HEADERS, TOKEN } from "../../api";
+import { getUser } from "../../actions";
+import { useDispatch } from "react-redux";
+import { Button, Divider, Form, Grid, Segment } from "semantic-ui-react";
 
+// import { useSelector } from "react-redux";
 
+const MainLogin = (props) => {
+  const dispatch = useDispatch();
 
-const MainLogin = () => {
-    return (
-        <div className="ui middle aligned center aligned grid">
-            <div className="column">
-                <UserLogin />
-                <UserCreate />
-            </div>
-           
+  const [loginPage, setLoginPage] = useState(true);
+
+  const changePage = (bool) => {
+    setLoginPage(bool);
+  };
+
+  useEffect(() => {
+    if (TOKEN && TOKEN !== "undefined")
+      dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
+  });
+
+  return (
+    <>
+      <div className="ui middle aligned center aligned grid" id="testing">
+        <div className="column" id="logincolumn">
+          <div
+            className="row"
+            id="top"
+            onClick={() => changePage(true)}
+            onPointerOver={() => changePage(true)}
+          >
+            <h1
+              id="toplogintext"
+              onClick={() => changePage(true)}
+              onPointerOver={() => changePage(true)}
+            >
+              {" "}
+              Log In
+            </h1>
+          </div>
+
+          {loginPage ? (
+            <UserLogin loginPage={loginPage} />
+          ) : (
+            <UserCreate loginPage={loginPage} />
+          )}
+          <div
+            className="row"
+            id="bottom"
+            onPointerOver={() => changePage(false)}
+            onClick={() => changePage(false)}
+          >
+            <h1
+              id="bottomlogintext"
+              onPointerOver={() => changePage(false)}
+              onClick={() => changePage(false)}
+            >
+              Sign up
+            </h1>
+          </div>
         </div>
-    )
-}
+      </div>
+    </>
+  );
+};
 
-export default MainLogin
+export default MainLogin;

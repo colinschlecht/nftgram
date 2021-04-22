@@ -8,11 +8,12 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Nav from "./header/Nav";
 import Explore from "./Explore";
 import CreateArt from "./Art/CreateArt";
-import UserCreate from "./user/UserCreate";
+// import UserCreate from "./user/UserCreate";
 import UserDelete from "./user/UserDelete";
 import Profile from "./user/Profile";
 import UserEdit from "./user/UserEdit";
-import UserLogin from "./user/UserLogin";
+// import UserLogin from "./user/UserLogin";
+import MainLogin from "./user/MainLogin";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,18 +26,21 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-          <Nav />
+      <>
           <Switch>
-            <Route path="/account/login" exact component={UserLogin} />
-            <Route path="/account/new" exact component={UserCreate} />
+            <Route path="/account/login" exact component={MainLogin} />
+            <>
         <div className="ui centered grid">
             <Route path="/" exact component={Explore} />
             <Route path="/art/new" exact component={CreateArt} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
             <Route path="/account/delete/:id" exact component={UserDelete} />
             <Route path="/account/:id" exact component={Profile} />
+          <Nav />
         </div>
+        </>
           </Switch>
+          </>
       </BrowserRouter>
     </>
   );

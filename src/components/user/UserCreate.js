@@ -2,7 +2,6 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import { createUser,  } from "../../actions";
 import { useDispatch } from "react-redux";
-import  MainLogin  from "./MainLogin";
 
 
 
@@ -23,10 +22,9 @@ const UserCreate = (props) => {
 
   
     return (
-      <div>
-        <h3>Create an Account</h3>
-        <LoginForm onSubmit={onSubmit} />
-      </div>
+      <>
+        <LoginForm onSubmit={onSubmit} loginPage={props.loginPage}/>
+      </>
     );
   
 }
