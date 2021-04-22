@@ -40,7 +40,7 @@ const App = () => {
             <Route path="/account/login" exact component={MainLogin} />
             <>
         <div id="main" className="ui centered grid">
-        <div onMouseOver={()=> changeMenu()} id="nav">
+        <div id="nav">
           <Nav />
         </div>
             <Route path="/" exact component={Explore} />

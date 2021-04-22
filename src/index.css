@@ -164,8 +164,26 @@ html::-webkit-scrollbar {
 }
 
 #nav{
+    transition: all .2s ease-in-out;
+    height: 10px;
     position:fixed;
+    display:flex;
+    justify-content: center;
     bottom: 0;
     width: 100%;
     z-index: 1000;
+    background-color: rgba(194, 149, 83, 0.242);
+}
+
+#nav:hover{
+    transform: scale(1.1);
+    height: 40px;
+    position:fixed;
+    display:flex;
+    justify-content: center;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(255, 235, 205, 0.242);
+
 }
