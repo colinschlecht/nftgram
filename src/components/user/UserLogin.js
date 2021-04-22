@@ -10,22 +10,15 @@ const UserLogin = (props) => {
   
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
-  // },);
-
-  
-
 
 
  const onSubmit = (formValues) => {
-   console.log(formValues)
-  //    dispatch(loginUser(formValues)).then((res) => {
-  //     localStorage.setItem("token", res.data.jwt);
-  //     if (res.status === 202) {
-  //       props.history.push("/");
-  //     }
-  //   });
+     dispatch(loginUser(formValues)).then((res) => {
+      localStorage.setItem("token", res.data.jwt);
+      if (res.status === 202) {
+        props.history.push("/");
+      }
+    });
   };
 
   return (

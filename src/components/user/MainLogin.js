@@ -16,10 +16,7 @@ const MainLogin = (props) => {
     setLoginPage(bool);
   };
 
-  useEffect(() => {
-    if (TOKEN && TOKEN !== "undefined")
-      dispatch(getUser(HEADERS, TOKEN)).then(props.history.push("/"));
-  });
+
 
   return (
     <>
@@ -42,9 +39,9 @@ const MainLogin = (props) => {
           </div>
 
           {loginPage ? (
-            <UserLogin loginPage={loginPage} />
+            <UserLogin loginPage={loginPage} history={props.history}/>
           ) : (
-            <UserCreate loginPage={loginPage} />
+            <UserCreate loginPage={loginPage} history={props.history}/>
           )}
           <div
             className="row"
