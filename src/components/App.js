@@ -1,17 +1,18 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Explore from "./Explore";
-import UserCreate from "./user/UserCreate";
-import CreateArt from "./Art/CreateArt";
-import UserLogin from "./user/UserLogin";
-import UserDelete from "./user/UserDelete";
-import UserEdit from "./user/UserEdit";
-import Profile from "./user/Profile";
-import Nav from "./header/Nav";
 import { getUser } from "../actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HEADERS, TOKEN } from "../api";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Nav from "./header/Nav";
+import Explore from "./Explore";
+import CreateArt from "./Art/CreateArt";
+import UserCreate from "./user/UserCreate";
+import UserDelete from "./user/UserDelete";
+import Profile from "./user/Profile";
+import UserEdit from "./user/UserEdit";
+import UserLogin from "./user/UserLogin";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,17 +26,17 @@ const App = () => {
     <>
       <BrowserRouter>
           <Nav />
-        <div className="ui centered grid">
           <Switch>
             <Route path="/account/login" exact component={UserLogin} />
+            <Route path="/account/new" exact component={UserCreate} />
+        <div className="ui centered grid">
             <Route path="/" exact component={Explore} />
             <Route path="/art/new" exact component={CreateArt} />
-            <Route path="/account/new" exact component={UserCreate} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
             <Route path="/account/delete/:id" exact component={UserDelete} />
             <Route path="/account/:id" exact component={Profile} />
-          </Switch>
         </div>
+          </Switch>
       </BrowserRouter>
     </>
   );

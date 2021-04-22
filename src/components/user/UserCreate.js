@@ -25,7 +25,6 @@ const UserCreate = (props) => {
     return (
       <div>
         <h3>Create an Account</h3>
-        <MainLogin />
         <LoginForm onSubmit={onSubmit} />
       </div>
     );

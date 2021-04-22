@@ -28,7 +28,6 @@ const UserLogin = (props) => {
   return (
     <>
       <h3>Log In</h3>
-      <MainLogin />
       <LoginForm onSubmit={onSubmit} />
     </>
   );
