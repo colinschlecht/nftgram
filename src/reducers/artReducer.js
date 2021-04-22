@@ -9,6 +9,7 @@ import {
   CREATE_COMMENT_LIKE,
   DESTROY_ART_LIKE,
   DESTROY_COMMENT_LIKE,
+  CREATE_ART
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -50,6 +51,12 @@ const artReducer = (state = INITIAL_STATE, action) => {
           }
         }),
       };
+    case CREATE_ART:
+      let newarts = [ ...state.arts]
+      return {
+        ...state,
+        arts: newarts.push(action.payload)
+        }
     case CREATE_COMMENT_COMMENT:
       return {
         ...state,
