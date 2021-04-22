@@ -119,17 +119,24 @@ position:absolute;
 }
 
 .button{
-    background-color: rgba(68, 81, 155, 0.201)!important;
+    background-color: rgba(68, 81, 155, 0.201);
 }
 .button:hover{
-    background-color: rgba(40, 45, 70, 0.201)!important;
+    background-color: rgba(40, 45, 70, 0.201);
 }
 
 html::-webkit-scrollbar {
     display: none;
   }
 
+  .like.button.icon{
+      background-color: white !important;
 
+  }
+
+  #like-button-main{
+    background-color: white !important;
+  }
 
 #sign{
     margin: auto;
@@ -148,4 +155,16 @@ html::-webkit-scrollbar {
     padding: 10px!important;
     border: 0px;
     visibility: hidden;
+}
+
+#main{
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+}
+
+#nav{
+    position:fixed;
+    bottom: 0;
+    width: 100%;
 }

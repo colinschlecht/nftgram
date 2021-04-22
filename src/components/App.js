@@ -22,6 +22,8 @@ const App = () => {
   useEffect(() => {
     dispatch(getUser(HEADERS, TOKEN)).then(res => console.log(res));
   },);
+  
+  dispatch(showMenu());
 
   return (
     <>
@@ -30,12 +32,14 @@ const App = () => {
           <Switch>
             <Route path="/account/login" exact component={MainLogin} />
             <>
-        <div className="ui centered grid">
+        <div id="main" className="ui centered grid">
             <Route path="/" exact component={Explore} />
             <Route path="/art/new" exact component={CreateArt} />
             <Route path="/account/edit/:id" exact component={UserEdit} />
             <Route path="/account/delete/:id" exact component={UserDelete} />
             <Route path="/account/:id" exact component={Profile} />
+        </div>
+        <div onMouseOver id="nav">
           <Nav />
         </div>
         </>

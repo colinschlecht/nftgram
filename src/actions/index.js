@@ -79,6 +79,11 @@ export const loadingArts = () => {
     type: LOADING_ARTS,
   };
 };
+export const showMenu = () => {
+  return {
+    type: SHOW_MENU
+  };
+};
 
 
 //!Comment Actions

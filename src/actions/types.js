@@ -20,3 +20,6 @@ export const DESTROY_ART_LIKE = "DESTROY_ART_LIKE";
 export const DESTROY_COMMENT_LIKE = "DESTROY_COMMENT_LIKE";
 
 
+//! ui
+
+export const SHOW_MENU = "SHOW_MENU"

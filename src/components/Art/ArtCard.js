@@ -57,6 +57,7 @@ export const ArtCard = ({ art }) => {
           <Card.Header>
             <>
               <a
+              id="like-button-main"
                 href="/"
                 className="like button icon"
                 onClick={(e) => handleLike(e)}
