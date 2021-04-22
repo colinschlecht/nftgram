@@ -1,5 +1,6 @@
 import API_BASE from "../api";
 import {
+  SHOW_MENU,
   SIGN_IN,
   SIGN_OUT,
   SIGN_UP,

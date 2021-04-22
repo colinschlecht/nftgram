@@ -5,20 +5,22 @@ import LogOut from "../user/LogOut";
 export default function Nav() {
   return (
     <div className="ui secondary pointing menu">
+      <div className="menu">
+
+
       <Link to="/" className="item">
         Home
       </Link>
-      <div className="right menu">
         <Link to="/art/new" className="item">
-          also home
+          <i class="camera retro icon"></i>
         </Link>
+
         <Link to="/account/Login" className="item">
-          Sign Up
-        </Link>
-        <Link to="/account/Login" className="item">
-          Log in
+          account{" "}
         </Link>
         <LogOut />
+
+        
       </div>
     </div>
   );
