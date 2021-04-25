@@ -12,7 +12,7 @@ export default function Nav() {
         Home
       </Link>
         <Link to="/art/new" className="item">
-          <i class="camera retro icon"></i>
+          <i className="camera retro icon"></i>
         </Link>
 
         <Link to="/account/Login" className="item">
