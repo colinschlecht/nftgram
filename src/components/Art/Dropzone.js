@@ -18,7 +18,7 @@ const Dropzone = ({ input }) => {
       });
       blobPromise.then((value) => {
         setfile(value);
-        console.log(value);
+        localStorage.setItem("cont",value);
       });
     },
     [input]
