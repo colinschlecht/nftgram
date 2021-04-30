@@ -1,5 +1,6 @@
 import API_BASE from "../api";
 import {
+  CREATE_ART,
   SHOW_MENU,
   SIGN_IN,
   SIGN_OUT,
@@ -53,6 +54,14 @@ export const logOut = () => {
 };
 
 //!Art actions//
+
+
+export const createArt = (formValues) => async (dispatch) => {
+  const response = await API_BASE.post("/arts", { ...formValues });
+  dispatch({ type: CREATE_ART, payload: response.data })
+  return response;
+};
+
 //fetch to index route w/o filter
 export const fetchArts = () => async (dispatch) => {
   const response = await API_BASE.get("/arts");

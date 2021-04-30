@@ -40,7 +40,6 @@ const artReducer = (state = INITIAL_STATE, action) => {
         ...state,
         arts: state.arts.map((item) => {
           if (item.id !== action.payload.commentable_id) {
-            // This isn't the item we care about - keep it as-is
             return item;
           } else {
             let newItem = { ...item };
@@ -52,10 +51,9 @@ const artReducer = (state = INITIAL_STATE, action) => {
         }),
       };
     case CREATE_ART:
-      let newarts = [ ...state.arts]
+      // let newarts = [ ...state.arts]
       return {
         ...state,
-        arts: newarts.push(action.payload)
         }
     case CREATE_COMMENT_COMMENT:
       return {
