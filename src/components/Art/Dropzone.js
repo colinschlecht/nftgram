@@ -1,3 +1,4 @@
+import { reader } from "ipfs-core/src/components/dag";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Header, Icon, Segment } from "semantic-ui-react";
@@ -8,21 +9,21 @@ const Dropzone = ({ input }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       input.onChange(acceptedFiles);
-      var blobPromise = new Promise((resolve, reject) => {
-        const reader = new window.FileReader();
-        reader.readAsDataURL(acceptedFiles[0]);
-        reader.onloadend = () => {
-          const base64data = reader.result;
-          resolve(base64data);
-        };
+      const upload = new File(acceptedFiles, acceptedFiles[0].name,{
+        type: acceptedFiles[0].type
+      })
+      const reader = new FileReader()
+      reader.readAsDataURL(upload)
+      reader.onloadend = () => {
+        const data = reader.result
+        setfile(data)
+        console.log(data)
+      }
+
+      
+      
       });
-      blobPromise.then((value) => {
-        setfile(value);
-        localStorage.setItem("cont",value);
-      });
-    },
-    [input]
-  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const render =
