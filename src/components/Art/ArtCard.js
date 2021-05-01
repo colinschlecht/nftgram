@@ -48,11 +48,21 @@ export const ArtCard = ({ art }) => {
   return (
     <>
       <Card fluid id="art-card">
+        {art.link ? 
+        <Image
+        src={`${art.link}`}
+        fluid
+        onClick={(e) => handleLike(e)}
+      />
+        :
+
         <Image
           src="https://react.semantic-ui.com/images/wireframe/image.png"
           fluid
           onClick={(e) => handleLike(e)}
         />
+        
+      }
         <Card.Content>
           <Card.Header>
             <>
