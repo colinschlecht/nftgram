@@ -16,7 +16,7 @@ const Dropzone = ({ input, getFile }) => {
       reader.onloadend = () => {
         const data = reader.result
         setfile(data)
-        getFile(data)
+        getFile(upload)
       }
 
       
