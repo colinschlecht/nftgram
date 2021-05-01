@@ -1,9 +1,8 @@
-import { reader } from "ipfs-core/src/components/dag";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Header, Icon, Segment } from "semantic-ui-react";
 
-const Dropzone = ({ input }) => {
+const Dropzone = ({ input, getFile }) => {
   const [file, setfile] = useState(input.value);
 
   const onDrop = useCallback(
@@ -17,7 +16,7 @@ const Dropzone = ({ input }) => {
       reader.onloadend = () => {
         const data = reader.result
         setfile(data)
-        console.log(data)
+        getFile(data)
       }
 
       
