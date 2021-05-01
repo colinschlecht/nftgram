@@ -1,33 +1,47 @@
 ###Description
-nftgram is a virtual art gallery, where a user can view virtual art created by various artists, many of which is being sold as nft's. This is not directly a location for trading art, but can be a great place to start the communication between users. User stories:
 
-A user can add art to their personal collection if they are the owner of the art, creating their own virtual art gallery.
+nftgram is a virtual art gallery/social media platform, where a user can view and create virtual art.
 
-An artist can show off their art sold and or
+User stories:
 
+A user is required to create an account to interract with other users.
+A user can create art, adding to the main explore view.
+A user can like and comment on other art pieces.
+A user can reply to comments and like comments.
 
+ToDo:
 
+Individual user show page.
+Individual art show page.
+List of users who have liked showpage.
+User account settings.
+Following capability.
+Additional timelines.
+Events tab on art.
 
+Current NFT creation status: WIP
+Updated 5/1/21
 
+When creating art, a unique CID is created as it is uploaded to the IPFS.
+In order to persist this upload to the IPFS the CID and artpiece is then pinned via pinning service: Pinata.
+The response from pinning to pinata returns a pinata specific URI that points to the artpiece. 
+The URI, along with the CID are then added to an art object, which contains the other art attributes defined by the user. This art object is passed via axios to the server in POST req, creating an art instance persisted to the db and added to the explore timeline.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+ToDo:
+*smart contract.
+*metamask ui.
+*minting capabilities.
 
 ## Available Scripts
 
 In the project directory, you can run:
-
-### `yarn start`
+### `yarn start` 
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build`
 
