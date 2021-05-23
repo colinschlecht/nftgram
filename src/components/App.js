@@ -1,6 +1,6 @@
 import React from "react";
 import { getUser } from "../actions";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HEADERS, TOKEN } from "../api";
 import { BrowserRouter, Route, Switch } from "react-router-dom";

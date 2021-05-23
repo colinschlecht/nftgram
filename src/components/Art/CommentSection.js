@@ -10,7 +10,7 @@ export const CommentSection = ({ art }) => {
 
   const [expanded, setExpanded] = useState(false);
   const [artComments, /*setArtComments*/] = useState(art.comments);
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user);
 
 
   
@@ -29,7 +29,7 @@ export const CommentSection = ({ art }) => {
     dispatch(
       createComment({
         ...formValues,
-        user_id: user.id,
+        user_id: user.user.id,
         commentable_id: art.id,
         commentable_type: "Art",
       })

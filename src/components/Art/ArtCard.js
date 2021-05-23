@@ -4,11 +4,19 @@ import { CommentSection } from "./CommentSection";
 import { createArtLike, destroyArtLike } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 
+
+
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
+  
+  const user = useSelector((state) => state.auth.user);
+  
+  const [liked, setLiked] = useState(!!art.likes.find((like) => like.user_id === user.user.id));
+  
 
-  const [liked, setLiked] = useState(false);
-  const user = useSelector((state) => state.auth.user.user);
+  
+    console.log(liked)
+ 
 
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {
@@ -17,24 +25,21 @@ export const ArtCard = ({ art }) => {
       setLiked(!liked);
       dispatch(
         createArtLike({
-          user_id: user.id,
+          user_id: user.user.id,
           likeable_type: "Art",
           likeable_id: art.id,
         })
-      );
-    } else {
-      setLiked(!liked);
-      let disLike = art.likes.find((like) => like.user_id === user.id);
-      console.log(disLike);
-      dispatch(destroyArtLike(disLike.id, disLike));
-    }
-  };
-  //!\///////////////////////////////////////////////
-
-
-
-  //!\///////// select a user profile or list /////////////
-  const handleUserClick = (e) => {
+        );
+      } else {
+        setLiked(!liked);
+        let disLike = art.likes.find((like) => like.user_id === user.user.id);
+        dispatch(destroyArtLike(disLike.id, disLike));
+      }
+    };
+    //!\///////////////////////////////////////////////
+    
+    //!\///////// select a user profile or list /////////////
+    const handleUserClick = (e) => {
     e.preventDefault();
     //pull up the selected user profile
   };
@@ -48,26 +53,20 @@ export const ArtCard = ({ art }) => {
   return (
     <>
       <Card fluid id="art-card">
-        {art.link ? 
-        <Image
-        src={`${art.link}`}
-        fluid
-        onClick={(e) => handleLike(e)}
-      />
-        :
-
-        <Image
-          src="https://react.semantic-ui.com/images/wireframe/image.png"
-          fluid
-          onClick={(e) => handleLike(e)}
-        />
-        
-      }
+        {art.link ? (
+          <Image src={`${art.link}`} fluid onClick={(e) => handleLike(e)} />
+        ) : (
+          <Image
+            src="https://react.semantic-ui.com/images/wireframe/image.png"
+            fluid
+            onClick={(e) => handleLike(e)}
+          />
+        )}
         <Card.Content>
           <Card.Header>
             <>
               <a
-              id="like-button-main"
+                id="like-button-main"
                 href="/"
                 className="like button icon"
                 onClick={(e) => handleLike(e)}
