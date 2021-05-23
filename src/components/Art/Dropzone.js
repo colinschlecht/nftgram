@@ -18,10 +18,7 @@ const Dropzone = ({ input, getFile }) => {
         setfile(data)
         getFile(upload)
       }
-
-      
-      
-      });
+      },[getFile, input]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

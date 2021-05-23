@@ -1,24 +1,12 @@
-import React from 'react'
-import ArtList from './Art/ArtList'
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-
-
-
+import React from "react";
+import ArtList from "./Art/ArtList";
 
 const Explore = () => {
+  return (
+    <>
+      <ArtList />
+    </>
+  );
+};
 
-
-
-    return (
-        <>
-          
-            <ArtList />
-        
-        
-        </>
-    )
-
-}
-
-export default Explore
+export default Explore;

@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Form, Grid, Header, Image, Input, Message, Segment } from 'semantic-ui-react'
-
+import { Button, Form, Grid, Segment } from 'semantic-ui-react'
+//(will need to be added back in to semantic ui)Header, Image, Input, Message, 
 
 //! this form is used for user account creation and user login !//
 

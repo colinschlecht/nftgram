@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UserLogin from "./UserLogin";
 import UserCreate from "./UserCreate";
-import { HEADERS, TOKEN } from "../../api";
-import { getUser } from "../../actions";
-import { useDispatch } from "react-redux";
-
-// import { useSelector } from "react-redux";
 
 const MainLogin = (props) => {
-  const dispatch = useDispatch();
+  
 
   const [loginPage, setLoginPage] = useState(true);
 
