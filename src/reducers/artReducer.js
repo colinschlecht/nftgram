@@ -9,7 +9,7 @@ import {
   CREATE_COMMENT_LIKE,
   DESTROY_ART_LIKE,
   DESTROY_COMMENT_LIKE,
-  CREATE_ART
+  CREATE_ART,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -54,7 +54,7 @@ const artReducer = (state = INITIAL_STATE, action) => {
       // let newarts = [ ...state.arts]
       return {
         ...state,
-        }
+      };
     case CREATE_COMMENT_COMMENT:
       return {
         ...state,
@@ -104,10 +104,11 @@ const artReducer = (state = INITIAL_STATE, action) => {
               if (like.id === action.payload.id) {
                 newArt.likes.splice(index, 1);
               }
+              return {
+                ...newArt,
+              };
             });
-            return {
-              ...newArt,
-            };
+            return art;
           }
         }),
       };
@@ -142,11 +143,12 @@ const artReducer = (state = INITIAL_STATE, action) => {
                 if (like.id === action.payload.id) {
                   newCom.likes.splice(index, 1);
                 }
+                return {
+                  ...newCom,
+                };
               });
-              return {
-                ...newCom,
-              };
             }
+            return com;
           });
           return art;
         }),
