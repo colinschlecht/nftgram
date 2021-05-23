@@ -16,14 +16,8 @@ import MainLogin from "./user/MainLogin";
 const App = () => {
   const dispatch = useDispatch();
 
-
-
   //!re-auth on page refresh
-  useEffect(() => {
-    dispatch(getUser(HEADERS, TOKEN)).then(res => console.log(res));
-  },);
-  
-
+  dispatch(getUser(HEADERS, TOKEN)).then(console.log("authed"))
 
   return (
     <>
