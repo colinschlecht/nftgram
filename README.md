@@ -2,6 +2,8 @@
 
 nftgram is a virtual art gallery/social media platform, where a user can view and create virtual art.
 
+NFT Smart Contract: https://rinkeby.etherscan.io/address/0xa83a98023313a7F0bdcD1f30c869E2c3318C9f12#code
+
 User stories:
 
 A user is required to create an account to interract with other users.
