@@ -15,7 +15,7 @@ export const ArtCard = ({ art }) => {
   
 
   
-    console.log(liked)
+
  
 
   //!\///////// like a post/artwork or unlike /////////////
