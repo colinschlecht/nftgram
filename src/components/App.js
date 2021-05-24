@@ -12,33 +12,39 @@ import UserDelete from "./user/UserDelete";
 import Profile from "./user/Profile";
 import UserEdit from "./user/UserEdit";
 import MainLogin from "./user/MainLogin";
+import MetamaskWrapper from "./header/MetamaskButton";
 
 const App = () => {
   const dispatch = useDispatch();
 
   //!re-auth on page refresh
-  dispatch(getUser(HEADERS, TOKEN)).then(console.log("authed"))
+  dispatch(getUser(HEADERS, TOKEN)).then(console.log("authed"));
 
   return (
     <>
       <BrowserRouter>
-      <>
+        <>
           <Switch>
             <Route path="/account/login" exact component={MainLogin} />
             <>
-        <div id="main" className="ui centered grid">
-        <div id="nav">
-          <Nav />
-        </div>
-            <Route path="/" exact component={Explore} />
-            <Route path="/art/new" exact component={CreateArt} />
-            <Route path="/account/edit/:id" exact component={UserEdit} />
-            <Route path="/account/delete/:id" exact component={UserDelete} />
-            <Route path="/account/:id" exact component={Profile} />
-        </div>
-        </>
+                <MetamaskWrapper />
+              <div id="main" className="ui centered grid">
+                <div id="nav">
+                  <Nav />
+                </div>
+                <Route path="/" exact component={Explore} />
+                <Route path="/art/new" exact component={CreateArt} />
+                <Route path="/account/edit/:id" exact component={UserEdit} />
+                <Route
+                  path="/account/delete/:id"
+                  exact
+                  component={UserDelete}
+                />
+                <Route path="/account/:id" exact component={Profile} />
+              </div>
+            </>
           </Switch>
-          </>
+        </>
       </BrowserRouter>
     </>
   );

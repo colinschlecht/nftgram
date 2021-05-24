@@ -16,8 +16,14 @@ import {
   CREATE_ART_LIKE,
   CREATE_COMMENT_LIKE,
   DESTROY_ART_LIKE,
-  DESTROY_COMMENT_LIKE
+  DESTROY_COMMENT_LIKE,
+  CONNECT
 } from "./types";
+
+//!METAMASK!//
+export const connect = (accts) => async (dispatch) => {
+  dispatch({ type: CONNECT, payload: accts })
+}
 
 //!user actions!//
 //create user and sign in
