@@ -7,26 +7,23 @@ import { connect } from "../../actions";
 
 const MetamaskButton = () => {
   const dispatch = useDispatch();
-
   const { ethereum } = window;
   const onboarding = new MetaMaskOnboarding();
-  const [isDisabled, setDisabled] = useState(false);
   const [message, setMessage] = useState("");
-
-  const [toggleAcct, setToggleAcct] = useState(false);
+  const [currentAcct, setCurrent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleNewAccount = () => {
     window.ethereum.request({ method: "eth_accounts" }).then((account) => {
-      
       dispatch(connect(account));
-
-      if (!toggleAcct){
-        setMessage(account);
-      } else {
-        setMessage("")
-      }
-      setDisabled(false)
+      setCurrent(account);
+      setLoading(false);
     });
+    if (message.length > 0) {
+      setMessage("");
+    } else {
+      setMessage(currentAcct);
+    }
   };
 
   const isMetaMaskInstalled = () => {
@@ -38,31 +35,31 @@ const MetamaskButton = () => {
   };
 
   const onConnectClick = async () => {
-   const connected =  await window.ethereum.request({ method: "eth_accounts" }).then(accts => accts.length > 0)
-   if(connected) {
-     setToggleAcct(!toggleAcct)
-   }
-   setDisabled(true)
-    setMessage("Connecting...")
-    window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
-      handleNewAccount();
-      window.ethereum.on("accountsChanged", () => handleNewAccount());
-      
-    }).catch( err => {
-      setMessage(err.message)
-    })
+    setLoading(true);
+    window.ethereum
+      .request({ method: "eth_requestAccounts" })
+      .then(() => {
+        handleNewAccount();
+        window.ethereum.on("accountsChanged", () => handleNewAccount());
+      })
+      .catch((err) => {
+        setMessage(err.message);
+      });
   };
 
   const MetaMaskClientCheck = () => {
     if (!isMetaMaskInstalled()) {
       return (
-        <Button disabled={isDisabled} onClick={() => onClickInstall()}>
+        <Button onClick={() => onClickInstall()}>
           Click here to install MetaMask!
         </Button>
       );
     } else {
       return (
-        <Button disabled={isDisabled} onClick={() => onConnectClick()}> {"Connect Metamask" }</Button>
+        <Button loading={loading} onClick={() => onConnectClick()}>
+          {" "}
+          {currentAcct.length > 0 ? "Connected" : "Connect to Metamask"}{" "}
+        </Button>
       );
     }
   };
