@@ -4,6 +4,7 @@ import { Button } from "semantic-ui-react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useDispatch } from "react-redux";
 import { connect } from "../../actions";
+import CopyButton from "./copyButton";
 
 const MetamaskButton = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,16 @@ const MetamaskButton = () => {
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const clearMessage = () => {
+    window.setTimeout(function () {
+      setMessage("");
+    }, 3000);
+  };
+
   const handleNewAccount = () => {
     window.ethereum.request({ method: "eth_accounts" }).then((account) => {
       dispatch(connect(account));
-      setCurrent(account);
+      setCurrent(account[0]);
       setLoading(false);
     });
     if (message.length > 0) {
@@ -24,6 +31,16 @@ const MetamaskButton = () => {
     } else {
       setMessage(currentAcct);
     }
+  };
+
+  const handleChangedAccount = () => {
+    window.ethereum.request({ method: "eth_accounts" }).then((account) => {
+      dispatch(connect(account));
+      setCurrent(account[0]);
+      setLoading(false);
+      setMessage(account[0]);
+      clearMessage();
+    });
   };
 
   const isMetaMaskInstalled = () => {
@@ -40,10 +57,11 @@ const MetamaskButton = () => {
       .request({ method: "eth_requestAccounts" })
       .then(() => {
         handleNewAccount();
-        window.ethereum.on("accountsChanged", () => handleNewAccount());
+        window.ethereum.on("accountsChanged", () => handleChangedAccount());
       })
       .catch((err) => {
         setMessage(err.message);
+        setLoading(false);
       });
   };
 
@@ -57,8 +75,7 @@ const MetamaskButton = () => {
     } else {
       return (
         <Button loading={loading} onClick={() => onConnectClick()}>
-          {" "}
-          {currentAcct.length > 0 ? "Connected" : "Connect to Metamask"}{" "}
+          {currentAcct.length > 0 ? "Connected" : "Connect to Metamask"}
         </Button>
       );
     }
@@ -68,7 +85,15 @@ const MetamaskButton = () => {
     <div className="ui secondary pointing menu">
       <div className="menu">
         {MetaMaskClientCheck()}
-        <div className="item">{message}</div>
+        <div className="item">
+          {message[0] === "0" ? (
+            <>
+              {message}<CopyButton message={message} />
+            </>
+          ) : (
+            message
+          )}
+        </div>
       </div>
     </div>
   );
