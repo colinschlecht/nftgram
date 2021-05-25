@@ -3,6 +3,7 @@ import { CONNECT } from "../actions/types";
 const INITIAL_STATE = {
   connected: false,
   accounts: [],
+  account: ""
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

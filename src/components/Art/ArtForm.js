@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 import Dropzone from "./Dropzone";
-import { TextArea, Button } from "semantic-ui-react";
+import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
-require('dotenv').config();
+import { mintNFT } from "../../utils/interact"
+require("dotenv").config();
 
 const key = process.env.REACT_APP_PINATA_KEY;
 const secret = process.env.REACT_APP_PINATA_SECRET;
@@ -14,65 +15,115 @@ const secret = process.env.REACT_APP_PINATA_SECRET;
 const ArtForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const wallet = useSelector((state) => state.MetaMask);
   const [upload, setfile] = useState("");
+  const [message, setMessage] = useState("");
+  const [uploadStatus, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //sets the uploaded file in local state
   const getFile = (file) => {
     setfile(file);
   };
 
-  //should be abstracted to .env
   const pinataSDK = require("@pinata/sdk");
-  const pinata = pinataSDK(
-    key,
-    secret
-  );
+  const pinata = pinataSDK(key, secret);
 
-  const onSubmit = async (data) => {
-    //!Stores uploaded image to IPFS and creates CID
-    const IPFS = require("ipfs-core");
-    const ipfs = await IPFS.create();
-    const { cid } = await ipfs.add(upload, {
-      fidVersion: 1,
-      hashAlg: "sha2-256",
+  const displayAccount = () => {
+    if (wallet.account) {
+      return `ETH account: ${wallet.account}`;
+    } else {
+      return "Please connect MetaMask";
+    }
+  };
+
+  const checkStatus = async (hash) =>
+    await pinata.pinJobs(hash).then((resp) => {
+      if (resp.rows.length) {
+        switch (resp.rows[0].status) {
+          case "searching":
+            setStatus("pinned");
+            break;
+          case "prechecking":
+            window.setTimeout(async () => {
+              await checkStatus();
+            }, 3000);
+            break;
+          default:
+            let error = {
+              response: resp.rows[0].status,
+              message: "Unable to pin to IFPS.",
+            };
+            setStatus("ERROR");
+            setLoading(false);
+            setMessage({ error });
+            break;
+        }
+      } else {
+        window.setTimeout(async () => {
+          await checkStatus(hash);
+        }, 3000);
+      }
     });
 
-    //! art object data
-    let art = {
-      user_id: user.user.id,
-      artist_id: user.user.artist.id,
-      for_sale: false,
-      caption: data.caption,
-      category: data.category,
-      name: data.name
-    };
+  const onSubmit = async (data) => {
+    //entire onsubmit is wrapped in this if statement
+    if (window.ethereum.selectedAddress !== wallet.account) {
+      return {
+        message:
+          "Error: Selected address does not match internally selected MetaMask account",
+      };
+    } else {
+      setLoading(true);
+      setStatus("pinning");
 
-    //optional additions to Pin data
-    const options = {
-      pinataMetadata: {
-        name: data.name,
-        keyvalues: {
-          description: `${data.caption}`,
-          uploded_file: `${data.dropFile[0].path}`
-        },
-      },
-    };
-
-    //! Pins image via Pinata SDK - used to persist image CID on Pinata
-    pinata
-      .pinByHash(cid.string, options)
-      .then((result) => {
-        art = {
-          ...art,
-          link: `https://gateway.pinata.cloud/ipfs/${result.ipfsHash}`,
-          cid: result.ipfsHash
-        };
-
-        dispatch(createArt({ art })).then(console.log);
-      })
-      .catch((err) => {
-        console.log(err);
+      //!Stores uploaded image to IPFS and creates CID
+      const IPFS = require("ipfs-core");
+      const ipfs = await IPFS.create();
+      const { cid } = await ipfs.add(upload, {
+        cidVersion: 1,
+        hashAlg: "sha2-256",
       });
+
+      console.log(cid.string)
+
+      //! art object data for DB
+      let art = {
+        user_id: user.user.id,
+        artist_id: user.user.artist.id,
+        for_sale: false,
+        caption: data.caption,
+        category: data.category,
+        name: data.name,
+      };
+
+      //! NFT metadata
+      const options = {
+        name: data.name,
+        description: `${data.caption}`,
+        image: `ifps://${cid.string}`,
+      };
+      //! Pins image via Pinata SDK - used to persist image CID on Pinata
+      await pinata
+        .pinByHash(cid.string, options)
+        .then(async (result) => {
+          art = {
+            ...art,
+            link: `https://gateway.pinata.cloud/ipfs/${result.ipfsHash}`,
+            cid: result.ipfsHash,
+          };
+          console.log(result)
+          await checkStatus(cid.string);
+          const { status } = await mintNFT(`ifps://${cid.string}`);
+          console.log(status)
+          setMessage(status.message);
+          //call mint nft, if successful, THEN add to db. if Error, delete pin.
+          // dispatch(createArt({ art })).then(console.log);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -99,8 +150,18 @@ const ArtForm = () => {
               name="dropFile"
               component={Dropzone}
             />
-            
 
+            <Field name="account">
+              {(props) => (
+                <>
+                  <Input
+                    value={displayAccount()}
+                    disabled={true}
+                    style={{ width: "100%" }}
+                  />
+                </>
+              )}
+            </Field>
             <Field name="name">
               {(props) => (
                 <>
@@ -132,6 +193,7 @@ const ArtForm = () => {
                     placeholder={`category...`}
                   />
                   <Button
+                    loading={loading}
                     type="submit"
                     disabled={Object.keys(values).length < 4}
                   >
@@ -140,10 +202,12 @@ const ArtForm = () => {
                 </>
               )}
             </Field>
+            {uploadStatus}
             {/* <pre>{JSON.stringify(values)}</pre> */}
           </form>
         )}
       />
+      {message}
     </>
   );
 };
