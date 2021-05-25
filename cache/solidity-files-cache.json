@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/NFTgramIO_Rinkeby.sol": {
-      "lastModificationDate": 1621747745030,
-      "contentHash": "56ade40b0159950784c924bbe684f92b",
-      "sourceName": "contracts/NFTgramIO_Rinkeby.sol",
+    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/NFTgramIO.sol": {
+      "lastModificationDate": 1621917629186,
+      "contentHash": "eee75f87dde4fb4bd704e6bbcad7a3fb",
+      "sourceName": "contracts/NFTgramIO.sol",
       "solcConfig": {
         "version": "0.7.3",
         "settings": {
@@ -29,13 +29,14 @@
       },
       "imports": [
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        "@openzeppelin/contracts/utils/Counters.sol"
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
         "^0.7.3"
       ],
       "artifacts": [
-        "NFTgramIO_Rinkeby"
+        "NFTgramIO"
       ]
     },
     "/Users/colin/Flatiron/projects/nftgram.io/nftgram/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
@@ -118,6 +119,42 @@
       ],
       "artifacts": [
         "Counters"
+      ]
+    },
+    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1621717711480,
+      "contentHash": "6748815a5b45c4aeeda56819f41190e0",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.7.3",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
       ]
     },
     "/Users/colin/Flatiron/projects/nftgram.io/nftgram/node_modules/@openzeppelin/contracts/utils/Context.sol": {
@@ -534,43 +571,6 @@
       ],
       "artifacts": [
         "IERC165"
-      ]
-    },
-    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/NFTgramIO.sol": {
-      "lastModificationDate": 1621747745030,
-      "contentHash": "d9b0d4fe3b36ec13a5aa3eca38b86f92",
-      "sourceName": "contracts/NFTgramIO.sol",
-      "solcConfig": {
-        "version": "0.7.3",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        "@openzeppelin/contracts/utils/Counters.sol"
-      ],
-      "versionPragmas": [
-        "^0.7.3"
-      ],
-      "artifacts": [
-        "NFTgramIO"
       ]
     }
   }
