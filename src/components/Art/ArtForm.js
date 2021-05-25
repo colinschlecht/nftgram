@@ -5,6 +5,8 @@ import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
 import { mintNFT } from "../../utils/interact";
+import { pinJSONToIPFS } from "../../api/pinata";
+
 require("dotenv").config();
 
 const key = process.env.REACT_APP_PINATA_KEY;
@@ -46,7 +48,7 @@ const ArtForm = () => {
             break;
           case "prechecking":
             window.setTimeout(async () => {
-              await checkStatus();
+              await checkStatus(hash);
             }, 3000);
             break;
           default:
@@ -98,35 +100,37 @@ const ArtForm = () => {
       };
 
       //! NFT metadata
-      const options = {
-        pinataMetadata: {
-          name: data.name,
-          description: `${data.caption}`,
-          image: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
-        },
-      };
+
+      const body = new Object();
+      body.name = data.name;
+      body.image = `ipfs://${cid.string}`;
+      body.description = `${data.caption}`;
+
       //! Pins image via Pinata SDK - used to persist image CID on Pinata
-      await pinata
-        .pinByHash(cid.string, options)
+
+      await pinJSONToIPFS(body)
         .then(async (result) => {
           art = {
             ...art,
-            link: `https://gateway.pinata.cloud/ipfs/${result.ipfsHash}`,
-            cid: result.ipfsHash,
+            link: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
+            cid: cid.string,
           };
-          console.log(result)
-          
-          await checkStatus(cid.string);
-          setStatus("Minting NFT")
-          await mintNFT(`https://gateway.pinata.cloud/ipfs/${cid.string}`).then(result => {
-            console.log(result)
-            setStatus("NFT Minted")
-            setMessage(result.message)
+          console.log(result);
+
+          // window.setTimeout(async () => {
+            await checkStatus(cid.string);
+          // }, 3500);
+          setStatus("Minting NFT");
+          // await mintNFT(`https://gateway.pinata.cloud/ipfs/${result.Ipfshash}`).then(
+          await mintNFT(`${result.pinataUrl}`).then((mintResp) => {
+            console.log(mintResp);
+            setStatus("NFT Minted");
+            setMessage(mintResp.message);
           });
-          dispatch(createArt({ art })).then(result => {
-            console.log(result)
-            setLoading(false)
-            setStatus("Posted!")
+          dispatch(createArt({ art })).then((dbResp) => {
+            console.log(dbResp);
+            setLoading(false);
+            setStatus("Posted!");
           });
         })
         .catch((err) => {
