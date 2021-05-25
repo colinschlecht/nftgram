@@ -6905,7 +6905,7 @@
     "ethjs-util" "0.1.6"
     "rlp" "^2.2.4"
 
-"ethers@^5.0.0":
+"ethers@^5.0.0", "ethers@^5.2.0":
   "integrity" "sha512-HqFGU2Qab0mAg3y1eHKVMXS4i1gTObMY0/4+x4LiO72NHhJL3Z795gnqyivmwG1J8e5NLSlRSfyIR7TL0Hw3ig=="
   "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.2.0.tgz"
   "version" "5.2.0"
