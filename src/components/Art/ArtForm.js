@@ -4,7 +4,7 @@ import Dropzone from "./Dropzone";
 import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
-import { mintNFT } from "../../utils/interact"
+import { mintNFT } from "../../utils/interact";
 require("dotenv").config();
 
 const key = process.env.REACT_APP_PINATA_KEY;
@@ -85,7 +85,7 @@ const ArtForm = () => {
         hashAlg: "sha2-256",
       });
 
-      console.log(cid.string)
+      console.log(cid.string);
 
       //! art object data for DB
       let art = {
@@ -99,9 +99,11 @@ const ArtForm = () => {
 
       //! NFT metadata
       const options = {
-        name: data.name,
-        description: `${data.caption}`,
-        image: `ifps://${cid.string}`,
+        pinataMetadata: {
+          name: data.name,
+          description: `${data.caption}`,
+          image: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
+        },
       };
       //! Pins image via Pinata SDK - used to persist image CID on Pinata
       await pinata
@@ -113,12 +115,19 @@ const ArtForm = () => {
             cid: result.ipfsHash,
           };
           console.log(result)
+          
           await checkStatus(cid.string);
-          const { status } = await mintNFT(`ifps://${cid.string}`);
-          console.log(status)
-          setMessage(status.message);
-          //call mint nft, if successful, THEN add to db. if Error, delete pin.
-          // dispatch(createArt({ art })).then(console.log);
+          setStatus("Minting NFT")
+          await mintNFT(`https://gateway.pinata.cloud/ipfs/${cid.string}`).then(result => {
+            console.log(result)
+            setStatus("NFT Minted")
+            setMessage(result.message)
+          });
+          dispatch(createArt({ art })).then(result => {
+            console.log(result)
+            setLoading(false)
+            setStatus("Posted!")
+          });
         })
         .catch((err) => {
           console.log(err);
