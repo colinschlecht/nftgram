@@ -5,7 +5,7 @@ import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
 import { mintNFT } from "../../utils/interact";
-import { pinJSONToIPFS } from "../../api/pinata";
+import {getTransactionStatus} from "../../api/etherscan"
 
 require("dotenv").config();
 
@@ -87,8 +87,6 @@ const ArtForm = () => {
         hashAlg: "sha2-256",
       });
 
-      console.log(cid.string);
-
       //! art object data for DB
       let art = {
         user_id: user.user.id,
@@ -100,33 +98,37 @@ const ArtForm = () => {
       };
 
       //! NFT metadata
-
       const body = new Object();
       body.name = data.name;
       body.image = `ipfs://${cid.string}`;
       body.description = `${data.caption}`;
+      //may add in description field and make caption body.caption
 
       //! Pins image via Pinata SDK - used to persist image CID on Pinata
-
-      await pinJSONToIPFS(body)
+      await pinata
+        .pinJSONToIPFS(body)
         .then(async (result) => {
           art = {
             ...art,
             link: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
             cid: cid.string,
+            // pin: `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`
           };
-          console.log(result);
-
-          // window.setTimeout(async () => {
+          window.setTimeout(async () => {
             await checkStatus(cid.string);
-          // }, 3500);
+          }, 3000);
+          //optomistically minting NFT
           setStatus("Minting NFT");
-          // await mintNFT(`https://gateway.pinata.cloud/ipfs/${result.Ipfshash}`).then(
-          await mintNFT(`${result.pinataUrl}`).then((mintResp) => {
+          await mintNFT(
+            `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`
+          ).then((mintResp) => {
+            //etherscan api to check transaction status
+            window.setTimeout(async () => {
+              await getTransactionStatus(mintResp.transactionHash)
+            }, 3000);
             console.log(mintResp);
-            setStatus("NFT Minted");
-            setMessage(mintResp.message);
           });
+          setStatus("NFT Minted");
           dispatch(createArt({ art })).then((dbResp) => {
             console.log(dbResp);
             setLoading(false);

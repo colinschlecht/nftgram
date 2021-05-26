@@ -37,6 +37,7 @@ export const mintNFT = async (uri) => {
         message:
           "Check out your transaction on Etherscan: https://rinkeby.etherscan.io/tx/" +
           txHash,
+          transactionHash: txHash
       };
     } catch (error) {
       return {

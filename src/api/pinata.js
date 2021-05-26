@@ -29,3 +29,6 @@ export const pinJSONToIPFS = async(JSONBody) => {
            
     });
 };
+
+
+const etherUrl = `https://api-rinkeby.etherscan.io/api?module=transaction&action=getstatus&txhash=${txHash}&apikey=${REACT_APP_ETHERSCAN_API_KEY}`
