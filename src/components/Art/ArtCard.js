@@ -14,10 +14,6 @@ export const ArtCard = ({ art }) => {
   const [liked, setLiked] = useState(!!art.likes.find((like) => like.user_id === user.user.id));
   
 
-  
-
- 
-
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {
     e.preventDefault();
@@ -54,7 +50,7 @@ export const ArtCard = ({ art }) => {
     <>
       <Card fluid id="art-card">
         {art.link ? (
-          <Image src={`${art.link}`} fluid onClick={(e) => handleLike(e)} />
+          <Image src={`https://ipfs.io/ipfs/${art.cid}`} fluid onClick={(e) => handleLike(e)} />
         ) : (
           <Image
             src="https://react.semantic-ui.com/images/wireframe/image.png"

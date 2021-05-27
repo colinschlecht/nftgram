@@ -4,8 +4,8 @@ import Dropzone from "./Dropzone";
 import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
-import { mintNFT } from "../../utils/interact";
-import {getTransactionStatus} from "../../api/etherscan"
+import { mintNFT, checkTransactionStatus } from "../../utils/interact";
+// import {getTransactionStatus} from "../../api/etherscan"
 
 require("dotenv").config();
 
@@ -22,6 +22,7 @@ const ArtForm = () => {
   const [message, setMessage] = useState("");
   const [uploadStatus, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   //sets the uploaded file in local state
   const getFile = (file) => {
@@ -44,9 +45,11 @@ const ArtForm = () => {
       if (resp.rows.length) {
         switch (resp.rows[0].status) {
           case "searching":
+            console.log("pinned")
             setStatus("pinned");
             break;
           case "prechecking":
+            console.log("pre-checking")
             window.setTimeout(async () => {
               await checkStatus(hash);
             }, 3000);
@@ -56,9 +59,10 @@ const ArtForm = () => {
               response: resp.rows[0].status,
               message: "Unable to pin to IFPS.",
             };
+            console.log(resp)
             setStatus("ERROR");
             setLoading(false);
-            setMessage({ error });
+            setMessage( error.message );
             break;
         }
       } else {
@@ -76,6 +80,7 @@ const ArtForm = () => {
           "Error: Selected address does not match internally selected MetaMask account",
       };
     } else {
+      setDisabled(true)
       setLoading(true);
       setStatus("pinning");
 
@@ -123,20 +128,22 @@ const ArtForm = () => {
             `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`
           ).then((mintResp) => {
             //etherscan api to check transaction status
-            window.setTimeout(async () => {
-              await getTransactionStatus(mintResp.transactionHash)
+            window.setTimeout(async() => {
+              console.log(mintResp.transactionHash)
+              await checkTransactionStatus(mintResp.transactionHash)
             }, 3000);
-            console.log(mintResp);
           });
+          console.log("minted")//!
           setStatus("NFT Minted");
           dispatch(createArt({ art })).then((dbResp) => {
-            console.log(dbResp);
+            console.log(dbResp);//!
             setLoading(false);
             setStatus("Posted!");
           });
         })
         .catch((err) => {
           console.log(err);
+          setDisabled(false)
         });
     }
   };
@@ -210,7 +217,7 @@ const ArtForm = () => {
                   <Button
                     loading={loading}
                     type="submit"
-                    disabled={Object.keys(values).length < 4}
+                    disabled={Object.keys(values).length < 4 || disabled}
                   >
                     Submit
                   </Button>
