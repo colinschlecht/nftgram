@@ -68,10 +68,10 @@ const ArtForm = () => {
 
   //!Submits data for pinning, minting, posting.
   const onSubmit = async (data) => {
-    setMessage("")
+    setMessage("");
     //hard stop if mismatched accounts.
     if (window.ethereum.selectedAddress !== wallet.account) {
-      setMessage("Ensure MetaMask account matches with selected address.")
+      setMessage("Ensure MetaMask account matches with selected address.");
       return {
         message:
           "Error: Selected address does not match internally selected MetaMask account",
@@ -107,50 +107,63 @@ const ArtForm = () => {
         image: `ipfs://${cid.string}`,
         description: `${data.caption}`,
       };
+      //! NFT metadata if pin by hash
+      const options = {
+        pinataMetadata: {
+          ...body,
+        },
+      };
+
+      pinata.pinByHash(cid.string, options);
 
       //! Pins image via Pinata SDK - used to persist image CID, & NFT Metadata on Pinata
       const pinResponse = await pinata.pinJSONToIPFS(body);
+      console.log(pinResponse);
 
       //! call to mint the NFT
       const mintResponse = await mintNFT(
-        `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`
+        `ipfs://${pinResponse.IpfsHash}`
+        // `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`
       );
 
-      if (!mintResponse.success) {
-        await ipfs.stop();
-        setMessage(mintResponse.message);
-        handleCancel(pinResponse.IpfsHash);
-        return null;
-      } else {
-        setStatus("Minting NFT");
-      }
+        if (!mintResponse.success) {
+          await ipfs.stop();
+          setMessage(mintResponse.message);
+          handleCancel(pinResponse.IpfsHash);
+          handleCancel(cid.string);
+          return null;
+        } else {
+          setStatus("Minting NFT");
+        }
 
-      //! checks status via web3 interaction, if successfully minted post is made to DB
-      const checkMine = () => {
-        checkTransactionStatus(mintResponse.transactionHash).then(
-          async (resp) => {
-            if (!resp) {
-              window.setTimeout(async () => {
-                await checkMine();
-              }, 4000);
-            } else {
-              if (!resp.status) {
-                setStatus("Error");
-                handleCancel(pinResponse.IpfsHash);
-                setMessage(
-                  `transaction ${mintResponse.transactionHash} unsuccessful`
-                );
+        //! checks status via web3 interaction, if successfully minted post is made to DB
+        const checkMine = () => {
+          checkTransactionStatus(mintResponse.transactionHash).then(
+            async (resp) => {
+              if (!resp) {
+                window.setTimeout(async () => {
+                checkMine();
+                }, 4000);
               } else {
-                const post = await handlePost(art);
-                setLoading(false);
-                setStatus(post.status);
-                setMessage(post.message);
+                if (!resp.status) {
+                  setStatus("Error");
+                  handleCancel(pinResponse.IpfsHash);
+                  handleCancel(cid.string)
+                  setMessage(
+                    `transaction ${mintResponse.transactionHash} unsuccessful`
+                  );
+                } else {
+                  const post = await handlePost(art);
+                  setLoading(false);
+                  await ipfs.stop();
+                  setStatus(post.status);
+                  setMessage(post.message);
+                }
               }
             }
-          }
-        );
-      };
-      await checkMine();
+          );
+        };
+        checkMine();
     }
   };
 
