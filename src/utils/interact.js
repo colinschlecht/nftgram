@@ -45,14 +45,13 @@ export const mintNFT = async (uri) => {
 
 export const checkTransactionStatus = async (txHash) => {
   const transaction = await web3.eth.getTransactionReceipt(txHash);
-  console.log(transaction);
-  if (!transaction) {
-    console.log("pending"); //!
-    window.setTimeout(async () => {
-      await checkTransactionStatus(txHash);
-    }, 3500);
+  console.log("checking")
+  if(!transaction){
+    console.log("pending")
+    return null
   } else {
-    return true
+    console.log(transaction)
+    return {status: transaction.status}
   }
 };
 

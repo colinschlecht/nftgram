@@ -21,18 +21,18 @@ Following capability.
 Additional timelines.
 Events tab on art.
 
-Current NFT creation status: WIP
-Updated 5/1/21
+NFT ToDo:
 
-When creating art, a unique CID is created as it is uploaded to the IPFS.
-In order to persist this upload to the IPFS the CID and artpiece is then pinned via pinning service: Pinata.
-The response from pinning to pinata returns a pinata specific URI that points to the artpiece. 
-The URI, along with the CID are then added to an art object, which contains the other art attributes defined by the user. This art object is passed via axios to the server in POST req, creating an art instance persisted to the db and added to the explore timeline.
+*smart contract. done
+*metamask ui. done
+*minting capabilities. done
+*add NFT from wallet*
 
-ToDo:
-*smart contract.
-*metamask ui.
-*minting capabilities.
+When creating art, a unique Content Identifier - CID - is created as it is uploaded to the IPFS. The URI, along with the CID are also added to an art object, which contains the other art attributes defined by the user. 
+
+In order to persist the IPFS the CID and metadata is then pinned via pinning service: Pinata, and is accompanied by a name and description in the metadata. The response from pinning to pinata contains the pinata URI, which is used as the token URI in the minting process.
+
+Using a standard ERC-721 smart contract, the token is minted. Once complete - if successful - The art object described earlier is passed via axios to the server in a POST req, creating an art instance persisted to the db and added to the explore timeline.
 
 ## Available Scripts
 

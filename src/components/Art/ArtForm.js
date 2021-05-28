@@ -5,7 +5,6 @@ import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
 import { mintNFT, checkTransactionStatus } from "../../utils/interact";
-// import {getTransactionStatus} from "../../api/etherscan"
 
 require("dotenv").config();
 
@@ -40,47 +39,45 @@ const ArtForm = () => {
     }
   };
 
-  const checkStatus = async (hash) =>
-    await pinata.pinJobs(hash).then((resp) => {
-      if (resp.rows.length) {
-        switch (resp.rows[0].status) {
-          case "searching":
-            console.log("pinned")
-            setStatus("pinned");
-            break;
-          case "prechecking":
-            console.log("pre-checking")
-            window.setTimeout(async () => {
-              await checkStatus(hash);
-            }, 3000);
-            break;
-          default:
-            let error = {
-              response: resp.rows[0].status,
-              message: "Unable to pin to IFPS.",
-            };
-            console.log(resp)
-            setStatus("ERROR");
-            setLoading(false);
-            setMessage( error.message );
-            break;
-        }
-      } else {
-        window.setTimeout(async () => {
-          await checkStatus(hash);
-        }, 3000);
-      }
-    });
+  const handlePost = async (art) => {
+    setStatus("NFT Minted, Posting...");
+    try {
+      dispatch(createArt({ art }));
+      console.log("posted");
+      return {
+        success: true,
+        message: "Posted NFT to NFTgram!",
+        status: "Posted",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: "Something went wrong: " + error.message,
+        status: "Error",
+      };
+    }
+  };
 
+  const handleCancel = async (hash) => {
+    const resp = await pinata.unpin(hash);
+    setStatus("Cancelled");
+    setLoading(false);
+    setDisabled(false);
+    return resp;
+  };
+
+  //!Submits data for pinning, minting, posting.
   const onSubmit = async (data) => {
-    //entire onsubmit is wrapped in this if statement
+    setMessage("")
+    //hard stop if mismatched accounts.
     if (window.ethereum.selectedAddress !== wallet.account) {
+      setMessage("Ensure MetaMask account matches with selected address.")
       return {
         message:
           "Error: Selected address does not match internally selected MetaMask account",
       };
     } else {
-      setDisabled(true)
+      setDisabled(true);
       setLoading(true);
       setStatus("pinning");
 
@@ -100,51 +97,60 @@ const ArtForm = () => {
         caption: data.caption,
         category: data.category,
         name: data.name,
+        link: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
+        cid: cid.string,
       };
 
       //! NFT metadata
-      const body = new Object();
-      body.name = data.name;
-      body.image = `ipfs://${cid.string}`;
-      body.description = `${data.caption}`;
-      //may add in description field and make caption body.caption
+      const body = {
+        name: data.name,
+        image: `ipfs://${cid.string}`,
+        description: `${data.caption}`,
+      };
 
-      //! Pins image via Pinata SDK - used to persist image CID on Pinata
-      await pinata
-        .pinJSONToIPFS(body)
-        .then(async (result) => {
-          art = {
-            ...art,
-            link: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
-            cid: cid.string,
-            // pin: `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`
-          };
-          window.setTimeout(async () => {
-            await checkStatus(cid.string);
-          }, 3000);
-          //optomistically minting NFT
-          setStatus("Minting NFT");
-          await mintNFT(
-            `https://gateway.pinata.cloud/ipfs/${result.IpfsHash}`
-          ).then((mintResp) => {
-            //etherscan api to check transaction status
-            window.setTimeout(async() => {
-              console.log(mintResp.transactionHash)
-              await checkTransactionStatus(mintResp.transactionHash)
-            }, 3000);
-          });
-          console.log("minted")//!
-          setStatus("NFT Minted");
-          dispatch(createArt({ art })).then((dbResp) => {
-            console.log(dbResp);//!
-            setLoading(false);
-            setStatus("Posted!");
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          setDisabled(false)
-        });
+      //! Pins image via Pinata SDK - used to persist image CID, & NFT Metadata on Pinata
+      const pinResponse = await pinata.pinJSONToIPFS(body);
+
+      //! call to mint the NFT
+      const mintResponse = await mintNFT(
+        `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`
+      );
+
+      if (!mintResponse.success) {
+        await ipfs.stop();
+        setMessage(mintResponse.message);
+        handleCancel(pinResponse.IpfsHash);
+        return null;
+      } else {
+        setStatus("Minting NFT");
+      }
+
+      //! checks status via web3 interaction, if successfully minted post is made to DB
+      const checkMine = () => {
+        checkTransactionStatus(mintResponse.transactionHash).then(
+          async (resp) => {
+            if (!resp) {
+              window.setTimeout(async () => {
+                await checkMine();
+              }, 4000);
+            } else {
+              if (!resp.status) {
+                setStatus("Error");
+                handleCancel(pinResponse.IpfsHash);
+                setMessage(
+                  `transaction ${mintResponse.transactionHash} unsuccessful`
+                );
+              } else {
+                const post = await handlePost(art);
+                setLoading(false);
+                setStatus(post.status);
+                setMessage(post.message);
+              }
+            }
+          }
+        );
+      };
+      await checkMine();
     }
   };
 
@@ -156,9 +162,9 @@ const ArtForm = () => {
           handleSubmit,
           // form,
           // submitting,
-          pristine,
+          // pristine,
           values,
-          initialValuesEqual,
+          // initialValuesEqual,
           // reset,
         }) => (
           <form
