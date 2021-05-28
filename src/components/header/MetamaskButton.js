@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { connect } from "../../actions";
 import CopyButton from "./copyButton";
 
-const MetamaskButton = () => {
+const MetaMaskButton = () => {
   const dispatch = useDispatch();
   const { ethereum } = window;
   const onboarding = new MetaMaskOnboarding();
@@ -99,4 +99,4 @@ const MetamaskButton = () => {
   );
 };
 
-export default MetamaskButton;
+export default MetaMaskButton;
