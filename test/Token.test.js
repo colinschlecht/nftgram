@@ -1,42 +1,43 @@
 
-// const mint = async () => {
-//   let [addr1, addr2] = await ethers.getSigners();
-//     tokenUri = "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb"
+
+
+beforeEach(async () => {
+    tokenUri = "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb"
     
-//     console.log(addr2)
-    // accounts = await web3.eth.getAccounts();
-    // let contract = await new web3.eth.Contract(contractABI, contractAddress);
+    console.log(addr2)
+    accounts = await web3.eth.getAccounts();
+    let contract = await new web3.eth.Contract(contractABI, contractAddress);
    
-    // //set up the Ethereum transaction
-    // const transactionParameters = {
-    //     to: contractAddress, 
-    //     from: accounts[0], 
-    //     data: contract.methods
-    //       .mintNFT(accounts[0], tokenURI)
-    //       .encodeABI(), 
-    //   };
+    //set up the Ethereum transaction
+    const transactionParameters = {
+        to: contractAddress, 
+        from: accounts[0], 
+        data: contract.methods
+          .mintNFT(accounts[0], tokenURI)
+          .encodeABI(), 
+      };
 
-    // //sign the transaction
-    // try {
-    //     const txHash = await window.ethereum.request({
-    //       method: "eth_sendTransaction",
-    //       params: [transactionParameters],
-    //     });
-    //     return {
-    //       success: true,
-    //       message:
-    //         "Transaction hash: https://rinkeby.etherscan.io/tx/" +
-    //         txHash,
-    //         transactionHash: txHash
-    //     };
-    //   } catch (error) {
-    //     return {
-    //       success: false,
-    //       message: "Something went wrong: " + error.message,
-    //     };
-    //   }
+    //sign the transaction
+    try {
+        const txHash = await window.ethereum.request({
+          method: "eth_sendTransaction",
+          params: [transactionParameters],
+        });
+        return {
+          success: true,
+          message:
+            "Transaction hash: https://rinkeby.etherscan.io/tx/" +
+            txHash,
+            transactionHash: txHash
+        };
+      } catch (error) {
+        return {
+          success: false,
+          message: "Something went wrong: " + error.message,
+        };
+      }
+})
 
-// }
 
 
 
