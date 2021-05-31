@@ -1,60 +1,77 @@
+const assert = require("assert");
+const { expect } = require("chai");
+const { ethers } = require("hardhat");
+require("@nomiclabs/hardhat-ganache");
 
+// const ganache = require("ganache-cli");
+// const Web3 = require("web3");
+// const web3 = new Web3(ganache.provider());
 
+// const contractABI = require("../src/abi/NFTgramIOABI.json");
+// const contractAddress = "0x3032107eAcD70a6590b24A1FD8A53Ecf4E9c3692"
 
-beforeEach(async () => {
-    tokenUri = "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb"
-    
-    console.log(addr2)
-    accounts = await web3.eth.getAccounts();
-    let contract = await new web3.eth.Contract(contractABI, contractAddress);
-   
-    //set up the Ethereum transaction
-    const transactionParameters = {
-        to: contractAddress, 
-        from: accounts[0], 
-        data: contract.methods
-          .mintNFT(accounts[0], tokenURI)
-          .encodeABI(), 
-      };
+//! npx hardhat --network ganache test
 
-    //sign the transaction
+let accounts;
+let testContract;
+let contract;
+let deployedNFT;
+
+describe("nftgramio", function () {
+  const tokenURI =
+    "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
+
+  beforeEach(async function () {
+    testContract = await ethers.getContractFactory("NFTgramIO");
+    accounts = await ethers.provider.listAccounts();
+    contract = await testContract.deploy();
+    deployedNFT = await contract.mintNFT(accounts[0], tokenURI);
+  });
+
+  it("deploys an nft", async function () {
     try {
-        const txHash = await window.ethereum.request({
-          method: "eth_sendTransaction",
-          params: [transactionParameters],
-        });
-        return {
-          success: true,
-          message:
-            "Transaction hash: https://rinkeby.etherscan.io/tx/" +
-            txHash,
-            transactionHash: txHash
-        };
-      } catch (error) {
-        return {
-          success: false,
-          message: "Something went wrong: " + error.message,
-        };
-      }
-})
+      const tx = await contract.mintNFT(accounts[0], tokenURI);
+      assert(true);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  it("deploys another nft", async function () {
+    try {
+      const tx = await contract.mintNFT(accounts[0], tokenURI);
+      assert(tx.nonce > 1);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  it("displays owner of specific token id", async function () {
+    try {
+      const owner = await contract.ownerOf(1);
+      assert(owner === accounts[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  it("shows a balance", async function () {
+    const balanceOfNone = await contract.balanceOf(accounts[9]);
+    const balanceOfOne = await contract.balanceOf(accounts[0]);
+    assert.strictEqual(parseInt(balanceOfNone), 0);
+    assert.strictEqual(parseInt(balanceOfOne), 1);
+  });
 
-
-
-
-// describe("Mint nft", function() {
-//   it("deploys an nft", async function() {
-//       const token = await mint();
-      // console.log(token.address)
-
-
-    // const [owner] = await ethers.getSigners();
-
-    // const Token = await ethers.getContractFactory("Token");
-
-    // const hardhatToken = await Token.deploy();
-
-    // const ownerBalance = await hardhatToken.balanceOf(owner.address);
-    // expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
-//   });
-// });
-
+  it("allows for transfer of NFT", async function () {
+    const ownerBefore = await contract.ownerOf(1);
+    await contract.transferFrom(accounts[0], accounts[1], 1);
+    const ownerAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerBefore, accounts[0]);
+    assert.strictEqual(ownerAfter, accounts[1]);
+  });
+  it("allows for 'safe transfer' of NFT", async function () {
+    console.log( Object.keys(contract) ) 
+    const ownerBefore = await contract.ownerOf(1);
+    await contract['safeTransferFrom(address,address,uint256)'](accounts[0], accounts[1], 1)
+    const ownerAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerBefore, accounts[0]);
+    assert.strictEqual(ownerAfter, accounts[1]);
+  });
+});
