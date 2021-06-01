@@ -19,6 +19,8 @@ let deployedNFT;
 
 let salesFactoryPre;
 let sales;
+let signer0;
+let signer1;
 
 describe("nftgramio contract", function () {
   const tokenURI =
@@ -86,6 +88,8 @@ describe("sales contract", function () {
 
   beforeEach(async function () {
     accounts = await ethers.provider.listAccounts();
+    signer0 = await ethers.provider.getSigner(accounts[0]);
+    signer1 = await ethers.provider.getSigner(accounts[1]);
     testContract = await ethers.getContractFactory("NFTgramIO");
     contract = await testContract.deploy();
     deployedNFT = await contract.mintNFT(accounts[0], tokenURI);
@@ -112,7 +116,7 @@ describe("sales contract", function () {
     assert.strictEqual(ownerAddress, contractAddress);
   });
 
-  it("can cancel an item for sale, move the item back to the seller's ownership, and list the status as cancelled", async function () {
+  it("can cancel an item for sale, move the item back to the seller's ownership, and list the status as 'Cancelled'", async function () {
     await contract.approve(sales.address, 1, { from: accounts[0] });
     await sales.openTrade();
     const ownerAddress = await contract.ownerOf(1);
@@ -126,5 +130,25 @@ describe("sales contract", function () {
       ethers.utils.parseBytes32String(summary[4]),
       "Cancelled"
     );
+  });
+  it("can transfer an item for sale, move the item into the buyer's ownership, and list the status as 'Executed'", async function () {
+    await contract.approve(sales.address, 1, { from: accounts[0] });
+    await sales.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = sales.address;
+    assert.strictEqual(ownerAddress, contractAddress);
+    await sales.connect(signer1).executeTrade({ from: accounts[1] });
+    const ownerAddressAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerAddressAfter, accounts[1]);
+    const summary = await sales.getSummary();
+    const status = ethers.utils.parseBytes32String(summary[4])
+    assert.strictEqual(
+      status,
+      "Executed"
+    );
+    console.log(status)
+
+    //!ToDo: Update Smart Contract & Set up tests for passing ethereum with the trade. 
+    //!ToDo: Test the "Event Emitters".
   });
 });
