@@ -573,44 +573,6 @@
         "IERC165"
       ]
     },
-    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/Sales.sol": {
-      "lastModificationDate": 1622422097576,
-      "contentHash": "e38b330ca3d002592547fd894c7c1d74",
-      "sourceName": "contracts/Sales.sol",
-      "solcConfig": {
-        "version": "0.7.3",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
-      ],
-      "versionPragmas": [
-        "^0.7.3"
-      ],
-      "artifacts": [
-        "Sales"
-      ]
-    },
     "/Users/colin/Flatiron/projects/nftgram.io/nftgram/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
       "lastModificationDate": 1622005405376,
       "contentHash": "e0a41531d159d3a32f84b7a3ecf9fabb",
@@ -643,6 +605,86 @@
       ],
       "artifacts": [
         "IERC20"
+      ]
+    },
+    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/sales.sol": {
+      "lastModificationDate": 1622500444289,
+      "contentHash": "8333b1d6f047059f30b4998c071af47e",
+      "sourceName": "contracts/sales.sol",
+      "solcConfig": {
+        "version": "0.7.3",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.3"
+      ],
+      "artifacts": [
+        "Sale",
+        "SaleFactory"
+      ]
+    },
+    "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/Sales.sol": {
+      "lastModificationDate": 1622518865727,
+      "contentHash": "86c52fbc1de5c2b55f5bb065243b9eeb",
+      "sourceName": "contracts/Sales.sol",
+      "solcConfig": {
+        "version": "0.7.3",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.3"
+      ],
+      "artifacts": [
+        "Sale",
+        "SaleFactory"
       ]
     }
   }

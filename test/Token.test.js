@@ -17,7 +17,11 @@ let testContract;
 let contract;
 let deployedNFT;
 
-describe("nftgramio", function () {
+let salesFactoryPre;
+let sales;
+
+
+describe("nftgramio contract", function () {
   const tokenURI =
     "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
 
@@ -31,15 +35,7 @@ describe("nftgramio", function () {
   it("deploys an nft", async function () {
     try {
       const tx = await contract.mintNFT(accounts[0], tokenURI);
-      assert(true);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  it("deploys another nft", async function () {
-    try {
-      const tx = await contract.mintNFT(accounts[0], tokenURI);
-      assert(tx.nonce > 1);
+      assert(!!tx);
     } catch (error) {
       console.log(error);
     }
@@ -67,11 +63,39 @@ describe("nftgramio", function () {
     assert.strictEqual(ownerAfter, accounts[1]);
   });
   it("allows for 'safe transfer' of NFT", async function () {
-    console.log( Object.keys(contract) ) 
     const ownerBefore = await contract.ownerOf(1);
     await contract['safeTransferFrom(address,address,uint256)'](accounts[0], accounts[1], 1)
     const ownerAfter = await contract.ownerOf(1);
     assert.strictEqual(ownerBefore, accounts[0]);
     assert.strictEqual(ownerAfter, accounts[1]);
   });
+  it("increments for each minted nft", async function () {
+    await contract.mintNFT(accounts[0], tokenURI)
+    await contract.mintNFT(accounts[0], tokenURI)
+    const supply = await contract.totalSupply()
+    assert(parseInt(supply) > 1)
+  })
+});
+
+describe("sales contract", function () {
+  const tokenURI =
+    "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
+
+  beforeEach(async function () {
+    accounts = await ethers.provider.listAccounts();
+    testContract = await ethers.getContractFactory("NFTgramIO");
+    contract = await testContract.deploy();
+    deployedNFT = await contract.mintNFT(accounts[0], tokenURI);
+    salesFactoryPre = await ethers.getContractFactory("Sale");
+    sales = await salesFactoryPre.deploy(accounts[0], contract.address, 1, 1);
+  });
+  
+  it("is deployable", async function () {
+  assert(sales)
+  });
+  it("has methods associated with the contract.", async function () {
+    console.log(Object.keys(sales))
+  assert(Object.keys(sales))
+  });
+  
 });
