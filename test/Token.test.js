@@ -93,9 +93,22 @@ describe("sales contract", function () {
   it("is deployable", async function () {
   assert(sales)
   });
+
   it("has methods associated with the contract.", async function () {
-    console.log(Object.keys(sales))
-  assert(Object.keys(sales))
+    assert(Object.keys(sales.functions))
   });
+  it("can display it's summary", async function () {
+    const summary = await sales.getSummary()
+    console.log(summary)
+    assert(summary)
+  });
+  it("can place an item for sale", async function () {
+    const approve = await contract.approve(sales.address, 1, {from: accounts[0]})
+    const trade = await sales.openTrade()
+    console.log(accounts[0])
+    console.log(sales.address)
+    console.log(trade)
+  });
+  
   
 });
