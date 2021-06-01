@@ -101,10 +101,6 @@ contract Sale {
      * @dev Cancels a trade by the poster.
      */
     function cancelTrade() public virtual {
-        require(
-            msg.sender == poster,
-            "Trade can be cancelled only by poster."
-        );
         require(status == "Open", "Trade is not Open.");
         itemToken.safeTransferFrom(address(this), poster, item);
         status = "Cancelled";

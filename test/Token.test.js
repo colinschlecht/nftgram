@@ -20,7 +20,6 @@ let deployedNFT;
 let salesFactoryPre;
 let sales;
 
-
 describe("nftgramio contract", function () {
   const tokenURI =
     "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
@@ -64,17 +63,21 @@ describe("nftgramio contract", function () {
   });
   it("allows for 'safe transfer' of NFT", async function () {
     const ownerBefore = await contract.ownerOf(1);
-    await contract['safeTransferFrom(address,address,uint256)'](accounts[0], accounts[1], 1)
+    await contract["safeTransferFrom(address,address,uint256)"](
+      accounts[0],
+      accounts[1],
+      1
+    );
     const ownerAfter = await contract.ownerOf(1);
     assert.strictEqual(ownerBefore, accounts[0]);
     assert.strictEqual(ownerAfter, accounts[1]);
   });
   it("increments for each minted nft", async function () {
-    await contract.mintNFT(accounts[0], tokenURI)
-    await contract.mintNFT(accounts[0], tokenURI)
-    const supply = await contract.totalSupply()
-    assert(parseInt(supply) > 1)
-  })
+    await contract.mintNFT(accounts[0], tokenURI);
+    await contract.mintNFT(accounts[0], tokenURI);
+    const supply = await contract.totalSupply();
+    assert(parseInt(supply) > 1);
+  });
 });
 
 describe("sales contract", function () {
@@ -89,26 +92,39 @@ describe("sales contract", function () {
     salesFactoryPre = await ethers.getContractFactory("Sale");
     sales = await salesFactoryPre.deploy(accounts[0], contract.address, 1, 1);
   });
-  
+
   it("is deployable", async function () {
-  assert(sales)
+    assert(sales);
   });
 
   it("has methods associated with the contract.", async function () {
-    assert(Object.keys(sales.functions))
+    assert(Object.keys(sales.functions));
   });
   it("can display it's summary", async function () {
-    const summary = await sales.getSummary()
-    console.log(summary)
-    assert(summary)
+    const summary = await sales.getSummary();
+    assert(summary);
   });
-  it("can place an item for sale", async function () {
-    const approve = await contract.approve(sales.address, 1, {from: accounts[0]})
-    const trade = await sales.openTrade()
-    console.log(accounts[0])
-    console.log(sales.address)
-    console.log(trade)
+  it("can place an item for sale, and move token to escrow", async function () {
+    await contract.approve(sales.address, 1, { from: accounts[0] });
+    await sales.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = sales.address;
+    assert.strictEqual(ownerAddress, contractAddress);
   });
-  
-  
+
+  it("can cancel an item for sale, move the item back to the seller's ownership, and list the status as cancelled", async function () {
+    await contract.approve(sales.address, 1, { from: accounts[0] });
+    await sales.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = sales.address;
+    assert.strictEqual(ownerAddress, contractAddress);
+    await sales.cancelTrade();
+    const ownerAddressAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerAddressAfter, accounts[0]);
+    const summary = await sales.getSummary();
+    assert.strictEqual(
+      ethers.utils.parseBytes32String(summary[4]),
+      "Cancelled"
+    );
+  });
 });
