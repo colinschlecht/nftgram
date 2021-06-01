@@ -82,7 +82,7 @@ describe("nftgramio contract", function () {
   });
 });
 
-describe("sales contract", function () {
+describe("Sales/Sales Factory", function () {
   const tokenURI =
     "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
 
@@ -93,8 +93,11 @@ describe("sales contract", function () {
     testContract = await ethers.getContractFactory("NFTgramIO");
     contract = await testContract.deploy();
     deployedNFT = await contract.mintNFT(accounts[0], tokenURI);
-    salesFactoryPre = await ethers.getContractFactory("Sale");
-    sales = await salesFactoryPre.deploy(accounts[0], contract.address, 1, 1);
+    deployedNFT2 = await contract.mintNFT(accounts[0], tokenURI);
+    salesFactoryPre = await ethers.getContractFactory("SaleFactory");
+    salesPre = await ethers.getContractFactory("Sale");
+    salesFactory = await salesFactoryPre.deploy();
+    sales = await salesPre.deploy(accounts[0], contract.address, 1, 1);
   });
 
   it("is deployable", async function () {
@@ -148,7 +151,24 @@ describe("sales contract", function () {
     );
     console.log(status)
 
-    //!ToDo: Update Smart Contract & Set up tests for passing ethereum with the trade. 
-    //!ToDo: Test the "Event Emitters".
+    
+  });
+  it("sales factory lists trades", async function () {
+    const trade = await salesFactory.createTrade(contract.address, 1, 1);
+    const trades = await salesFactory.getTrades()
+    await contract.approve(trades[0], 1, { from: accounts[0] });
+    const salescont = await ethers.getContractAt(salesPre, trades[0])  
+
+    console.log(salesFactory.address)
+  
+    console.log(trades[0])
+    console.log(salescont)
+
+    
+    
   });
 });
+
+
+//!ToDo: Update Smart Contract & Set up tests for passing ethereum with the trade. 
+//!ToDo: Test the "Event Emitters".
