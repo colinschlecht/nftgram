@@ -156,169 +156,169 @@ describe("Deployed Sale contract", function () {
       .to.be.reverted;
   });
 
-  // it("executeTrade function can place an item for sale, and move token to escrow, and list status as 'Open'", async function () {
-  //   await saleContract.openTrade();
-  //   const ownerAddress = await contract.ownerOf(1);
-  //   const contractAddress = saleContract.address;
-  //   assert.strictEqual(ownerAddress, contractAddress);
-  //   summary = await saleContract.getSummary();
-  //   const status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Open");
-  // });
+  it("executeTrade function can place an item for sale, and move token to escrow, and list status as 'Open'", async function () {
+    await saleContract.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = saleContract.address;
+    assert.strictEqual(ownerAddress, contractAddress);
+    summary = await saleContract.getSummary();
+    const status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Open");
+  });
 
-  // it("executeTrade function will deny Executing a sale on an order that is in Pending, Executed, or Cancelled status", async function () {
-  //   //Pending transaction
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Pending");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
+  it("executeTrade function will deny Executing a sale on an order that is in Pending, Executed, or Cancelled status", async function () {
+    //Pending transaction
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Pending");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
 
-  //   //Cancelled transaction
-  //   await saleContract.openTrade();
-  //   await saleContract.cancelTrade();
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
+    //Cancelled transaction
+    await saleContract.openTrade();
+    await saleContract.cancelTrade();
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
 
-  //   //Executed transaction
-  //   await saleContract2.openTrade();
-  //   await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
-  //   summary = await saleContract2.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Executed");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
-  // });
+    //Executed transaction
+    await saleContract2.openTrade();
+    await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
+    summary = await saleContract2.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Executed");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
+  });
 
-  // it("cancelTrade can cancel an item for sale, move the item back to the seller's ownership, and list the status as 'Cancelled'", async function () {
-  //   await saleContract.openTrade();
-  //   const ownerAddress = await contract.ownerOf(1);
-  //   const contractAddress = saleContract.address;
-  //   assert.strictEqual(ownerAddress, contractAddress);
-  //   await saleContract.cancelTrade();
-  //   const ownerAddressAfter = await contract.ownerOf(1);
-  //   assert.strictEqual(ownerAddressAfter, accounts[0]);
-  //   summary = await saleContract.getSummary();
-  //   const status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  // });
+  it("cancelTrade can cancel an item for sale, move the item back to the seller's ownership, and list the status as 'Cancelled'", async function () {
+    await saleContract.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = saleContract.address;
+    assert.strictEqual(ownerAddress, contractAddress);
+    await saleContract.cancelTrade();
+    const ownerAddressAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerAddressAfter, accounts[0]);
+    summary = await saleContract.getSummary();
+    const status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+  });
 
-  // it("cancelTrade will not cancel a sale that is outside of 'Open' status.", async function () {
-  //   //Pending transaction
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Pending");
-  //   await expect(saleContract.cancelTrade()).to.be.revertedWith(
-  //     "Trade is not Open."
-  //   );
+  it("cancelTrade will not cancel a sale that is outside of 'Open' status.", async function () {
+    //Pending transaction
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Pending");
+    await expect(saleContract.cancelTrade()).to.be.revertedWith(
+      "Trade is not Open."
+    );
 
-  //   //Cancelled transaction
-  //   await saleContract.openTrade();
-  //   await saleContract.cancelTrade();
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  //   await expect(saleContract.cancelTrade()).to.be.revertedWith(
-  //     "Trade is not Open."
-  //   );
+    //Cancelled transaction
+    await saleContract.openTrade();
+    await saleContract.cancelTrade();
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+    await expect(saleContract.cancelTrade()).to.be.revertedWith(
+      "Trade is not Open."
+    );
 
-  //   //Executed transaction
-  //   await saleContract2.openTrade();
-  //   await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
-  //   summary = await saleContract2.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Executed");
-  //   await expect(saleContract.cancelTrade()).to.be.revertedWith(
-  //     "Trade is not Open."
-  //   );
-  // });
+    //Executed transaction
+    await saleContract2.openTrade();
+    await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
+    summary = await saleContract2.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Executed");
+    await expect(saleContract.cancelTrade()).to.be.revertedWith(
+      "Trade is not Open."
+    );
+  });
 
-  // it("executeTrade can transfer an item for sale, move the item into the buyer's ownership, and list the status as 'Executed'", async function () {
-  //   await saleContract.openTrade();
-  //   const ownerAddress = await contract.ownerOf(1);
-  //   const contractAddress = saleContract.address;
-  //   assert.strictEqual(ownerAddress, contractAddress);
-  //   await saleContract.connect(signer1).executeTrade({ from: accounts[1] });
-  //   const ownerAddressAfter = await contract.ownerOf(1);
-  //   assert.strictEqual(ownerAddressAfter, accounts[1]);
-  //   const summary = await saleContract.getSummary();
-  //   const status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Executed");
-  // });
+  it("executeTrade can transfer an item for sale, move the item into the buyer's ownership, and list the status as 'Executed'", async function () {
+    await saleContract.openTrade();
+    const ownerAddress = await contract.ownerOf(1);
+    const contractAddress = saleContract.address;
+    assert.strictEqual(ownerAddress, contractAddress);
+    await saleContract.connect(signer1).executeTrade({ from: accounts[1] });
+    const ownerAddressAfter = await contract.ownerOf(1);
+    assert.strictEqual(ownerAddressAfter, accounts[1]);
+    const summary = await saleContract.getSummary();
+    const status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Executed");
+  });
 
-  // it("executeTrade will not execute a sale that is outside of 'Open' status.", async function () {
-  //   //Pending transaction
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Pending");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
+  it("executeTrade will not execute a sale that is outside of 'Open' status.", async function () {
+    //Pending transaction
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Pending");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
 
-  //   //Cancelled transaction
-  //   await saleContract.openTrade();
-  //   await saleContract.cancelTrade();
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
+    //Cancelled transaction
+    await saleContract.openTrade();
+    await saleContract.cancelTrade();
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
 
-  //   //Executed transaction
-  //   await saleContract2.openTrade();
-  //   await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
-  //   summary = await saleContract2.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Executed");
-  //   await expect(
-  //     saleContract.connect(signer1).executeTrade({ from: accounts[1] })
-  //   ).to.be.revertedWith("Trade is not Open.");
-  // });
+    //Executed transaction
+    await saleContract2.openTrade();
+    await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
+    summary = await saleContract2.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Executed");
+    await expect(
+      saleContract.connect(signer1).executeTrade({ from: accounts[1] })
+    ).to.be.revertedWith("Trade is not Open.");
+  });
 
-  // it("cancelPending can move a pending (yet to be Opened) Sale contract to Cancelled", async function () {
-  //   const ownerAddress = await contract.ownerOf(1);
-  //   assert.strictEqual(ownerAddress, accounts[0]);
-  //   await saleContract.cancelPending();
-  //   const summary = await saleContract.getSummary();
-  //   const status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  // });
-  // it("cancelPending will not cancel a sale that is outside of 'Pending' status.", async function () {
-  //   //Open transaction
-  //   await saleContract.openTrade();
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Open");
-  //   await expect(saleContract.cancelPending()).to.be.revertedWith(
-  //     "Trade is not Pending."
-  //   );
+  it("cancelPending can move a pending (yet to be Opened) Sale contract to Cancelled", async function () {
+    const ownerAddress = await contract.ownerOf(1);
+    assert.strictEqual(ownerAddress, accounts[0]);
+    await saleContract.cancelPending();
+    const summary = await saleContract.getSummary();
+    const status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+  });
+  it("cancelPending will not cancel a sale that is outside of 'Pending' status.", async function () {
+    //Open transaction
+    await saleContract.openTrade();
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Open");
+    await expect(saleContract.cancelPending()).to.be.revertedWith(
+      "Trade is not Pending."
+    );
 
-  //   //Cancelled transaction
-  //   await saleContract.cancelTrade();
-  //   summary = await saleContract.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Cancelled");
-  //   await expect(saleContract.cancelPending()).to.be.revertedWith(
-  //     "Trade is not Pending."
-  //   );
+    //Cancelled transaction
+    await saleContract.cancelTrade();
+    summary = await saleContract.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Cancelled");
+    await expect(saleContract.cancelPending()).to.be.revertedWith(
+      "Trade is not Pending."
+    );
 
-  //   //Executed transaction
-  //   await saleContract2.openTrade();
-  //   await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
-  //   summary = await saleContract2.getSummary();
-  //   status = ethers.utils.parseBytes32String(summary[4]);
-  //   assert.strictEqual(status, "Executed");
-  //   await expect(saleContract.cancelPending()).to.be.revertedWith(
-  //     "Trade is not Pending."
-  //   );
-  // });
+    //Executed transaction
+    await saleContract2.openTrade();
+    await saleContract2.connect(signer1).executeTrade({ from: accounts[1] });
+    summary = await saleContract2.getSummary();
+    status = ethers.utils.parseBytes32String(summary[4]);
+    assert.strictEqual(status, "Executed");
+    await expect(saleContract.cancelPending()).to.be.revertedWith(
+      "Trade is not Pending."
+    );
+  });
 });
 
 //!ToDo: Update Smart Contract & Set up tests for passing ethereum with the trade.
