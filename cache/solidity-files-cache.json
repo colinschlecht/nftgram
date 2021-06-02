@@ -648,8 +648,8 @@
       ]
     },
     "/Users/colin/Flatiron/projects/nftgram.io/nftgram/contracts/Sales.sol": {
-      "lastModificationDate": 1622595582075,
-      "contentHash": "37122b50f746a1acb28d6bfa033cd194",
+      "lastModificationDate": 1622608766915,
+      "contentHash": "c86f877bc64a3536c3cf2755890b99c8",
       "sourceName": "contracts/Sales.sol",
       "solcConfig": {
         "version": "0.7.3",

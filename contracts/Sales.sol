@@ -61,8 +61,8 @@ contract Sale {
      
  function openTrade() public virtual{
             require(status == "Pending", "Trade is not openable.");
-             itemToken.transferFrom(msg.sender, address(this), item);
              status = "Open";
+             itemToken.transferFrom(msg.sender, address(this), item);
              
 }
     /**
@@ -114,7 +114,7 @@ contract Sale {
      * @dev Cancels a Pending trade by the poster.
      */
     function cancelPending() public virtual {
-        require(status == "Pending", "Trade is not Cancellable.");
+        require(status == "Pending", "Trade is not Pending.");
         status = "Cancelled";
         emit TradeStatusChange(item, "Cancelled");
     }
