@@ -151,8 +151,9 @@ describe("Deployed Sale contract", function () {
   });
 
   it("openTrade can only be called by the owner", async function () {
-    //this is reverted by ERC721 contract before custom require statement in contract
-    await expect(saleContract.connect(signer1).openTrade({from: accounts[1]})).to.be.reverted;
+    //this is reverted by ERC721 contract
+    await expect(saleContract.connect(signer1).openTrade({ from: accounts[1] }))
+      .to.be.reverted;
   });
 
   // it("executeTrade function can place an item for sale, and move token to escrow, and list status as 'Open'", async function () {
