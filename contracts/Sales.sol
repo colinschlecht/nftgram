@@ -60,7 +60,8 @@ contract Sale {
      */
      
  function openTrade() public virtual{
-            require(status == "Pending", "Trade is not openable.");
+            require(itemToken.ownerOf(item) == poster, "Poster must be owner of token.");
+            require(status == "Pending", "Trade is not openable."); 
              status = "Open";
              itemToken.transferFrom(msg.sender, address(this), item);
              
