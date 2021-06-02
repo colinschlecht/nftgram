@@ -12,6 +12,7 @@ require("@nomiclabs/hardhat-ganache");
 
 //! npx hardhat --network ganache test
 
+let tokenURI;
 let accounts;
 let testContract;
 let contract;
@@ -28,12 +29,13 @@ let trades;
 let summary;
 
 
+
 //!NFT contract
 describe("nftgramio contract", function () {
-  const tokenURI =
-    "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
-
+  
   beforeEach(async function () {
+    tokenURI =
+      "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
     testContract = await ethers.getContractFactory("NFTgramIO");
     accounts = await ethers.provider.listAccounts();
     contract = await testContract.deploy();
@@ -89,10 +91,9 @@ describe("nftgramio contract", function () {
   });
 });
 
+
 //!SalesFactory contract
 describe("SalesFactory contract", function () {
-  const tokenURI =
-    "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
 
   beforeEach(async function () {
     //nft
@@ -123,12 +124,10 @@ describe("SalesFactory contract", function () {
   });
 });
 
+
 //!Deployed Sale contract
 describe("Deployed Sale contract", function () {
-  const tokenURI =
-    "https://gateway.pinata.cloud/ipfs/QmfYHTus2YC4jRj3NBxHZxUbjwLiQ3ofhMp1SintTSUqHb";
 
-    
   beforeEach(async function () {
     //approve contract interraction
     trades = await salesFactory.getSales();
@@ -146,43 +145,42 @@ it("can display it's summary, and show status of pending", async function () {
 });
 
 it("can place an item for sale, and move token to escrow", async function () {
-  await contract.approve(sale.address, 1, { from: accounts[0] });
-  await sale.openTrade();
+  await saleContract.openTrade();
   const ownerAddress = await contract.ownerOf(1);
-  const contractAddress = sales.address;
+  const contractAddress = saleContract.address;
   assert.strictEqual(ownerAddress, contractAddress);
 });
 
-it("can cancel an item for sale, move the item back to the seller's ownership, and list the status as 'Cancelled'", async function () {
-  await contract.approve(sales.address, 1, { from: accounts[0] });
-  await sales.openTrade();
-  const ownerAddress = await contract.ownerOf(1);
-  const contractAddress = sales.address;
-  assert.strictEqual(ownerAddress, contractAddress);
-  await sales.cancelTrade();
-  const ownerAddressAfter = await contract.ownerOf(1);
-  assert.strictEqual(ownerAddressAfter, accounts[0]);
-  const summary = await sales.getSummary();
-  assert.strictEqual(
-    ethers.utils.parseBytes32String(summary[4]),
-    "Cancelled"
-  );
-});
+// it("can cancel an item for sale, move the item back to the seller's ownership, and list the status as 'Cancelled'", async function () {
+//   await contract.approve(sales.address, 1, { from: accounts[0] });
+//   await sales.openTrade();
+//   const ownerAddress = await contract.ownerOf(1);
+//   const contractAddress = sales.address;
+//   assert.strictEqual(ownerAddress, contractAddress);
+//   await sales.cancelTrade();
+//   const ownerAddressAfter = await contract.ownerOf(1);
+//   assert.strictEqual(ownerAddressAfter, accounts[0]);
+//   const summary = await sales.getSummary();
+//   assert.strictEqual(
+//     ethers.utils.parseBytes32String(summary[4]),
+//     "Cancelled"
+//   );
+// });
 
-it("can transfer an item for sale, move the item into the buyer's ownership, and list the status as 'Executed'", async function () {
-  await contract.approve(sales.address, 1, { from: accounts[0] });
-  await sales.openTrade();
-  const ownerAddress = await contract.ownerOf(1);
-  const contractAddress = sales.address;
-  assert.strictEqual(ownerAddress, contractAddress);
-  await sales.connect(signer1).executeTrade({ from: accounts[1] });
-  const ownerAddressAfter = await contract.ownerOf(1);
-  assert.strictEqual(ownerAddressAfter, accounts[1]);
-  const summary = await sales.getSummary();
-  const status = ethers.utils.parseBytes32String(summary[4]);
-  assert.strictEqual(status, "Executed");
-  console.log(status);
-});
+// it("can transfer an item for sale, move the item into the buyer's ownership, and list the status as 'Executed'", async function () {
+//   await contract.approve(sales.address, 1, { from: accounts[0] });
+//   await sales.openTrade();
+//   const ownerAddress = await contract.ownerOf(1);
+//   const contractAddress = sales.address;
+//   assert.strictEqual(ownerAddress, contractAddress);
+//   await sales.connect(signer1).executeTrade({ from: accounts[1] });
+//   const ownerAddressAfter = await contract.ownerOf(1);
+//   assert.strictEqual(ownerAddressAfter, accounts[1]);
+//   const summary = await sales.getSummary();
+//   const status = ethers.utils.parseBytes32String(summary[4]);
+//   assert.strictEqual(status, "Executed");
+//   console.log(status);
+// });
 
 
 });

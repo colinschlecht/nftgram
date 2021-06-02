@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 contract SaleFactory {
     address[] public sales;
 
+
     function createSale(address _itemTokenAddress, uint256 _item, uint256 price) public {
         address newSale = address(new Sale(msg.sender, _itemTokenAddress, _item, price));
         sales.push(newSale);
@@ -35,7 +36,7 @@ contract Sale {
         address public itemTokenAddress;
         uint256 public item;
         uint256 public price;
-        bytes32 public status; // Open, Executed, Cancelled
+        bytes32 public status; // Pending, Open, Executed, Cancelled
     
 
         /**
@@ -101,11 +102,19 @@ contract Sale {
     }
 
     /**
-     * @dev Cancels a trade by the poster.
+     * @dev Cancels an Open trade by the poster.
      */
     function cancelTrade() public virtual {
-        require(status == "Open" || status == "Pending", "Trade is not Open.");
+        require(status == "Open", "Trade is not Open.");
         itemToken.safeTransferFrom(address(this), poster, item);
+        status = "Cancelled";
+        emit TradeStatusChange(item, "Cancelled");
+    }
+    /**
+     * @dev Cancels a Pending trade by the poster.
+     */
+    function cancelPending() public virtual {
+        require(status == "Pending", "Trade is not Cancellable.");
         status = "Cancelled";
         emit TradeStatusChange(item, "Cancelled");
     }
