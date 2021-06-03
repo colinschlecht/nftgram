@@ -322,4 +322,5 @@ describe("Deployed Sale contract", function () {
 });
 
 //!ToDo: Update Smart Contract & Set up tests for passing ethereum with the trade.
+//!ToDo: Write additional tests to verify ownership
 //!ToDo: Test the "Event Emitters".
