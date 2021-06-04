@@ -43,7 +43,6 @@ contract SaleFactory {
             tatus: _status
         });
         trades.push(newtrade);
-
     }
     
 
