@@ -4,7 +4,7 @@ import Dropzone from "./Dropzone";
 import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
-import { mintNFT, checkTransactionStatus } from "../../utils/interact";
+import { mintNFT, checkTransactionStatus } from "../../utils/NFTInteract";
 
 require("dotenv").config();
 
