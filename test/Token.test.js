@@ -111,19 +111,6 @@ describe("SaleFactory contract", function () {
     trades = await saleFactory.getSales();
     assert.strictEqual(trades.length, 2);
   });
-  // it("can display the struct array", async function () {
-  //   await saleFactory.createSale(contract.address, 10, 1);
-  //   await saleFactory.createSale(contract.address, 200, 1);
-  //   saleContract = await ethers.getContractAt("Sale", trades[0]);
-  //   saleContract2 = await ethers.getContractAt("Sale", trades[1]);
-  //   await contract.approve(trades[0], 1, { from: accounts[0] });
-  //   await contract.approve(trades[1], 2, { from: accounts[0] });
-  //   await saleContract.openTrade();
-  //   await saleContract2.openTrade();
-  //   trades = await saleFactory.getSalesDetailed();
-  //   assert.strictEqual(trades.length, 2);
-  //   console.log(trades)
-  // });
 });
 
 // //!Deployed Sale contract
@@ -362,8 +349,11 @@ describe("Purchase Token function", function () {
    
   });
   it("test print", async function () {
+    //the trade addresses involved
     console.log(trades)
+    //the summary of a sale
     console.log(summary)
+    //the array of structs returned from SF
     console.log(theTrades)
   })
  
