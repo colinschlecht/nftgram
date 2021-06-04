@@ -79,7 +79,8 @@ contract Sale {
             address,
             uint256,
             uint256,
-            bytes32
+            bytes32,
+            address
         )
     {
         return (
@@ -87,10 +88,15 @@ contract Sale {
             itemTokenAddress,
             item,
             price,
-            status
+            status,
+            buyer
         );
     }
 
+
+    /**
+     * @dev Engages the execution of a trade. Transfers funds to the contract.
+     */
 
     function purchaseToken() public payable virtual {
         require(status == "Open", "Trade is not Open.");
@@ -103,10 +109,10 @@ contract Sale {
         emit TradeStatusChange(item, "Locked");
         executeTrade();
     } 
+
     /**
-     * @dev Executes a trade. Must have approved this contract to transfer the
-     * amount of currency specified to the poster. Transfers ownership of the
-     * item to the filler.
+     * @dev Executes a trade. Transfers ownership of the
+     * item to the buyer.
      */
 
     function executeTrade() private {
@@ -118,7 +124,7 @@ contract Sale {
     }
 
     /**
-     * @dev Cancels an Open trade by the poster. (Trade was cancelled before a purchaser could purchase.)
+     * @dev Cancels an Open trade by the poster. (Trade was cancelled before a buyer could purchase.)
      */
     function cancelTrade() public virtual {
         require(status == "Open", "Trade is not Open.");
