@@ -1,0 +1,94 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_address", "type": "address" },
+      { "internalType": "address", "name": "_poster", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "_itemTokenAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "_item", "type": "uint256" },
+      { "internalType": "uint256", "name": "_price", "type": "uint256" },
+      { "internalType": "bytes32", "name": "_status", "type": "bytes32" }
+    ],
+    "name": "addStruct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_itemTokenAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "_item", "type": "uint256" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" }
+    ],
+    "name": "createSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSales",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSalesDetailed",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "ale", "type": "address" },
+          { "internalType": "address", "name": "oster", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "temTokenAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "tem", "type": "uint256" },
+          { "internalType": "uint256", "name": "rice", "type": "uint256" },
+          { "internalType": "bytes32", "name": "tatus", "type": "bytes32" }
+        ],
+        "internalType": "struct SaleFactory.Trade[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "sales",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "trades",
+    "outputs": [
+      { "internalType": "address", "name": "ale", "type": "address" },
+      { "internalType": "address", "name": "oster", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "temTokenAddress",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "tem", "type": "uint256" },
+      { "internalType": "uint256", "name": "rice", "type": "uint256" },
+      { "internalType": "bytes32", "name": "tatus", "type": "bytes32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
