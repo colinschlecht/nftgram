@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.3;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -11,7 +12,19 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 //factory constructor to create a sale contract
 contract SaleFactory {
+    
     address[] public sales;
+
+    struct Trade {
+    address ale;
+    address oster;
+    address temTokenAddress;
+    uint256 tem;
+    uint256 rice;
+    bytes32 tatus; 
+}
+
+    Trade[] public trades;
 
 
     function createSale(address _itemTokenAddress, uint256 _item, uint256 price) public {
@@ -19,17 +32,36 @@ contract SaleFactory {
         sales.push(newSale);
     }
 
-    function getSales() public view returns (address[]memory) {
+
+    function addStruct(address _address, address _poster, address _itemTokenAddress, uint256 _item, uint256 _price, bytes32 _status) external {
+         Trade memory newtrade = Trade({
+            ale: _address,
+            oster: _poster,
+            temTokenAddress: _itemTokenAddress,
+            tem: _item,
+            rice: _price,
+            tatus: _status
+        });
+        trades.push(newtrade);
+
+    }
+    
+
+    function getSales() public view returns (address[] memory) {
         return sales;
+    }
+
+    function getSalesDetailed() public view returns (Trade[] memory){
+        return trades;
     }
 }
 
 contract Sale {
     
-    
     event TradeStatusChange(uint256 ad, bytes32 status);
     
     IERC721 itemToken;
+    address public parent;
     address payable public poster;
     address public buyer;
     address public itemTokenAddress;
@@ -38,7 +70,8 @@ contract Sale {
     uint public payment;
     bool public purchaser;
     bytes32 public status; // Pending, Open, Locked, Executed, Cancelled
-    
+
+
     /**
      * @dev Opens a new trade. Puts _item in escrow.
      * @param _itemTokenAddress The token's contract.
@@ -47,6 +80,7 @@ contract Sale {
      */
 
     constructor(address payable _poster, address _itemTokenAddress, uint256 _item, uint256 _price) {
+        parent = msg.sender;
         itemToken = IERC721(_itemTokenAddress);
         itemTokenAddress = _itemTokenAddress;
         poster = _poster;
@@ -64,8 +98,9 @@ contract Sale {
              status = "Open";
              purchaser = false;
              itemToken.transferFrom(msg.sender, address(this), item);
+             SaleFactory(parent).addStruct(address(this), poster, itemTokenAddress, item, price, status);
             emit TradeStatusChange(item, "Open");
-             
+            
 }
     /**
      * @dev Returns the details for a trade.
@@ -77,6 +112,7 @@ contract Sale {
         returns (
             address,
             address,
+            address,
             uint256,
             uint256,
             bytes32,
@@ -84,6 +120,7 @@ contract Sale {
         )
     {
         return (
+            address(this),
             poster,
             itemTokenAddress,
             item,
