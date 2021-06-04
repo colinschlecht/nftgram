@@ -29,24 +29,24 @@ contract Sale {
     
     event TradeStatusChange(uint256 ad, bytes32 status);
     
-
     IERC721 itemToken;
+    address payable public poster;
+    address public buyer;
+    address public itemTokenAddress;
+    uint256 public item;
+    uint256 public price;
+    uint public payment;
+    bool public purchaser;
+    bytes32 public status; // Pending, Open, Locked, Executed, Cancelled
     
-        address public poster;
-        address public itemTokenAddress;
-        uint256 public item;
-        uint256 public price;
-        bytes32 public status; // Pending, Open, Executed, Cancelled
-    
-
-        /**
+    /**
      * @dev Opens a new trade. Puts _item in escrow.
      * @param _itemTokenAddress The token's contract.
      * @param _item The id for the item to trade.
      * @param _price The amount of currency for which to trade the item.
      */
 
-    constructor(address _poster, address _itemTokenAddress, uint256 _item, uint256 _price) {
+    constructor(address payable _poster, address _itemTokenAddress, uint256 _item, uint256 _price) {
         itemToken = IERC721(_itemTokenAddress);
         itemTokenAddress = _itemTokenAddress;
         poster = _poster;
@@ -59,10 +59,12 @@ contract Sale {
      * @dev Opens a new trade. Puts item in escrow.
      */
      
- function openTrade() public virtual{
+    function openTrade() public virtual{
             require(status == "Pending", "Trade is not openable."); 
              status = "Open";
+             purchaser = false;
              itemToken.transferFrom(msg.sender, address(this), item);
+            emit TradeStatusChange(item, "Open");
              
 }
     /**
@@ -89,29 +91,43 @@ contract Sale {
         );
     }
 
+
+    function purchaseToken() public payable virtual {
+        require(status == "Open", "Trade is not Open.");
+        require(msg.value >= price, "Payment must meet or exceed asking price.");
+        require(purchaser == false, "Item is no longer available");
+        purchaser = true;
+        payment = msg.value;
+        status = "Locked";
+        buyer = msg.sender;
+        emit TradeStatusChange(item, "Locked");
+        executeTrade();
+    } 
     /**
      * @dev Executes a trade. Must have approved this contract to transfer the
      * amount of currency specified to the poster. Transfers ownership of the
      * item to the filler.
      */
-    function executeTrade() public payable virtual {
-        require(status == "Open", "Trade is not Open.");
-        itemToken.safeTransferFrom(address(this), msg.sender, item);
+
+    function executeTrade() private {
+        require(status == "Locked", "Trade is not locked in.");
+        itemToken.safeTransferFrom(address(this), buyer, item);
+        poster.transfer(payment);
         status = "Executed";
         emit TradeStatusChange(item, "Executed");
     }
 
     /**
-     * @dev Cancels an Open trade by the poster.
+     * @dev Cancels an Open trade by the poster. (Trade was cancelled before a purchaser could purchase.)
      */
     function cancelTrade() public virtual {
         require(status == "Open", "Trade is not Open.");
-        itemToken.safeTransferFrom(address(this), poster, item);
         status = "Cancelled";
+        itemToken.safeTransferFrom(address(this), poster, item);
         emit TradeStatusChange(item, "Cancelled");
     }
     /**
-     * @dev Cancels a Pending trade by the poster.
+     * @dev Cancels a Pending trade by the poster. (Trade has yet to be confirmed.)
      */
     function cancelPending() public virtual {
         require(status == "Pending", "Trade is not Pending.");
