@@ -4,24 +4,22 @@ const axios = require("axios");
 const key = process.env.REACT_APP_ETHERSCAN_API_KEY;
 
 
-export const getTransactionStatus = async (txHash) => {
+export const getNFTHistory = async (address) => {
 //   const txUrl = `https://api-rinkeby.etherscan.io/api?module=transaction&action=getstatus&txhash=${txHash}&apikey=${key}`;
-  const txUrl = `https://api-rinkeby.etherscan.io/api?module=transaction&action=getstatus&txhash=${txHash}&apikey=36RUPJM5TPCPPA6BCHIGD1M4YD8ICPECUG`;
-  //making axios POST request to Pinata ⬇️
+  const URL = `https://api-rinkeby.etherscan.io/api?module=account&action=tokennfttx&address=${address}&startblock=0&endblock=999999999&sort=asc&apikey=${key}`
+  //making axios POST request to Etherscan
   return axios
-    .get(txUrl)
+    .get(URL)
     .then(function (response) {
-      console.log(response);
       return {
-        error: false,
-        status: response.message,
+       response
       };
     })
     .catch(function (error) {
       console.log(error);
       return {
         success: false,
-        message: error.message,
+        message: error.data.result,
       };
     });
 };

@@ -5,6 +5,8 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import { useDispatch } from "react-redux";
 import { connect } from "../../actions";
 import CopyButton from "./copyButton";
+// import { getNFTHistory } from "../../api/etherscan";
+
 
 const MetaMaskButton = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,12 @@ const MetaMaskButton = () => {
   const [message, setMessage] = useState("");
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
+
+
+  // const handleNFTload = async (acct) => {
+  //   const load = await getNFTHistory(acct)
+  //   console.log(load)
+  // }
 
   const clearMessage = () => {
     window.setTimeout(function () {
@@ -25,6 +33,7 @@ const MetaMaskButton = () => {
       dispatch(connect(account));
       setCurrent(account[0]);
       setLoading(false);
+      // handleNFTload(account[0])
     });
     if (message.length > 0) {
       setMessage("");
@@ -40,6 +49,7 @@ const MetaMaskButton = () => {
       setLoading(false);
       setMessage(account[0]);
       clearMessage();
+      // handleNFTload(account[0])
     });
   };
 

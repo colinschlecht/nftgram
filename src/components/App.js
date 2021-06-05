@@ -40,8 +40,8 @@ const App = () => {
                   exact
                   component={UserDelete}
                 />
-                <Route path="/account/:id" exact component={Profile} />
               </div>
+                <Route path="/account/:id" exact component={Profile} />
             </>
           </Switch>
         </>

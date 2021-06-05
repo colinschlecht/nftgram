@@ -15,7 +15,7 @@ export default function Nav() {
           <i className="camera retro icon"></i>
         </Link>
 
-        <Link to="/account/Login" className="item">
+        <Link to="/account/:id" className="item">
           account{" "}
         </Link>
         <LogOut />

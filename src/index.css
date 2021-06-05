@@ -187,3 +187,13 @@ html::-webkit-scrollbar {
     background-color: rgba(255, 235, 205, 0.242);
 
 }
+
+
+
+
+
+.ui.placeholder.square.image {
+    height: 150px !important;
+    width: 150px !important;
+    border-radius: 50%!important;
+}
