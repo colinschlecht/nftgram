@@ -14,7 +14,7 @@ export const CommentSection = ({ art }) => {
     if (!!state.auth.user) {
       return state.auth.user;
     } else {
-      false;
+      return false;
     }
   });
 

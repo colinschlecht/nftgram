@@ -5,8 +5,8 @@ import artReducer from "./artReducer";
 import metaMaskReducer from "./metaMaskReducer";
 
 export default combineReducers({
-  auth: userReducer,
   art: artReducer,
-  UI: UIReducer,
-  MetaMask: metaMaskReducer
+  auth: userReducer,
+  MetaMask: metaMaskReducer,
+  UI: UIReducer
 });

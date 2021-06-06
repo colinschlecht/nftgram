@@ -29,22 +29,28 @@ const MetaMaskButton = () => {
   };
 
   const handleNewAccount = () => {
-    window.ethereum.request({ method: "eth_accounts" }).then((account) => {
-      dispatch(connect(account));
-      setCurrent(account[0]);
-      setLoading(false);
-      // handleNFTload(account[0])
-    });
+    if(!currentAcct){
+      window.ethereum.request({ method: "eth_accounts" }).then((account) => {
+        dispatch(connect(account));
+        dispatch(createUser({ metamask_account: account[0] })).then(console.log)
+        setCurrent(account[0]);
+        setLoading(false);
+        // handleNFTload(account[0])
+      });
+    }
     if (message.length > 0) {
       setMessage("");
+      setLoading(false);
     } else {
       setMessage(currentAcct);
+      setLoading(false);
     }
   };
 
   const handleChangedAccount = () => {
     window.ethereum.request({ method: "eth_accounts" }).then((account) => {
       dispatch(connect(account));
+      dispatch(createUser({ metamask_account: account[0] }))
       setCurrent(account[0]);
       setLoading(false);
       setMessage(account[0]);

@@ -2,10 +2,10 @@ import API_BASE from "../api";
 import {
   CREATE_ART,
   SHOW_MENU,
-  SIGN_IN,
-  SIGN_OUT,
+  // SIGN_IN,
+  // SIGN_OUT,
   SIGN_UP,
-  GET_USER,
+  // GET_USER,
   SHOW_USER,
   FETCH_ARTS,
   FETCH_ARTS_INF_SCROLL,
@@ -22,7 +22,6 @@ import {
 
 //!METAMASK!//
 export const connect = (accts) => async (dispatch) => {
-  await createUser({ metamask_account: accts[0] });
   dispatch({ type: CONNECT, payload: accts });
 };
 
@@ -33,32 +32,32 @@ export const createUser = (account) => async (dispatch) => {
   dispatch({ type: SIGN_UP, payload: response.data });
   return response;
 };
-//login user
-export const loginUser = (formValues) => async (dispatch) => {
-  const response = await API_BASE.post("/login", { ...formValues });
-  dispatch({ type: SIGN_IN, payload: response.data });
-  return response;
-};
-//checks for user token
-export const getUser = (header, TOKEN) => async (dispatch) => {
-  if (TOKEN && TOKEN !== "undefined") {
-    const response = await API_BASE.get("/getuser", { ...header });
-    dispatch({ type: GET_USER, payload: response.data });
-    return response;
-  }
-};
-//checks for user token
 export const showUser = (id) => async (dispatch) => {
   const response = await API_BASE.get(`/users/${id}`);
   dispatch({ type: SHOW_USER, payload: response.data });
   return response;
 };
+// //login user
+// export const loginUser = (formValues) => async (dispatch) => {
+//   const response = await API_BASE.post("/login", { ...formValues });
+//   dispatch({ type: SIGN_IN, payload: response.data });
+//   return response;
+// };
+// //checks for user token
+// export const getUser = (header, TOKEN) => async (dispatch) => {
+//   if (TOKEN && TOKEN !== "undefined") {
+//     const response = await API_BASE.get("/getuser", { ...header });
+//     dispatch({ type: GET_USER, payload: response.data });
+//     return response;
+//   }
+// };
+
 //log out user
-export const logOut = () => {
-  return {
-    type: SIGN_OUT,
-  };
-};
+// export const logOut = () => {
+//   return {
+//     type: SIGN_OUT,
+//   };
+// };
 
 //!Art actions//
 

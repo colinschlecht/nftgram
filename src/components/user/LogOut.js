@@ -1,21 +1,20 @@
-import { logOut } from "../../actions";
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+
 
 
 class LogOut extends React.Component {
   handleClick = () => {
     localStorage.clear();
-    this.props.logOut();
+    console.log(this.props.match)
+    // window.location.reload()
   };
   render() {
     return (
-      <Link to="/account/login" onClick={this.handleClick} className="item">
+      <a href="/" onClick={this.handleClick} className="item">
         Log Out
-      </Link>
+      </a>
     );
   }
 }
 
-export default connect(null, { logOut })(LogOut);
+export default LogOut

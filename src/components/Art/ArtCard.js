@@ -11,16 +11,16 @@ export const ArtCard = ({ art }) => {
     if (!!state.auth.user) {
       return state.auth.user;
     } else {
-      false;
+      return false;
     }
   });
 
   const [liked, setLiked] = useState(
     !!art.likes.find((like) => {
       if (user) {
-        like.user_id === user.user.id;
+        return like.user_id === user.user.id;
       } else {
-        false;
+        return false;
       }
     })
   );
@@ -28,7 +28,7 @@ export const ArtCard = ({ art }) => {
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {
     e.preventDefault();
-    if (state.auth.user) {
+    if (user) {
       if (!liked) {
         setLiked(!liked);
         dispatch(

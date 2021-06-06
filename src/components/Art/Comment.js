@@ -10,21 +10,28 @@ import {
 
 export const Comment = ({ comment }) => {
   const dispatch = useDispatch();
+
+ 
+
+
   const [replyClick, setReplyClick] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  // const user = useSelector((state) => state.auth.user);
   const user = useSelector((state) => {
-    if (!!state.auth.user) {
-      return state.auth.user;
+    if(!!state.auth.user) {
+      return state.auth.user
     } else {
-      false;
+      return false
     }
   });
+
   const [liked, setLiked] = useState(
     !!comment.likes.find((like) => {
       if (user) {
-        like.user_id === user.user.id;
+        return like.user_id === user.user.id;
       } else {
-        false;
+        return false;
       }
     })
   );
@@ -39,7 +46,7 @@ export const Comment = ({ comment }) => {
 
   //handles comment reply submission
   const onSubmit = (formValues) => {
-    if(user){
+    if (user) {
       dispatch(
         createCommentComment({
           ...formValues,
@@ -49,7 +56,7 @@ export const Comment = ({ comment }) => {
         })
       );
     } else {
-      alert("Please connect to MetaMask to interact")
+      alert("Please connect to MetaMask to interact");
     }
   };
   //!\////////////////////////////
