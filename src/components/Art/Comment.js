@@ -12,10 +12,22 @@ export const Comment = ({ comment }) => {
   const dispatch = useDispatch();
   const [replyClick, setReplyClick] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const user = useSelector((state) => state.auth.user);
-  const [liked, setLiked] = useState(!!comment.likes.find((like) => like.user_id === user.user.id));
-
- 
+  const user = useSelector((state) => {
+    if (!!state.auth.user) {
+      return state.auth.user;
+    } else {
+      false;
+    }
+  });
+  const [liked, setLiked] = useState(
+    !!comment.likes.find((like) => {
+      if (user) {
+        like.user_id === user.user.id;
+      } else {
+        false;
+      }
+    })
+  );
 
   //!POLYMORPHIC COMMENT REPLY /////
   //handles clicking of reply icon
@@ -27,35 +39,43 @@ export const Comment = ({ comment }) => {
 
   //handles comment reply submission
   const onSubmit = (formValues) => {
-    dispatch(
-      createCommentComment({
-        ...formValues,
-        user_id: user.user.id,
-        commentable_id: comment.id,
-        commentable_type: "Comment",
-      })
-    )
+    if(user){
+      dispatch(
+        createCommentComment({
+          ...formValues,
+          user_id: user.user.id,
+          commentable_id: comment.id,
+          commentable_type: "Comment",
+        })
+      );
+    } else {
+      alert("Please connect to MetaMask to interact")
+    }
   };
   //!\////////////////////////////
 
   //!\//// like a comment /////////
   const handleLike = (e) => {
     e.preventDefault();
-    if (!liked) {
-      setLiked(!liked);
-      dispatch(
-        createCommentLike({
-          user_id: user.user.id,
-          likeable_type: "Comment",
-          likeable_id: comment.id,
-        })
-      );
+    if (user) {
+      if (!liked) {
+        setLiked(!liked);
+        dispatch(
+          createCommentLike({
+            user_id: user.user.id,
+            likeable_type: "Comment",
+            likeable_id: comment.id,
+          })
+        );
+      } else {
+        setLiked(!liked);
+        let disLikedComment = comment.likes.find(
+          (like) => like.user_id === user.user.id
+        );
+        dispatch(destroyCommentLike(disLikedComment.id, disLikedComment));
+      }
     } else {
-      setLiked(!liked);
-      let disLikedComment = comment.likes.find(
-        (like) => like.user_id === user.user.id
-      );
-      dispatch(destroyCommentLike(disLikedComment.id, disLikedComment));
+      alert("Please connect to MetaMask to interact");
     }
   };
   //!\////////////////////////////

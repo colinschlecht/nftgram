@@ -4,38 +4,54 @@ import { CommentSection } from "./CommentSection";
 import { createArtLike, destroyArtLike } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 
-
-
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
-  
-  const user = useSelector((state) => state.auth.user);
-  
-  const [liked, setLiked] = useState(!!art.likes.find((like) => like.user_id === user.user.id));
-  
+
+  const user = useSelector((state) => {
+    if (!!state.auth.user) {
+      return state.auth.user;
+    } else {
+      false;
+    }
+  });
+
+  const [liked, setLiked] = useState(
+    !!art.likes.find((like) => {
+      if (user) {
+        like.user_id === user.user.id;
+      } else {
+        false;
+      }
+    })
+  );
 
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {
     e.preventDefault();
-    if (!liked) {
-      setLiked(!liked);
-      dispatch(
-        createArtLike({
-          user_id: user.user.id,
-          likeable_type: "Art",
-          likeable_id: art.id,
-        })
+    if (state.auth.user) {
+      if (!liked) {
+        setLiked(!liked);
+        dispatch(
+          createArtLike({
+            user_id: user.user.id,
+            likeable_type: "Art",
+            likeable_id: art.id,
+          })
         );
       } else {
         setLiked(!liked);
         let disLike = art.likes.find((like) => like.user_id === user.user.id);
         dispatch(destroyArtLike(disLike.id, disLike));
       }
-    };
-    //!\///////////////////////////////////////////////
-    
-    //!\///////// select a user profile or list /////////////
-    const handleUserClick = (e) => {
+    } else {
+      alert("Please connect to MetaMask to interact");
+    }
+  };
+
+  //!\///////////////////////////////////////////////
+
+  //!\///////// select a user profile or list /////////////
+  const handleUserClick = (e) => {
     e.preventDefault();
     //pull up the selected user profile
   };
@@ -50,7 +66,11 @@ export const ArtCard = ({ art }) => {
     <>
       <Card fluid id="art-card">
         {art.link ? (
-          <Image src={`https://ipfs.io/ipfs/${art.cid}`} fluid onClick={(e) => handleLike(e)} />
+          <Image
+            src={`https://ipfs.io/ipfs/${art.cid}`}
+            fluid
+            onClick={(e) => handleLike(e)}
+          />
         ) : (
           <Image
             src="https://react.semantic-ui.com/images/wireframe/image.png"

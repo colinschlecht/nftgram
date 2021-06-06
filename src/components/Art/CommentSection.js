@@ -10,8 +10,13 @@ export const CommentSection = ({ art }) => {
 
   const [expanded, setExpanded] = useState(false);
   const [artComments, /*setArtComments*/] = useState(art.comments);
-  const user = useSelector((state) => state.auth.user);
-
+  const user = useSelector((state) => {
+    if (!!state.auth.user) {
+      return state.auth.user;
+    } else {
+      false;
+    }
+  });
 
   
 
@@ -25,15 +30,17 @@ export const CommentSection = ({ art }) => {
 
   //!try passing e
   const onSubmit = (formValues) => {
-    
-    dispatch(
-      createComment({
-        ...formValues,
-        user_id: user.user.id,
-        commentable_id: art.id,
-        commentable_type: "Art",
-      })
-    )
+    if(user){
+      dispatch(
+        createComment({
+          ...formValues,
+          user_id: user.user.id,
+          commentable_id: art.id,
+          commentable_type: "Art",
+        }));
+    } else {
+      alert("Please connect to MetaMask to interract")
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useDispatch } from "react-redux";
-import { connect } from "../../actions";
+import { connect, createUser } from "../../actions";
 import CopyButton from "./copyButton";
 // import { getNFTHistory } from "../../api/etherscan";
 
