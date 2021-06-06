@@ -15,6 +15,7 @@ const MetaMaskButton = () => {
   const [message, setMessage] = useState("");
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false)
 
 
   // const handleNFTload = async (acct) => {
@@ -29,15 +30,14 @@ const MetaMaskButton = () => {
   };
 
   const handleNewAccount = () => {
-    if(!currentAcct){
+
       window.ethereum.request({ method: "eth_accounts" }).then((account) => {
         dispatch(connect(account));
         dispatch(createUser({ metamask_account: account[0] })).then(console.log)
         setCurrent(account[0]);
         setLoading(false);
-        // handleNFTload(account[0])
       });
-    }
+   
     if (message.length > 0) {
       setMessage("");
       setLoading(false);
@@ -55,7 +55,7 @@ const MetaMaskButton = () => {
       setLoading(false);
       setMessage(account[0]);
       clearMessage();
-      // handleNFTload(account[0])
+      console.log("change")
     });
   };
 
@@ -68,12 +68,16 @@ const MetaMaskButton = () => {
   };
 
   const onConnectClick = async () => {
+    console.log("click")
+    if(!listening){
+      window.ethereum.on("accountsChanged", () => handleChangedAccount())
+      setListening(!listening)
+    }
     setLoading(true);
     window.ethereum
       .request({ method: "eth_requestAccounts" })
       .then(() => {
         handleNewAccount();
-        window.ethereum.on("accountsChanged", () => handleChangedAccount());
       })
       .catch((err) => {
         setMessage(err.message);

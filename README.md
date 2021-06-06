@@ -5,16 +5,17 @@
 NFTgramIO is a virtual art gallery/social media platform, where a user can view and create virtual art.
 ## User stories:
 
-A user is required to 'create an account' to interract with other users. 
-A user can create art, adding to the main explore view.
-A user can like and comment on other art pieces.
-A user can reply to comments and like comments.
+* A user is required to 'create an account' to interract with other users, by connecting their MetaMask account. 
+* A user account is singular, and can only be accessed via the user's MetaMask wallet. If a user has more than one MetaMask address and connects to NFTgramIO - they will generate another account.
+* A user can mint an NFT in app on the ethereum blockchain, adding it to the explore view and the user's MetaMask wallet.
+* A user can like and comment on other art pieces.
+* A user can reply to comments and like comments.
 
 ## Creating an NFT:
 
-When creating art, a unique Content Identifier - CID - is created as it is uploaded to the IPFS. The URI, along with the CID are also added to an art object, which contains the other art attributes defined by the user. 
+When creating art, a unique Content Identifier - CID - is created as it is uploaded to IPFS for decentralized storage. The URI, along with the CID are also added to an art object, which contains the other art attributes defined by the user. 
 
-In order to persist the IPFS the CID and metadata is then pinned via pinning service: Pinata, and is accompanied by a name and description in the metadata. The response from pinning to pinata contains the pinata URI, which is used as the token URI in the minting process.
+In order to persist to IPFS the uploaded asset is pinned via pinning service: Pinata. Once pinned, the CID, name and description are also pinned as a JSON object separately. The response from pinning to pinata once again contains the pinata URI, which is used as the token URI in the minting process.
 
 Using a standard ERC-721 smart contract, the token is minted. Once complete - if successful - The art object described earlier is passed via axios to the server in a POST req, creating an art instance persisted to the db and added to the explore timeline.
 
@@ -41,6 +42,11 @@ Events tab on art.
 
 * add NFT from wallet* WIP - currently able to use etherscan API to check address for ERC721 transfers
 * wire up sales and sale factory so users can buy/sell
+
+-------------------------------------------------------
+## Bug squashing! 
+
+*  When switching MM accounts after liking a comment, if you click the same like button with another account the app crashes. Potential cause: "liked" state isn't updating on user swap, unless a re-render occurs. 
 
 -------------------------------------------------------
 ## Further Decentralization WIP

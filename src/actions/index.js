@@ -37,6 +37,10 @@ export const showUser = (id) => async (dispatch) => {
   dispatch({ type: SHOW_USER, payload: response.data });
   return response;
 };
+export const generate = async () => {
+  const response = await API_BASE.get(`/generate`);
+  return response;
+};
 // //login user
 // export const loginUser = (formValues) => async (dispatch) => {
 //   const response = await API_BASE.post("/login", { ...formValues });
