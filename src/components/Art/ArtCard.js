@@ -3,6 +3,7 @@ import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 import { createArtLike, destroyArtLike } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
@@ -51,10 +52,6 @@ export const ArtCard = ({ art }) => {
   //!\///////////////////////////////////////////////
 
   //!\///////// select a user profile or list /////////////
-  const handleUserClick = (e) => {
-    e.preventDefault();
-    //pull up the selected user profile
-  };
 
   const handleLikeCountClick = (e) => {
     e.preventDefault();
@@ -95,15 +92,15 @@ export const ArtCard = ({ art }) => {
             {art.likes.length > 3 ? (
               <p className="explore art card">
                 liked by{" "}
-                <a
-                  className="explore art card"
-                  href="/"
-                  onClick={(e) => handleUserClick(e)}
+                <Link
+                  id="user-link"
+                  key={art.likes[0].user.id + "u"}
+                  to={`/profile/${art.likes[0].user.id}`}
                 >
                   <span className="explore art card username">
                     {art.likes[0].user.username}
                   </span>{" "}
-                </a>
+                </Link>
                 and{" "}
                 <span className="explore art card likes">
                   <a
@@ -118,25 +115,25 @@ export const ArtCard = ({ art }) => {
             ) : art.likes.length > 1 ? (
               <p className="explore art card">
                 liked by{" "}
-                <a
-                  className="explore art card"
-                  href="/"
-                  onClick={(e) => handleUserClick(e)}
+                <Link
+                  id="user-link"
+                  key={art.likes[0].user.id + "u"}
+                  to={`/profile/${art.likes[0].user.id}`}
                 >
                   <span className="explore art card username">
                     {art.likes[0].user.username}
                   </span>{" "}
-                </a>
+                </Link>
                 and{" "}
-                <a
-                  className="explore art card"
-                  href="/"
-                  onClick={(e) => handleUserClick(e)}
+                <Link
+                  id="user-link"
+                  key={art.likes[1].user.id + "u"}
+                  to={`/profile/${art.likes[1].user.id}`}
                 >
                   <span className="explore art card username">
                     {art.likes[1].user.username}
                   </span>
-                </a>
+                </Link>
                 <span className="explore art card likes"></span>{" "}
               </p>
             ) : (
@@ -144,13 +141,13 @@ export const ArtCard = ({ art }) => {
                 liked by{" "}
                 <span className="explore art card username">
                   {art.likes.length > 0 ? (
-                    <a
-                      className="explore art card"
-                      href="/"
-                      onClick={(e) => handleUserClick(e)}
+                    <Link
+                      id="user-link"
+                      key={art.likes[0].user.id + "u"}
+                      to={`/profile/${art.likes[0].user.id}`}
                     >
                       {art.likes[0].user.username}
-                    </a>
+                    </Link>
                   ) : (
                     "nobody... yet!"
                   )}
@@ -160,13 +157,13 @@ export const ArtCard = ({ art }) => {
 
             <p className="explore art card">
               <span className="explore art card username">
-                <a
-                  href="/"
-                  className="explore art card username"
-                  onClick={(e) => handleUserClick(e)}
+                <Link
+                  id="user-link"
+                  key={art.user.id + "u"}
+                  to={`/profile/${art.user.id}`}
                 >
                   {art.user.username}
-                </a>
+                </Link>
               </span>
               &nbsp;&nbsp;{art.caption}
             </p>
