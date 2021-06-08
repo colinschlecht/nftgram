@@ -15,7 +15,7 @@ export default function Nav() {
           <i className="camera retro icon"></i>
         </Link>
 
-        <Link to="/account/:id" className="item">
+        <Link to={`profile/needsupdate`} className="item">
           account{" "}
         </Link>
         <LogOut />

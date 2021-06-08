@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Header from "./Header";
-import Body from "./Body";
+import Body from "./ProfileArtCard";
 import { getNFTHistory } from "../../api/etherscan";
-import { generate, showUser } from "../../actions";
+import { generate } from "../../actions";
 import { Button } from "semantic-ui-react";
 
 const Profile = ({ match }) => {
   const wallet = useSelector((state) => state.MetaMask);
-  const [randomName, setRandom] = useState("");
-  const [user, setUser] = useState({});
-  const [self, setSelf] = useState(false);
 
-  const determineSelf = () => wallet.account === user.metamask_account;
+  const [randomName, setRandom] = useState("");
 
   useEffect(() => {
-    //load the art associated with the user id of the profile
     const getAcct = async () => {
-      const user_object = await showUser(match.params.id);
-      setUser(user_object.data);
+      if (wallet.account && wallet.account === match.params.id) {
+        const load = await getNFTHistory(wallet.account);
+        console.log(load);
+      } else {
+        console.log("nah");
+      }
     };
     getAcct();
-    setSelf(determineSelf)
-  },);
+  }, [wallet]);
 
   const handleClick = async (e) => {
     e.preventDefault();
     const name = await generate();
+    console.log(name.data.name);
     setRandom(name.data.name);
   };
 
   return (
     <div>
-      <Header user={user} />
+      <Header />
       <Button onClick={(e) => handleClick(e)} />
       <h1>{randomName}</h1>
-      <Body user={user} />
+      <Body />
     </div>
   );
 };

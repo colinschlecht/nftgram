@@ -6,7 +6,7 @@ import {
   // SIGN_OUT,
   SIGN_UP,
   // GET_USER,
-  SHOW_USER,
+  // SHOW_USER,
   FETCH_ARTS,
   FETCH_ARTS_INF_SCROLL,
   LOADING_ARTS,
@@ -32,9 +32,9 @@ export const createUser = (account) => async (dispatch) => {
   dispatch({ type: SIGN_UP, payload: response.data });
   return response;
 };
-export const showUser = (id) => async (dispatch) => {
+export const showUser = async (id) => {
   const response = await API_BASE.get(`/users/${id}`);
-  dispatch({ type: SHOW_USER, payload: response.data });
+  // dispatch({ type: SHOW_USER, payload: response.data });
   return response;
 };
 export const generate = async () => {

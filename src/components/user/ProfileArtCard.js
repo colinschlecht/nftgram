@@ -1,10 +1,10 @@
 import React from "react";
 
-const ProfileArtCard = ({ nft }) => {
+const ProfileArtCard = ({ art }) => {
   return (
     <div className="ui card">
       <div className="content">
-        <div className="ui placeholder"> {nft}
+        <div className="ui placeholder"> {art.caption}
           <div className="square image"></div>
         </div>
       </div>

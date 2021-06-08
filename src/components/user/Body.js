@@ -1,10 +1,13 @@
 import React from "react";
 import ProfileArtCard from "./ProfileArtCard";
 
-export const Body = () => {
+const Body = ({user}) => {
+  console.log(user)
   return (
     <>
-      <ProfileArtCard />;
+    {user.arts ? user.arts.map(art => <ProfileArtCard key={art.id} art={art}/>) : null}
     </>
   );
 };
+
+export default Body

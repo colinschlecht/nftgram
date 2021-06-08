@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 import { createArtLike, destroyArtLike } from "../../actions";
@@ -25,6 +25,17 @@ export const ArtCard = ({ art }) => {
       }
     })
   );
+
+  useEffect(() => {
+   setLiked(!!art.likes.find((like) => {
+    if (user) {
+      return like.user_id === user.user.id;
+    } else {
+      return false;
+    }
+  }))
+    
+  }, [ user, art])
 
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {

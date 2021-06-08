@@ -55,7 +55,6 @@ const MetaMaskButton = () => {
       setLoading(false);
       setMessage(account[0]);
       clearMessage();
-      console.log("change")
     });
   };
 
@@ -68,7 +67,6 @@ const MetaMaskButton = () => {
   };
 
   const onConnectClick = async () => {
-    console.log("click")
     if(!listening){
       window.ethereum.on("accountsChanged", () => handleChangedAccount())
       setListening(!listening)
