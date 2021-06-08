@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import Body from "./Body";
-import { getNFTHistory } from "../../api/etherscan";
+// import { getNFTHistory } from "../../api/etherscan";
 import { generate, showUser } from "../../actions";
 import { Button } from "semantic-ui-react";
 
@@ -21,8 +21,7 @@ const Profile = ({ match }) => {
       setUser(user_object.data);
     };
     getAcct();
-    setSelf(determineSelf)
-  },);
+  });
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -32,7 +31,7 @@ const Profile = ({ match }) => {
 
   return (
     <div>
-      <Header user={user} />
+      <Header user={user} self={self}/>
       <Button onClick={(e) => handleClick(e)} />
       <h1>{randomName}</h1>
       <Body user={user} />

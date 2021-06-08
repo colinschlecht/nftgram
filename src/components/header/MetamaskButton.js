@@ -7,7 +7,7 @@ import { connect, createUser } from "../../actions";
 import CopyButton from "./copyButton";
 // import { getNFTHistory } from "../../api/etherscan";
 
-const MetaMaskButton = () => {
+const MetamaskButton = () => {
   const dispatch = useDispatch();
   const { ethereum } = window;
   const onboarding = new MetaMaskOnboarding();
@@ -115,4 +115,4 @@ const MetaMaskButton = () => {
   );
 };
 
-export default MetaMaskButton;
+export default MetamaskButton;

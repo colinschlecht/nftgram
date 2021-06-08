@@ -85,6 +85,11 @@ export const explore = (page) => async (dispatch) => {
   return response;
 };
 
+export const showArt = async (id) => {
+  const response = await API_BASE.get(`/arts/${id}`);
+  return response;
+};
+
 //resets state
 export const resetAllLoaded = () => {
   return {

@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Nav from "./header/Nav";
 import Explore from "./Explore";
 import CreateArt from "./Art/CreateArt";
-import UserDelete from "./user/UserDelete";
+import ArtShow from "./Art/ArtShow";
 import Profile from "./user/Profile";
 import UserEdit from "./user/UserEdit";
 // import MainLogin from "./user/MainLogin";
@@ -34,13 +34,9 @@ const App = () => {
                 </div>
                 <Route path="/" exact component={Explore} />
                 <Route path="/art/new" exact component={CreateArt} />
-                <Route path="/profile/edit/:id" exact component={UserEdit} />
+                <Route path="/art/:id" exact component={ArtShow} />
                 <Route path="/profile/:id" exact component={Profile} />
-                <Route
-                  path={`/profile/delete/:id`}
-                  exact
-                  component={UserDelete}
-                />
+                <Route path="/profile/edit/:id" exact component={UserEdit} />
               </div>
             </>
           </Switch>
