@@ -7,7 +7,6 @@ import { connect, createUser } from "../../actions";
 import CopyButton from "./copyButton";
 // import { getNFTHistory } from "../../api/etherscan";
 
-
 const MetaMaskButton = () => {
   const dispatch = useDispatch();
   const { ethereum } = window;
@@ -15,8 +14,7 @@ const MetaMaskButton = () => {
   const [message, setMessage] = useState("");
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [listening, setListening] = useState(false)
-
+  const [listening, setListening] = useState(false);
 
   // const handleNFTload = async (acct) => {
   //   const load = await getNFTHistory(acct)
@@ -30,14 +28,13 @@ const MetaMaskButton = () => {
   };
 
   const handleNewAccount = () => {
+    window.ethereum.request({ method: "eth_accounts" }).then((account) => {
+      dispatch(connect(account));
+      dispatch(createUser({ metamask_account: account[0] })).then(console.log);
+      setCurrent(account[0]);
+      setLoading(false);
+    });
 
-      window.ethereum.request({ method: "eth_accounts" }).then((account) => {
-        dispatch(connect(account));
-        dispatch(createUser({ metamask_account: account[0] })).then(console.log)
-        setCurrent(account[0]);
-        setLoading(false);
-      });
-   
     if (message.length > 0) {
       setMessage("");
       setLoading(false);
@@ -50,7 +47,7 @@ const MetaMaskButton = () => {
   const handleChangedAccount = () => {
     window.ethereum.request({ method: "eth_accounts" }).then((account) => {
       dispatch(connect(account));
-      dispatch(createUser({ metamask_account: account[0] }))
+      dispatch(createUser({ metamask_account: account[0] }));
       setCurrent(account[0]);
       setLoading(false);
       setMessage(account[0]);
@@ -67,9 +64,9 @@ const MetaMaskButton = () => {
   };
 
   const onConnectClick = async () => {
-    if(!listening){
-      window.ethereum.on("accountsChanged", () => handleChangedAccount())
-      setListening(!listening)
+    if (!listening) {
+      window.ethereum.on("accountsChanged", () => handleChangedAccount());
+      setListening(!listening);
     }
     setLoading(true);
     window.ethereum
@@ -106,7 +103,8 @@ const MetaMaskButton = () => {
         <div className="item">
           {message[0] === "0" ? (
             <>
-              {message}<CopyButton message={message} />
+              {message}
+              <CopyButton message={message} />
             </>
           ) : (
             message
