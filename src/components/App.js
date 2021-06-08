@@ -12,7 +12,7 @@ import UserDelete from "./user/UserDelete";
 import Profile from "./user/Profile";
 import UserEdit from "./user/UserEdit";
 // import MainLogin from "./user/MainLogin";
-import MetaMaskButton from "./header/MetaMaskButton";
+import MetamaskButton from "./header/MetamaskButton";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const App = () => {
           <Switch>
             {/* <Route path="/account/login" exact component={MainLogin} /> */}
             <>
-              <MetaMaskButton />
+              <MetamaskButton />
               <div id="main" className="ui centered grid">
                 <div id="nav">
                   <Nav />
