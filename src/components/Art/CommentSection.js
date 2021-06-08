@@ -99,6 +99,7 @@ export const CommentSection = ({ art }) => {
             </a>
             {artComments.map((com) => (
               <Comment
+              art={art}
                 handleExpandClick={() => handleExpandClick}
                 key={com.id}
                 comment={com}

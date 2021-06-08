@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
-
+  
   const user = useSelector((state) => {
     if (!!state.auth.user) {
       return state.auth.user;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Comment as Comm, Icon } from "semantic-ui-react";
 import { CommentForm } from "./CommentForm";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,17 @@ export const Comment = ({ comment }) => {
       }
     })
   );
+
+  useEffect(() => {
+    setLiked(!!comment.likes.find((like) => {
+     if (user) {
+       return like.user_id === user.user.id;
+     } else {
+       return false;
+     }
+   }))
+     
+   }, [ user, comment])
 
   //!POLYMORPHIC COMMENT REPLY /////
   //handles clicking of reply icon
