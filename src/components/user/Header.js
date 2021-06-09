@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import PlaceholderExampleImage from "./PPPlaceHolder";
 
-const Header = ({ user, self }) => {
-  const [editing, setEditing] = useState(false);
+const Header = ({ user }) => {
+  const wallet = useSelector((state) => state.MetaMask)
 
+  console.log("hi")
   return (
     <>
       <PlaceholderExampleImage />
-      {self && <button onClick={setEditing(!editing)}>Edit</button>}
       <h2>{user.username}</h2>
       <h5>{user.metamask_account}</h5>
       <div className="ui divider"></div>
