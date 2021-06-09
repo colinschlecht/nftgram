@@ -97,7 +97,7 @@ const MetamaskButton = () => {
   };
 
   return (
-    <div className="ui secondary pointing menu">
+    <div className="container">
       <div className="menu">
         {MetaMaskClientCheck()}
         <div className="item">

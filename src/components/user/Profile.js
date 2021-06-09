@@ -17,7 +17,7 @@ useEffect(() => {
 },[match])
 
   return (
-    <div>
+    <div className="profile container">
       <Header user={user} />
       <Body user={user} />
     </div>

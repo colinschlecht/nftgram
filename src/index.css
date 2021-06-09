@@ -189,11 +189,35 @@ html::-webkit-scrollbar {
 }
 
 
-
-
-
 .ui.placeholder.square.image {
     height: 150px !important;
     width: 150px !important;
     border-radius: 50%!important;
+}
+.container{
+    max-width: 90%;
+    margin: auto;
+}
+
+.profile.container{
+    border: 1px solid rgba(138, 135, 135, 0.276);
+    padding: 1em;
+}
+.header.container{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.ui.divider.header{
+    width: 90%;
+    margin: auto;
+}
+
+.image .placeholder{
+    position:relative;
+    margin:auto;
 }
