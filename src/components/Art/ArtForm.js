@@ -4,7 +4,11 @@ import Dropzone from "./Dropzone";
 import { TextArea, Button, Input } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { createArt } from "../../actions";
-import { mintNFT, checkTransactionStatus } from "../../utils/NFTInteract";
+import {
+  mintNFT,
+  checkTransactionStatus,
+  getTokenId,
+} from "../../utils/NFTInteract";
 
 require("dotenv").config();
 
@@ -27,7 +31,7 @@ const ArtForm = () => {
   const getFile = (file) => {
     setfile(file);
   };
-
+console.log(wallet.account)
   const pinataSDK = require("@pinata/sdk");
   const pinata = pinataSDK(key, secret);
 
@@ -89,18 +93,6 @@ const ArtForm = () => {
         hashAlg: "sha2-256",
       });
 
-      //! art object data for DB
-      let art = {
-        user_id: user.user.id,
-        artist_id: user.user.artist.id,
-        for_sale: false,
-        caption: data.caption,
-        category: data.category,
-        name: data.name,
-        link: `https://gateway.pinata.cloud/ipfs/${cid.string}`,
-        cid: cid.string,
-      };
-
       //! NFT metadata
       const body = {
         name: data.name,
@@ -121,49 +113,65 @@ const ArtForm = () => {
       console.log(pinResponse);
 
       //! call to mint the NFT
-      const mintResponse = await mintNFT(
-        `ipfs://${pinResponse.IpfsHash}`
-        // `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`
-      );
+      const mintResponse = await mintNFT(`ipfs://${pinResponse.IpfsHash}`);
 
-        if (!mintResponse.success) {
-          await ipfs.stop();
-          setMessage(mintResponse.message);
-          handleCancel(pinResponse.IpfsHash);
-          handleCancel(cid.string);
-          return null;
-        } else {
-          setStatus("Minting NFT");
-        }
+      let art;
 
-        //! checks status via web3 interaction, if successfully minted post is made to DB
-        const checkMine = () => {
-          checkTransactionStatus(mintResponse.transactionHash).then(
-            async (resp) => {
-              if (!resp) {
-                window.setTimeout(async () => {
+      if (!mintResponse.success) {
+        await ipfs.stop();
+        setMessage(mintResponse.message);
+        handleCancel(pinResponse.IpfsHash);
+        handleCancel(cid.string);
+        return null;
+      } else {
+        setStatus("Minting NFT");
+        
+        //! art object data for DB
+        const tokenInfo = await getTokenId(wallet.account);
+        art = {
+          user_id: user.user.id,
+          artist_id: user.user.artist.id,
+          for_sale: false,
+          description: data.description,
+          caption: data.caption,
+          category: data.category,
+          name: data.name,
+          link: `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`,
+          cid: cid.string,
+          tokenURI: `ipfs://${pinResponse.IpfsHash}`,
+          contract_address: tokenInfo.address,
+          tokenID: tokenInfo.id,
+        };
+      }
+
+      //! checks status via web3 interaction, if successfully minted post is made to DB
+      const checkMine = () => {
+        checkTransactionStatus(mintResponse.transactionHash).then(
+          async (resp) => {
+            if (!resp) {
+              window.setTimeout(async () => {
                 checkMine();
-                }, 4000);
+              }, 4000);
+            } else {
+              if (!resp.status) {
+                setStatus("Error");
+                handleCancel(pinResponse.IpfsHash);
+                handleCancel(cid.string);
+                setMessage(
+                  `transaction ${mintResponse.transactionHash} unsuccessful`
+                );
               } else {
-                if (!resp.status) {
-                  setStatus("Error");
-                  handleCancel(pinResponse.IpfsHash);
-                  handleCancel(cid.string)
-                  setMessage(
-                    `transaction ${mintResponse.transactionHash} unsuccessful`
-                  );
-                } else {
-                  const post = await handlePost(art);
-                  setLoading(false);
-                  await ipfs.stop();
-                  setStatus(post.status);
-                  setMessage(post.message);
-                }
+                const post = await handlePost(art);
+                setLoading(false);
+                await ipfs.stop();
+                setStatus(post.status);
+                setMessage(post.message);
               }
             }
-          );
-        };
-        checkMine();
+          }
+        );
+      };
+      checkMine();
     }
   };
 
@@ -214,6 +222,17 @@ const ArtForm = () => {
                 </>
               )}
             </Field>
+            <Field name="description">
+              {(props) => (
+                <>
+                  <TextArea
+                    value={props.input.value}
+                    onChange={props.input.onChange}
+                    placeholder={`Description...`}
+                  />
+                </>
+              )}
+            </Field>
             <Field name="caption">
               {(props) => (
                 <>
@@ -236,7 +255,7 @@ const ArtForm = () => {
                   <Button
                     loading={loading}
                     type="submit"
-                    disabled={Object.keys(values).length < 4 || disabled}
+                    disabled={Object.keys(values).length < 5 || disabled}
                   >
                     Submit
                   </Button>

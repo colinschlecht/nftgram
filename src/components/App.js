@@ -36,7 +36,7 @@ const App = () => {
                 <Route path="/art/new" exact component={CreateArt} />
                 <Route path="/profile/edit/:id" exact component={UserEdit} />
               </div>
-              <Route path="/art/:id" exact component={ArtShow} />
+              <Route path="/art/show/:id" exact component={ArtShow} />
               <Route path="/profile/:id" exact component={Profile} />
             </>
           </Switch>

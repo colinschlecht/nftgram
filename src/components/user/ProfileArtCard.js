@@ -9,8 +9,10 @@ const getDate = () => {
   let ms = (Date.now() - Date.parse(art.created_at)) / 1000 / 60 / 60 / 24 
   if(ms >= 1){
     return Math.floor(ms) + " days ago"
-  } else {
-    return (ms * 24) + " hours ago"
+  } else if(ms * 24 >= 1){
+    return Math.floor(ms * 24) + " hours ago"
+  } else if(ms * 24 < 1) {
+    return Math.floor(ms * 24 * 60) + " minutes ago"
   }
 }
 
@@ -21,9 +23,9 @@ const getDate = () => {
         <Link
           id={art.id}
           key={art.id + "u"}
-          to={{ pathname: `/art/${art.id}` }}
+          to={{ pathname: `/art/show/${art.id}` }}
         >
-          <Image src={`https://ipfs.io/ipfs/${art.cid}`} fluid />
+          <Image alat={art.description} src={`https://ipfs.io/ipfs/${art.cid}`} fluid />
         </Link>
         <h5>{art.caption}</h5>
         <Card.Meta>

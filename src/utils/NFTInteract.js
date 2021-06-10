@@ -41,6 +41,25 @@ export const mintNFT = async (uri) => {
   }
 };
 
+export const getTokenId = async (account) => {
+  const arr = [];
+  const contract = new web3.eth.Contract(contractABI, contractAddress);
+  const supply = await contract.methods.totalSupply().call();
+
+  const total = parseInt(supply);
+  for (let i = 1; i < total; i++) {
+    try {
+      const id = await contract.methods.ownerOf(i).call();
+      if (id.toLowerCase() === account) {
+        arr.push(i);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return { id: arr[arr.length - 1], address: contractAddress };
+};
+
 export const checkTransactionStatus = async (txHash) => {
   const transaction = await web3.eth.getTransactionReceipt(txHash);
   if (!transaction) {

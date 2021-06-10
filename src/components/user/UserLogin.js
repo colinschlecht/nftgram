@@ -10,8 +10,6 @@ const UserLogin = (props) => {
   
   const dispatch = useDispatch();
 
-
-
  const onSubmit = (formValues) => {
      dispatch(loginUser(formValues)).then((res) => {
       localStorage.setItem("token", res.data.jwt);
