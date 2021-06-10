@@ -34,12 +34,10 @@ const App = () => {
                 </div>
                 <Route path="/" exact component={Explore} />
                 <Route path="/art/new" exact component={CreateArt} />
-                <Route path="/art/:id" exact component={ArtShow} />
                 <Route path="/profile/edit/:id" exact component={UserEdit} />
               </div>
-              
-                <Route path="/profile/:id" exact component={Profile} />
-           
+              <Route path="/art/:id" exact component={ArtShow} />
+              <Route path="/profile/:id" exact component={Profile} />
             </>
           </Switch>
         </>

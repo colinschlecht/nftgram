@@ -5,7 +5,7 @@ export const FullLoaded = () => {
     return (
         <>
             <Divider />
-            There's nothing more to see here ...
+            No more postings to load ... create some more?
         </>
     )
 }

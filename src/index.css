@@ -221,3 +221,11 @@ html::-webkit-scrollbar {
     position:relative;
     margin:auto;
 }
+
+.imagecontainer{
+    height: 400px;
+    width: 400px;
+    display:flex;
+    align-items: center;
+    border: 1px solid black;
+}
