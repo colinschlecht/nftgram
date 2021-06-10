@@ -217,7 +217,7 @@ html::-webkit-scrollbar {
     margin: auto;
 }
 
-.image .placeholder{
+.image.placeholder{
     position:relative;
     margin:auto;
 }
@@ -228,4 +228,44 @@ html::-webkit-scrollbar {
     display:flex;
     align-items: center;
     border: 1px solid black;
+    overflow: hidden;
+}
+.outer.body.containter{
+    width: 90%;
+    margin: auto;
+    
+}
+.body.container{
+    display:flex;
+    align-content: center;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.body.image.container{
+    display:flex;
+    align-items: center;
+    align-content: center;
+    height: 300px;
+    width: 300px;
+    margin:auto;
+    overflow: hidden;
+}
+.body.art.image{
+    width: 100%;
+    max-height: 100rem;
+}
+
+.ui.card.body{
+    margin: 1em auto;
+    display: flex;
+    height: 500px;
+    width: 350px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.body.text.content{
+margin-top: 10px;
 }
