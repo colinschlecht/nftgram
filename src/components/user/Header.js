@@ -10,7 +10,7 @@ const Header = ({ user }) => {
   return (
     <>
       <div className="header container">
-        <img className="ui small circular image"></img>
+        <img alt={`${user.username}'s profile pic. Nice!`} className="ui small circular image"></img>
         <div className="image placeholder">
           <PlaceholderExampleImage />
         </div>

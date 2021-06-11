@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import { Comment as Comm, Divider } from "semantic-ui-react";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
@@ -7,6 +7,9 @@ import { createComment } from "../../actions";
 
 export const CommentSection = ({ art }) => {
   const dispatch = useDispatch();
+
+
+
 
   const [expanded, setExpanded] = useState(false);
   const [artComments, /*setArtComments*/] = useState(art.comments);

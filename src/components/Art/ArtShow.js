@@ -3,7 +3,6 @@ import { showArt } from "../../actions/";
 
 const ArtShow = ({ match }) => {
   const [art, setArt] = useState({});
-  //set loading state, and have a conditional that will either render loading or the actual data. Have the update occur during use effect
 
   useEffect(() => {
     showArt(match.params.id).then((resp) => setArt(resp.data));

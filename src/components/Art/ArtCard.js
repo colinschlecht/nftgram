@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 import { createArtLike, destroyArtLike } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
-  
+//! Used in setting classname for art image
+  const imgEl = useRef();
+//! Makes use of the current user in global state
   const user = useSelector((state) => {
     if (!!state.auth.user) {
       return state.auth.user;
@@ -15,7 +18,7 @@ export const ArtCard = ({ art }) => {
       return false;
     }
   });
-
+//! Sets liked status in local state
   const [liked, setLiked] = useState(
     !!art.likes.find((like) => {
       if (user) {
@@ -27,15 +30,28 @@ export const ArtCard = ({ art }) => {
   );
 
   useEffect(() => {
-   setLiked(!!art.likes.find((like) => {
-    if (user) {
-      return like.user_id === user.user.id;
-    } else {
-      return false;
-    }
-  }))
-    
-  }, [ user, art])
+    //! Get natural height and natural width and set className for image display accordingly
+    const getImageDim = async () => {
+      const width = await imgEl.current.naturalWidth
+      const height = await imgEl.current.naturalHeight
+      if (width > height) {
+        return imgEl.current.className = "landscape";
+      } else {
+        return imgEl.current.className = "portrait";
+      }
+    };
+    getImageDim()
+    //! Sets liked status in local state on render
+    setLiked(
+      !!art.likes.find((like) => {
+        if (user) {
+          return like.user_id === user.user.id;
+        } else {
+          return false;
+        }
+      })
+    );
+  }, [user, art]);
 
   //!\///////// like a post/artwork or unlike /////////////
   const handleLike = (e) => {
@@ -74,10 +90,13 @@ export const ArtCard = ({ art }) => {
     <>
       <Card fluid id="art-card">
         {art.link ? (
-          <Image
+          <img
             src={`https://ipfs.io/ipfs/${art.cid}`}
-            fluid
-            onClick={(e) => handleLike(e)}
+            onClick={(e) => {
+              handleLike(e);
+            }}
+            ref={imgEl}
+            alt={`An NFT posted with a description of: ${art.description}`}
           />
         ) : (
           <Image
