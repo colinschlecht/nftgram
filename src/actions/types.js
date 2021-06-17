@@ -21,5 +21,7 @@ export const DESTROY_COMMENT_LIKE = "DESTROY_COMMENT_LIKE";
 //!METAMASK
 export const CONNECT = "CONNECT";
 
-//!UI (not used)
+//!UI 
+export const ALERT = "ALERT"
+export const LOWER_ALERT = "LOWER_ALERT"
 export const SHOW_MENU = "SHOW_MENU";

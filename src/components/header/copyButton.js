@@ -1,17 +1,27 @@
+import { raiseAlert, lowerAlert } from "../../actions";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Icon } from "semantic-ui-react";
-import { CopyMessage } from "./CopyMessage";
 
-const CopyButton = ({ message }) => {
+const CopyButton = ({ message, mod }) => {
+  const dispatch = useDispatch();
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(message);
-    return <CopyMessage />;
+    dispatch(raiseAlert("Copied!"));
+    dispatch(lowerAlert());
   };
 
   return (
     <>
       &nbsp;&nbsp;
-      <Icon link className="copy outline" onClick={() => copyToClipboard()} />
+      <Icon
+        link
+        className={`copy outline ${mod}`}
+        onClick={() => {
+          copyToClipboard();
+        }}
+      />
     </>
   );
 };

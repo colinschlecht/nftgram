@@ -1,7 +1,7 @@
 import React from "react";
 // import { getUser } from "../actions";
 // import { useEffect } from "react";
-// import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import { HEADERS, TOKEN } from "../api";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -13,21 +13,21 @@ import Profile from "./user/Profile";
 import UserEdit from "./user/UserEdit";
 // import MainLogin from "./user/MainLogin";
 import MetamaskButton from "./header/MetamaskButton";
+import Alert from "./header/Alert";
 
 const App = () => {
-  // const dispatch = useDispatch();
-
-  // //!re-auth on page refresh
-  // dispatch(getUser(HEADERS, TOKEN)).then(console.log("authed"));
+  const alerted = useSelector((state) => !!state.UI.messages.length);
 
   return (
     <>
       <BrowserRouter>
         <>
           <Switch>
-            {/* <Route path="/account/login" exact component={MainLogin} /> */}
             <>
-              <MetamaskButton />
+              <div className="mm alerts container">
+                <MetamaskButton />
+                {alerted && <Alert />}
+              </div>
               <div id="main" className="ui centered grid">
                 <div id="nav">
                   <Nav />

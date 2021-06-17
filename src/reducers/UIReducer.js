@@ -1,16 +1,22 @@
-import { SHOW_MENU } from "../actions/types";
+import { ALERT, LOWER_ALERT } from "../actions/types";
 
 const INITIAL_STATE = {
-  nav_menu: hidden
+  messages: [],
 };
 
-const UIReducer = (state = INITIAL_STATE, action) => {
+const uiReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SHOW_MENU:
-      return { nav_menu: shown };
+    case ALERT:
+      return {
+        ...state,
+        messages: [action.payload, ...state.messages],
+      };
+    case LOWER_ALERT:
+      const newMessages = [...state.messages].slice(1)
+      return { ...state, messages: newMessages};
     default:
       return state;
   }
 };
 
-export default UIReducer;
+export default uiReducer;

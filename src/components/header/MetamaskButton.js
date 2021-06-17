@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useDispatch } from "react-redux";
-import { connect, createUser } from "../../actions";
+import { connect, createUser, raiseAlert, lowerAlert } from "../../actions";
 import CopyButton from "./copyButton";
 // import { getNFTHistory } from "../../api/etherscan";
 
@@ -45,9 +45,11 @@ const MetamaskButton = () => {
   };
 
   const handleChangedAccount = () => {
-    window.ethereum.request({ method: "eth_accounts" }).then((account) => {
+    window.ethereum.request({ method: "eth_accounts" }).then( async (account) => {
       dispatch(connect(account));
-      dispatch(createUser({ metamask_account: account[0] }));
+      dispatch(createUser({ metamask_account: account[0] }))
+      dispatch(raiseAlert("Account Changed"));
+      dispatch(lowerAlert());
       setCurrent(account[0]);
       setLoading(false);
       setMessage(account[0]);
@@ -67,17 +69,26 @@ const MetamaskButton = () => {
     if (!listening) {
       window.ethereum.on("accountsChanged", () => handleChangedAccount());
       setListening(!listening);
+      setLoading(true);
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(() => {
+          handleNewAccount();
+        })
+        .catch((err) => {
+          setMessage(err.message);
+          setLoading(false);
+        });
+        dispatch(raiseAlert("Connected"));
+        dispatch(lowerAlert());
     }
-    setLoading(true);
-    window.ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then(() => {
-        handleNewAccount();
-      })
-      .catch((err) => {
-        setMessage(err.message);
-        setLoading(false);
-      });
+    if (message.length > 0) {
+      setMessage("");
+      setLoading(false);
+    } else {
+      setMessage(currentAcct);
+      setLoading(false);
+    }
   };
 
   const MetaMaskClientCheck = () => {
@@ -97,19 +108,17 @@ const MetamaskButton = () => {
   };
 
   return (
-    <div className="container">
-      <div className="menu">
-        {MetaMaskClientCheck()}
-        <div className="item">
-          {message[0] === "0" ? (
-            <>
-              {message}
-              <CopyButton message={message} />
-            </>
-          ) : (
-            message
-          )}
-        </div>
+    <div className="menu">
+      {MetaMaskClientCheck()}
+      <div className="item">
+        {message[0] === "0" ? (
+          <div className="metamask message positive">
+            {message}
+            <CopyButton message={message} mod={"inverse"}/>
+          </div>
+        ) : (
+          message
+        )}
       </div>
     </div>
   );

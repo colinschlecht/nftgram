@@ -1,5 +1,7 @@
 import API_BASE from "../api";
 import {
+  ALERT,
+  LOWER_ALERT,
   CREATE_ART,
   SHOW_MENU,
   // SIGN_IN,
@@ -23,6 +25,16 @@ import {
 //!METAMASK!//
 export const connect = (accts) => async (dispatch) => {
   dispatch({ type: CONNECT, payload: accts });
+};
+
+//! UI
+export const raiseAlert = (msg) => async (dispatch) => {
+  dispatch({ type: ALERT, payload: msg });
+};
+export const lowerAlert = () => async (dispatch) => {
+  window.setTimeout(() => {
+    dispatch({ type: LOWER_ALERT, payload: null });
+  }, 3000);
 };
 
 //!user actions!//
