@@ -1,23 +1,35 @@
-import React, {/* useEffect, useState */} from "react";
+import React /* useEffect, useState */ from "react";
 import { useSelector } from "react-redux";
+import {Link} from 'react-router-dom'
 import PlaceholderExampleImage from "./PPPlaceHolder";
+import { Icon } from "semantic-ui-react";
+import CopyButton from "../header/copyButton";
 // import { Grid, Image } from "semantic-ui-react";
 
 const Header = ({ user }) => {
   const wallet = useSelector((state) => state.MetaMask);
 
-  console.log("hi");
   return (
     <>
       <div className="header container">
-        <img alt={`${user.username}'s profile pic. Nice!`} className="ui small circular image"></img>
         <div className="image placeholder">
-          <PlaceholderExampleImage />
+          {user.avatar ? (
+            <img
+              alt={`${user.username}'s profile pic. Nice!`}
+              className="ui small circular image"
+            ></img>
+          ) : (
+            <PlaceholderExampleImage />
+          )}
         </div>
         <h2>{user.username}</h2>
-        <h5>{user.metamask_account}</h5>
+        <h5>{user.metamask_account}<CopyButton message={user.metamask_account}></CopyButton></h5>
         <div>
-          {wallet.account === user.metamask_account ? <button>Edit</button> : null}
+          {wallet.account === user.metamask_account ? (
+            <Link className="edit icon">
+            <Icon name="edit outline"></Icon>
+            </Link>
+          ) : null}
         </div>
         <div className="ui divider header"></div>
         <p>{user.bio}</p>

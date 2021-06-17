@@ -9,10 +9,8 @@ const UserCreate = (props) => {
 
 
   const onSubmit = (input) => {
-    console.log(input)
     dispatch(createUser(input)).then((res) => {
       localStorage.setItem("token", res.data.jwt)
-      console.log(res);
       if (res.status === 201) {
        props.history.push("/");
       }

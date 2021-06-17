@@ -269,3 +269,16 @@ html::-webkit-scrollbar {
 .body.text.content{
 margin-top: 10px;
 }
+
+.edit.icon{
+    color: rgba(65, 65, 65, 0.249);
+}
+.edit.icon:hover{
+    color: rgb(65, 65, 65);
+}
+.copy.outline{
+    color: rgba(65, 65, 65, 0.249);
+}
+.copy.outline:hover{
+    color: rgb(65, 65, 65);
+}
