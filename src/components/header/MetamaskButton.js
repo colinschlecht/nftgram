@@ -30,7 +30,7 @@ const MetamaskButton = () => {
   const handleNewAccount = () => {
     window.ethereum.request({ method: "eth_accounts" }).then((account) => {
       dispatch(connect(account));
-      dispatch(createUser({ metamask_account: account[0] })).then(console.log);
+      dispatch(createUser({ metamask_account: account[0] }));
       setCurrent(account[0]);
       setLoading(false);
     });
@@ -45,16 +45,18 @@ const MetamaskButton = () => {
   };
 
   const handleChangedAccount = () => {
-    window.ethereum.request({ method: "eth_accounts" }).then( async (account) => {
-      dispatch(connect(account));
-      dispatch(createUser({ metamask_account: account[0] }))
-      dispatch(raiseAlert("Account Changed"));
-      dispatch(lowerAlert());
-      setCurrent(account[0]);
-      setLoading(false);
-      setMessage(account[0]);
-      clearMessage();
-    });
+    window.ethereum
+      .request({ method: "eth_accounts" })
+      .then(async (account) => {
+        dispatch(connect(account));
+        dispatch(createUser({ metamask_account: account[0] }));
+        dispatch(raiseAlert("Account Changed"));
+        dispatch(lowerAlert());
+        setCurrent(account[0]);
+        setLoading(false);
+        setMessage(account[0]);
+        clearMessage();
+      });
   };
 
   const isMetaMaskInstalled = () => {
@@ -79,8 +81,8 @@ const MetamaskButton = () => {
           setMessage(err.message);
           setLoading(false);
         });
-        dispatch(raiseAlert("Connected"));
-        dispatch(lowerAlert());
+      dispatch(raiseAlert("Connected"));
+      dispatch(lowerAlert());
     }
     if (message.length > 0) {
       setMessage("");
@@ -114,7 +116,7 @@ const MetamaskButton = () => {
         {message[0] === "0" ? (
           <div className="metamask message positive">
             {message}
-            <CopyButton message={message} mod={"inverse"}/>
+            <CopyButton message={message} mod={"inverse"} />
           </div>
         ) : (
           message
