@@ -9,7 +9,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { Header, Icon, Segment, Divider, Label } from "semantic-ui-react";
-import CopyButton from "../header/copyButton";
 import ShowDetails from "./ShowDetails";
 
 const ArtShow = ({ match }) => {
@@ -19,7 +18,7 @@ const ArtShow = ({ match }) => {
 
   const [displayLikes, setDisplayLikes] = useState(false);
   const [displayComments, setdisplayComments] = useState(false);
-  const [displayDetails, setDisplayDetails] = useState(false);
+  const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
 
   const wallet = useSelector((state) => state.MetaMask);
@@ -265,65 +264,7 @@ const ArtShow = ({ match }) => {
           </Segment.Group>
         </div>
 
-        <div className="artshow details">
-          <Header className="artshow detail title" as="h4" attached="top" block>
-            Owner
-          </Header>
-          <Segment attached className="artshow detail seg">
-            {art.user?.username}
-          </Segment>
-          <Segment attached="bottom" className="artshow detail seg">
-            <h5 className="trunc">
-              <CopyButton message={art.user?.metamask_account} />
-              {art.user?.metamask_account}
-            </h5>
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached="top" block>
-            Created by
-          </Header>
-          <Segment attached className="artshow detail seg">
-            {art.artist?.name}
-          </Segment>
-          <Segment attached="bottom" className="artshow detail seg">
-            <h5 className="trunc">
-              <CopyButton message={art.artist?.user?.metamask_account} />
-              {art.artist?.user?.metamask_account}
-            </h5>
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached="top" block>
-            Artwork CID
-          </Header>
-          <Segment attached className="artshow detail seg">
-            <h5 className="trunc">
-              <CopyButton message={art.cid} />
-              {art?.cid}
-            </h5>
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
-            Token URI
-          </Header>
-          <Segment attached className="artshow detail seg">
-            <h5 className="trunc">
-              <CopyButton message={art.tokenURI} />
-              {art?.tokenURI}
-            </h5>
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
-            ERC 721 Contract Address
-          </Header>
-          <Segment attached className="artshow detail seg">
-            <h5 className="trunc">
-              <CopyButton message={art.contract_address} />
-              {art?.contract_address}
-            </h5>
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
-            Token ID
-          </Header>
-          <Segment attached="bottom" className="artshow detail title">
-            {art.tokenID}
-          </Segment>
-        </div>
+        {displayDetails && <ShowDetails art={art}/>}
 
         <Segment
           className="artshowdetail description ui block header"
