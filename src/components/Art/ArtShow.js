@@ -16,10 +16,10 @@ const ArtShow = ({ match }) => {
 
   const [art, setArt] = useState({});
 
-  const [displayLikes, setDisplayLikes] = useState(false)
-  const [displayComments, setdisplayComments] = useState(false)
-  const [displayDetails, setDisplayDetails] = useState(true)
-  const [displayEvents, setDisplayEvents] = useState(false)
+  const [displayLikes, setDisplayLikes] = useState(false);
+  const [displayComments, setdisplayComments] = useState(false);
+  const [displayDetails, setDisplayDetails] = useState(false);
+  const [displayEvents, setDisplayEvents] = useState(false);
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -102,6 +102,22 @@ const ArtShow = ({ match }) => {
     e.preventDefault();
   };
 
+  const handleDisplayLikes = (e) => {
+    e.preventDefault()
+    setDisplayLikes(!displayLikes)
+  }
+  const handleDisplayComments = (e) => {
+    e.preventDefault()
+    setdisplayComments(!displayComments)
+  }
+  const handleDisplayEvents = (e) => {
+    e.preventDefault()
+    setDisplayEvents(!displayEvents)
+  }
+  const handleDisplayDetails = (e) => {
+    e.preventDefault()
+    setDisplayDetails(!displayDetails)
+  }
   return (
     <div className="container">
       <Segment className="artshow header">
@@ -134,37 +150,40 @@ const ArtShow = ({ match }) => {
                 >
                   <Icon name="fire" />
                 </a>
-                {art.likes?.length} Likes
+                <a
+                href={`/art/show/${art.id}`}
+                className="like button icon"
+                onClick={(e) => handleDisplayLikes(e)}>{art.likes?.length} Likes</a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleComments(e)}
+                  onClick={(e) => handleDisplayComments(e)}
                 >
                   <Icon name="comment" />
-                </a>
                 {art.comments?.length} comments
+                </a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleComments(e)}
+                  onClick={(e) => handleDisplayEvents(e)}
                 >
                   <Icon name="calendar" />
-                </a>
                 {art.events?.length} events
+                </a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleComments(e)}
+                  onClick={(e) => handleDisplayDetails(e)}
                 >
                   <Icon name="info circle" />
-                </a>
                 {art.events?.length} details
+                </a>
               </h4>
             </Segment>
             <Segment attached="bottom" className="buy sell bottom">
