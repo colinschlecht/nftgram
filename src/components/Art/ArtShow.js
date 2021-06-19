@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Segment, Divider, Label } from "semantic-ui-react";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
+import ShowEvents from "./ShowEvents";
+import ShowComments from "./ShowComments";
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -274,9 +276,22 @@ const ArtShow = ({ match }) => {
             </Segment>
           </Segment.Group>
         </div>
-
+        {
+          //! SHOW ART DETAILS
+        }
         {displayDetails && <ShowDetails art={art} />}
+        {
+          //! SHOW ART LIKES
+        }
         {displayLikes && <ShowLikes art={art} />}
+        {
+          //! SHOW ART EVENTS
+        }
+        {displayEvents && <ShowEvents art={art} />}
+        {
+          //! SHOW ART COMMENTS
+        }
+        {displayComments && <ShowComments art={art} />}
 
         <Segment
           className="artshowdetail description ui block header"

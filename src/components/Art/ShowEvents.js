@@ -1,10 +1,11 @@
 import React from 'react'
 
-const ShowLikes = () => {
+const ShowEvents = () => {
     return (
         <div className="artshow details">
-            LIKES!!
+            EVENTS!!
         </div>
     )
 }
-export default ShowLikes
+
+export default ShowEvents
