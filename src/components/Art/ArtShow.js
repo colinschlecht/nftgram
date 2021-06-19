@@ -8,16 +8,14 @@ import {
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
 
-
-import { Header, Icon, Segment, Divider, Popup } from "semantic-ui-react";
+import { Header, Icon, Segment, Divider, Label } from "semantic-ui-react";
 import CopyButton from "../header/copyButton";
-
-
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
 
   const [art, setArt] = useState({});
+
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -38,18 +36,24 @@ const ArtShow = ({ match }) => {
     })
   );
 
+  console.log("hi");
+
+
   useEffect(() => {
-    showArt(match.params.id).then((resp) => setArt(resp.data));
-    setLiked(
-      !!art.likes?.find((like) => {
-        if (user) {
-          return like.user_id === user.user.id;
-        } else {
-          return false;
-        }
-      })
-    );
-  }, [match.params.id, user, art]);
+  
+    showArt(match.params.id).then((resp) => {
+      setArt(resp.data);
+      setLiked(
+        !!resp.data.likes?.find((like) => {
+          if (user) {
+            return like.user_id === user.user.id;
+          } else {
+            return false;
+          }
+        })
+      );
+    });
+  }, [match.params.id, user, liked]);
 
   const handleLike = (e) => {
     e.preventDefault();
@@ -75,13 +79,7 @@ const ArtShow = ({ match }) => {
     }
   };
 
-  const truncateText = (text) => {
-    if (window.innerWidth < 530) {
-      return `${text.slice(0, Math.floor(window.innerWidth / 15))}...`;
-    } else {
-      return text;
-    }
-  };
+
 
   const handleShowPrice = (e) => {
     e.preventDefault();
@@ -89,112 +87,124 @@ const ArtShow = ({ match }) => {
     dispatch(lowerAlert());
   };
 
+  const handlePurchase = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="container">
-      <Divider />
-      <div className="artshow header">
+      <Segment className="artshow header">
         <div className="outer artshow left">
-          <div className="imagecontainer">
-            <img
-              className="ui fluid image"
-              src={`https://ipfs.io/ipfs/${art.cid}`}
-              alt={art.description}
-            />
-          </div>
-          <div className="artshow caption">
+          <Header as="h4" attached="top" className="artshow detail title" block>
+            {art.name}
+          </Header>
+
+          <Segment attached>
+            <div className="imagecontainer artshow">
+              <img
+                className="artshow image portrait"
+                src={`https://ipfs.io/ipfs/${art.cid}`}
+                alt={art.description}
+              />
+            </div>
+          </Segment>
+
+          <Segment attached="bottom" className="artshow caption bottom">
             <h4>{art.caption}</h4>
-          </div>
-          <div className="artshow nftg-specs">
-            <h4>
-              <a
-                id="like-button-main"
-                href={`/art/show/${art.id}`}
-                className="like button icon"
-                onClick={(e) => handleLike(e)}
-              >
-                <Icon name="fire" />
-              </a>
-              {art.likes?.length} Likes
-              
-            </h4>
-          </div>
-          <div classname="buy sell box">
-          {art.for_sale ? (
+          </Segment>
+
+          <Segment.Group>
+            <Segment attached="top" className="artshow nftg-specs">
+              <h4>
                 <a
-                  id="like-button-main"
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  color="green"
                   onClick={(e) => handleLike(e)}
                 >
-                  <Icon color="green" name="ethereum" />
+                  <Icon name="fire" />
                 </a>
-              ) : (
-                <>
+                {art.likes?.length} Likes
+              </h4>
+            </Segment>
+            <Segment attached="bottom" className="buy sell bottom">
+              <Label tag>
+                {art.for_sale ? (
                   <a
-                    id="like-button-main"
                     href={`/art/show/${art.id}`}
-                    className="like button icon ethereum"
-                    onClick={(e) => handleShowPrice(e)}                    
+                    className="ethereum sale"
+                    color="green"
+                    onClick={(e) => handlePurchase(e)}  
                   >
-                    <Icon color="red" name="ethereum" />
+                    <Icon color="green" name="ethereum" />
                   </a>
-                </>
-              )}
-              {wallet?.account === art.user?.metamask_account ? (
-            
-            <Icon name="edit outline"></Icon>
-            
-          ) : "null"}
-          </div>
+                ) : (
+                  <>
+                    <a
+                      href={`/art/show/${art.id}`}
+                      className="ethereum sale"
+                      onClick={(e) => handleShowPrice(e)}
+                    >
+                      <Icon color="red" name="ethereum" />
+                      <span>0.0 ETH</span>
+                    </a>
+                    {art.user?.metamask_account === wallet?.account ? (<p className="pricemessage">List for sale</p>) : <p className="pricemessage">not for sale</p>}
+                    
+                  </>
+                )}
+              </Label>
+             
+            </Segment>
+          </Segment.Group>
         </div>
 
         <div className="artshow details">
-          <Header as="h4" attached="top" className="artshow detail title" block>
-            Name
-          </Header>
-          <Segment attached className="artshow detail seg">
-            {art.name}
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
-            Description
-          </Header>
-          <Segment attached className="artshow detail seg">
-            {art.description}t
-          </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
+          <Header className="artshow detail title" as="h4" attached="top" block>
             Owner
           </Header>
           <Segment attached className="artshow detail seg">
             {art.user?.username}
           </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
+          <Segment attached="bottom" className="artshow detail seg">
+            <h5 className="trunc">
+            <CopyButton message={art.user?.metamask_account} />
+              {art.user?.metamask_account}
+            </h5>
+          </Segment>
+          <Header className="artshow detail title" as="h4" attached="top" block>
             Created by
           </Header>
           <Segment attached className="artshow detail seg">
             {art.artist?.name}
           </Segment>
-          <Header className="artshow detail title" as="h4" attached block>
+          <Segment attached="bottom" className="artshow detail seg">
+          <h5 className="trunc"> 
+            <CopyButton message={art.artist?.user?.metamask_account} />
+          {art.artist?.user?.metamask_account}</h5>
+             
+          </Segment>
+          <Header className="artshow detail title" as="h4" attached="top" block>
             Artwork CID
           </Header>
           <Segment attached className="artshow detail seg">
-            {art?.cid && truncateText(art?.cid.toString())}
+            <h5 className="trunc"> 
             <CopyButton message={art.cid} />
+            {art?.cid}</h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             Token URI
           </Header>
           <Segment attached className="artshow detail seg">
-            {art?.tokenURI && truncateText(art?.tokenURI.toString())}{" "}
+            <h5 className="trunc">
             <CopyButton message={art.tokenURI} />
+              {art?.tokenURI}</h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             ERC 721 Contract Address
           </Header>
           <Segment attached className="artshow detail seg">
-            {art?.contract_address &&
-              truncateText(art?.contract_address.toString())}
+            <h5 className="trunc">
             <CopyButton message={art.contract_address} />
+              {art?.contract_address}</h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             Token ID
@@ -203,7 +213,19 @@ const ArtShow = ({ match }) => {
             {art.tokenID}
           </Segment>
         </div>
-      </div>
+
+        <Segment
+          className="artshowdetail description ui block header"
+          as="h4"
+          attached="top"
+        >
+          Description
+        </Segment>
+        <Segment attached="bottom" className="artshowdetail description ">
+          {art.description}t
+        </Segment>
+      </Segment>
+
       <Divider />
     </div>
   );

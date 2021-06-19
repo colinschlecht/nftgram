@@ -5,12 +5,11 @@ import { createArtLike, destroyArtLike } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
-//! Used in setting classname for art image
+  //! Used in setting classname for art image
   const imgEl = useRef();
-//! Makes use of the current user in global state
+  //! Makes use of the current user in global state
   const user = useSelector((state) => {
     if (!!state.auth.user) {
       return state.auth.user;
@@ -18,7 +17,7 @@ export const ArtCard = ({ art }) => {
       return false;
     }
   });
-//! Sets liked status in local state
+  //! Sets liked status in local state
   const [liked, setLiked] = useState(
     !!art.likes.find((like) => {
       if (user) {
@@ -32,15 +31,15 @@ export const ArtCard = ({ art }) => {
   useEffect(() => {
     //! Get natural height and natural width and set className for image display accordingly
     const getImageDim = async () => {
-      const width = await imgEl.current.naturalWidth
-      const height = await imgEl.current.naturalHeight
+      const width = await imgEl.current.naturalWidth;
+      const height = await imgEl.current.naturalHeight;
       if (width > height) {
-        return imgEl.current.className = "landscape";
+        return (imgEl.current.className = "landscape");
       } else {
-        return imgEl.current.className = "portrait";
+        return (imgEl.current.className = "portrait");
       }
     };
-    getImageDim()
+    getImageDim();
     //! Sets liked status in local state on render
     setLiked(
       !!art.likes.find((like) => {

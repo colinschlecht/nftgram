@@ -168,82 +168,7 @@ html::-webkit-scrollbar {
   border-radius: 0.15em;
 }
 
-/*! -------- art showpage --------- */
-@media (max-width: 767.98px) {
-  .artshow.details {
-    min-width: max-content;
-    justify-content: space-around;
-  }
-  .artshow.detail.seg {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-  }
-}
-.artshow.header {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-}
-.artshow.details {
-  min-width: 60%;
-  justify-content: space-around;
-} 
-.artshow.detail.title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.artshow.detail.seg {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-.imagecontainer {
-  height: 400px;
-  width: 400px;
-  display: flex;
-  align-items: center;
-  border: 0px solid transparent;
-  border-radius: 0.15em;
-  overflow: hidden;
-}
-.artshow.outer.left {
-  border: 0px solid transparent;
-  border-radius: 0.15em;
-  display: flex;
-  flex-direction: column;
-}
-.artshow.caption {
-  margin-top: 1em;
-  border: 0px solid transparent;
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
-  padding-top: 0.84em;
-  padding-bottom: 0.84em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(138, 113, 13, 0.106);
-}
-
-
-.artshow.nftg-specs {
-  margin-top: 1em;
-  border: 0px solid transparent;
-  border-top-left-radius: 0.15em;
-  border-top-right-radius: 0.15em;
-  padding-top: 0.84em;
-  padding-bottom: 0.84em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(237, 234, 217, 0.174);
-}
+/*! ---------- user showpage body ----------- */
 
 .outer.body.containter {
   width: 90%;
@@ -286,17 +211,181 @@ html::-webkit-scrollbar {
   margin-top: 10px;
 }
 
+/*! -------- art showpage --------- */
+@media (max-width: 1152.8px) {
+  .outer.artshow.left {
+    width: 100%;
+    margin: auto !important;
+    margin-bottom: 1.5rem !important;
+
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+  .artshow.details {
+    width: 100%;
+  }
+}
+@media (max-width: 350.98px) {
+  .artshow.image.portrait {
+    max-height: 300px !important;
+    display: flex;
+    width: auto;
+    margin: auto;
+  }
+}
+
+@media (max-width: 528.98px) {
+  div .artshow.image.portrait {
+    max-height: 340px;
+    display: flex;
+    width: auto;
+    margin: auto;
+  }
+}
+@media (max-width: 767.98px) {
+  .outer.artshow.left {
+    width: 100%;
+
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+
+  .artshowdetail.description.header {
+    color: (0, 0, 0, 0.87);
+  }
+  .artshowdetail.description {
+    margin: 1em;
+    width: 100%;
+  }
+
+  .artshow.details {
+    margin: auto;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .artshow.detail.seg {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  .artshow.header {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-around;
+  }
+}
+
+.trunc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.artshow.image.portrait {
+  max-height: 450px;
+  width: auto;
+  margin: auto;
+}
+.artshow.header {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.outer.artshow.left {
+  flex-grow: 2;
+  flex-basis: auto;
+  margin: 0;
+  margin-right: 1em;
+  min-width: 40%;
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px solid #d4d4d5; */
+}
+.artshow.details {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0;
+  min-width: 50%;
+  justify-content: space-between;
+  margin-top: 0;
+}
+.artshow.detail.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.artshow.detail.seg {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.artshow.detail.seg.bottom {
+  box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);
+}
+
+.imagecontainer.artshow {
+  margin: auto;
+  max-height: 600x;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid transparent;
+  border-radius: 0.15em;
+  overflow: hidden;
+}
+.artshow.caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.artshow.nftg-specs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buy.sell {
+  width: 100%;
+  display: flex;
+}
+
+.ethereum.sale {
+  font-size: 2em;
+}
+
+.pricemessage {
+  font-size: 1em;
+  margin-left: 0.45em;
+  width: fit-content;
+}
 
 /*! -------- ui/mm/copy --------- */
 @media (max-width: 767.98px) {
-    .alertbox {
-        margin-left: -7vw !important;
-        position: fixed;
-        display: flex;
-        width: 100vw!important;
-        height: fit-content;
-        z-index: 11;
-      }
+  .alertbox {
+    margin-left: -7vw !important;
+    position: fixed;
+    display: flex;
+    width: 100vw !important;
+    height: fit-content;
+    z-index: 11;
+  }
 }
 
 .edit.icon {
