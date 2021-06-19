@@ -222,7 +222,7 @@ const ArtShow = ({ match }) => {
           Description
         </Segment>
         <Segment attached="bottom" className="artshowdetail description ">
-          {art.description}t
+          {art.description}
         </Segment>
       </Segment>
 
