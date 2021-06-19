@@ -361,9 +361,16 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 
+.displaychanger{
+    margin: auto;
+}
+
 .buy.sell {
   width: 100%;
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  
 }
 
 .ethereum.sale {
@@ -371,9 +378,42 @@ html::-webkit-scrollbar {
 }
 
 .pricemessage {
+    
   font-size: 1em;
   margin-left: 0.45em;
   width: fit-content;
+}
+
+.salemessage{
+    width: 100%;
+    font-size: 1em;
+    transform: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    color:#b0afaf;
+
+}
+.pricetag:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.01);
+}
+
+.cartspan{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.cartspan:hover p{
+color: black;   
+}
+
+.shoppingcart{
+    margin:auto;
+}
+.shoppingcart:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.2);
 }
 
 /*! -------- ui/mm/copy --------- */

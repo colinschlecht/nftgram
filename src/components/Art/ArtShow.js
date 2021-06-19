@@ -16,6 +16,10 @@ const ArtShow = ({ match }) => {
 
   const [art, setArt] = useState({});
 
+  const [displayLikes, setDisplayLikes] = useState(false)
+  const [displayComments, setdisplayComments] = useState(false)
+  const [displayDetails, setDisplayDetails] = useState(true)
+  const [displayEvents, setDisplayEvents] = useState(false)
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -38,9 +42,7 @@ const ArtShow = ({ match }) => {
 
   console.log("hi");
 
-
   useEffect(() => {
-  
     showArt(match.params.id).then((resp) => {
       setArt(resp.data);
       setLiked(
@@ -79,7 +81,9 @@ const ArtShow = ({ match }) => {
     }
   };
 
-
+  const handleComments = (e) => {
+    e.preventDefault();
+  };
 
   const handleShowPrice = (e) => {
     e.preventDefault();
@@ -88,6 +92,13 @@ const ArtShow = ({ match }) => {
   };
 
   const handlePurchase = (e) => {
+    e.preventDefault();
+  };
+  const handlePurchaseCancel = (e) => {
+    e.preventDefault();
+  };
+
+  const handleList = (e) => {
     e.preventDefault();
   };
 
@@ -115,7 +126,7 @@ const ArtShow = ({ match }) => {
 
           <Segment.Group>
             <Segment attached="top" className="artshow nftg-specs">
-              <h4>
+              <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
@@ -125,34 +136,113 @@ const ArtShow = ({ match }) => {
                 </a>
                 {art.likes?.length} Likes
               </h4>
+              <h4 className="displaychanger">
+                <a
+                  href={`/art/show/${art.id}`}
+                  className="like button icon"
+                  onClick={(e) => handleComments(e)}
+                >
+                  <Icon name="comment" />
+                </a>
+                {art.comments?.length} comments
+              </h4>
+              <h4 className="displaychanger">
+                <a
+                  href={`/art/show/${art.id}`}
+                  className="like button icon"
+                  onClick={(e) => handleComments(e)}
+                >
+                  <Icon name="calendar" />
+                </a>
+                {art.events?.length} events
+              </h4>
+              <h4 className="displaychanger">
+                <a
+                  href={`/art/show/${art.id}`}
+                  className="like button icon"
+                  onClick={(e) => handleComments(e)}
+                >
+                  <Icon name="info circle" />
+                </a>
+                {art.events?.length} details
+              </h4>
             </Segment>
             <Segment attached="bottom" className="buy sell bottom">
-              <Label tag>
+              <Label tag className="pricetag">
                 {art.for_sale ? (
-                  <a
-                    href={`/art/show/${art.id}`}
-                    className="ethereum sale"
-                    color="green"
-                    onClick={(e) => handlePurchase(e)}  
-                  >
-                    <Icon color="green" name="ethereum" />
-                  </a>
-                ) : (
+                  //! if item IS for sale
                   <>
-                    <a
-                      href={`/art/show/${art.id}`}
-                      className="ethereum sale"
-                      onClick={(e) => handleShowPrice(e)}
-                    >
-                      <Icon color="red" name="ethereum" />
-                      <span>0.0 ETH</span>
-                    </a>
-                    {art.user?.metamask_account === wallet?.account ? (<p className="pricemessage">List for sale</p>) : <p className="pricemessage">not for sale</p>}
-                    
+                    {art.user?.metamask_account === wallet?.account ? (
+                      <>
+                        //! if USER is OWNER
+                        <a
+                          href={`/art/show/${art.id}`}
+                          className="ethereum sale"
+                          color="green"
+                          onClick={(e) => handlePurchaseCancel(e)}
+                        >
+                          <Icon color="green" name="ethereum" />
+                        </a>
+                        <p className="pricemessage">Click to cancel listing</p>
+                      </>
+                    ) : (
+                      //! if USER is BUYER
+                      <>
+                        <a
+                          href={`/art/show/${art.id}`}
+                          className="ethereum sale"
+                          color="green"
+                          onClick={(e) => handlePurchase(e)}
+                        >
+                          <Icon color="green" name="ethereum" />
+                        </a>
+                        <p className="pricemessage">Click to purchase</p>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  //! if item NOT is for sale
+                  <>
+                    {art.user?.metamask_account === wallet?.account ? (
+                      //! User is OWNER
+                      <>
+                        <a
+                          href={`/art/show/${art.id}`}
+                          className="ethereum sale"
+                          onClick={(e) => handleList(e)}
+                        >
+                          <Icon color="red" name="ethereum" />
+                          <span>0.0 ETH</span>
+                        </a>
+                        <p className="pricemessage">List for sale</p>
+                      </>
+                    ) : (
+                      //! User is NOT OWNER
+                      <>
+                        <a
+                          href={`/art/show/${art.id}`}
+                          className="ethereum sale"
+                          onClick={(e) => handleShowPrice(e)}
+                        >
+                          <Icon color="red" name="ethereum" />
+                          <span>0.0 ETH</span>
+                        </a>
+                        <p className="pricemessage">Not for sale</p>
+                      </>
+                    )}
                   </>
                 )}
               </Label>
-             
+              <span className="cartspan">
+                <a
+                  href={`/art/show/${art.id}`}
+                  className="ethereum sale shoppingcart"
+                  onClick={(e) => handleShowPrice(e)}
+                >
+                  <Icon color="red" name="cart" className="shoppingcart" />
+                </a>
+                <p className="salemessage">Not for sale</p>
+              </span>
             </Segment>
           </Segment.Group>
         </div>
@@ -166,7 +256,7 @@ const ArtShow = ({ match }) => {
           </Segment>
           <Segment attached="bottom" className="artshow detail seg">
             <h5 className="trunc">
-            <CopyButton message={art.user?.metamask_account} />
+              <CopyButton message={art.user?.metamask_account} />
               {art.user?.metamask_account}
             </h5>
           </Segment>
@@ -177,34 +267,37 @@ const ArtShow = ({ match }) => {
             {art.artist?.name}
           </Segment>
           <Segment attached="bottom" className="artshow detail seg">
-          <h5 className="trunc"> 
-            <CopyButton message={art.artist?.user?.metamask_account} />
-          {art.artist?.user?.metamask_account}</h5>
-             
+            <h5 className="trunc">
+              <CopyButton message={art.artist?.user?.metamask_account} />
+              {art.artist?.user?.metamask_account}
+            </h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached="top" block>
             Artwork CID
           </Header>
           <Segment attached className="artshow detail seg">
-            <h5 className="trunc"> 
-            <CopyButton message={art.cid} />
-            {art?.cid}</h5>
+            <h5 className="trunc">
+              <CopyButton message={art.cid} />
+              {art?.cid}
+            </h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             Token URI
           </Header>
           <Segment attached className="artshow detail seg">
             <h5 className="trunc">
-            <CopyButton message={art.tokenURI} />
-              {art?.tokenURI}</h5>
+              <CopyButton message={art.tokenURI} />
+              {art?.tokenURI}
+            </h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             ERC 721 Contract Address
           </Header>
           <Segment attached className="artshow detail seg">
             <h5 className="trunc">
-            <CopyButton message={art.contract_address} />
-              {art?.contract_address}</h5>
+              <CopyButton message={art.contract_address} />
+              {art?.contract_address}
+            </h5>
           </Segment>
           <Header className="artshow detail title" as="h4" attached block>
             Token ID
