@@ -43,8 +43,6 @@ const ArtShow = ({ match }) => {
     })
   );
 
- 
-
   useEffect(() => {
     showArt(match.params.id).then((resp) => {
       setArt(resp.data);
@@ -109,16 +107,12 @@ const ArtShow = ({ match }) => {
     switch (display) {
       case "LIKES":
         return setDisplayLikes(!displayLikes);
-        break;
       case "DETAILS":
         return setDisplayDetails(!displayDetails);
-        break;
       case "COMMENTS":
         return setdisplayComments(!displayComments);
-        break;
       case "EVENTS":
         return setDisplayEvents(!displayEvents);
-        break;
       default:
         dispatch(raiseAlert("Error"));
         dispatch(lowerAlert());
@@ -202,8 +196,8 @@ const ArtShow = ({ match }) => {
                   //! if item IS for sale
                   <>
                     {art.user?.metamask_account === wallet?.account ? (
-                      <>
                         //! if USER is OWNER
+                      <>
                         <a
                           href={`/art/show/${art.id}`}
                           className="ethereum sale"

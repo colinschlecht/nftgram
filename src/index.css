@@ -361,8 +361,8 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 
-.displaychanger{
-    margin: auto;
+.displaychanger {
+  margin: auto;
 }
 
 .buy.sell {
@@ -370,7 +370,6 @@ html::-webkit-scrollbar {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  
 }
 
 .ethereum.sale {
@@ -378,42 +377,64 @@ html::-webkit-scrollbar {
 }
 
 .pricemessage {
-    
   font-size: 1em;
   margin-left: 0.45em;
   width: fit-content;
 }
 
-.salemessage{
-    width: 100%;
-    font-size: 1em;
-    transform: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    color:#b0afaf;
-
+.salemessage {
+  width: 100%;
+  font-size: 1em;
+  transform: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  color: #b0afaf;
 }
 .pricetag:hover {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1.01);
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.01);
 }
 
-.cartspan{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+.cartspan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
-.cartspan:hover p{
-color: black;   
+.cartspan:hover p {
+  color: black;
 }
 
-.shoppingcart{
-    margin:auto;
+.shoppingcart {
+  margin: auto;
 }
 .shoppingcart:hover {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1.2);
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.2);
+}
+
+/*! -------- Likes --------- */
+.likes.background::-webkit-scrollbar {
+  display: none;
+}
+.likes.background {
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+}
+
+.liker.card {
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: fill-available;
+  min-width: -moz-available;
+  min-width: -webkit-fill-available;
+}
+
+.bio.small {
+  color: #b0afaf;
 }
 
 /*! -------- ui/mm/copy --------- */
