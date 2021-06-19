@@ -43,7 +43,7 @@ const ArtShow = ({ match }) => {
     })
   );
 
-  console.log("hi");
+ 
 
   useEffect(() => {
     showArt(match.params.id).then((resp) => {
@@ -80,7 +80,6 @@ const ArtShow = ({ match }) => {
     } else {
       dispatch(raiseAlert("Please connect to MetaMask to interact"));
       dispatch(lowerAlert());
-      // alert("Please connect to MetaMask to interact");
     }
   };
 
