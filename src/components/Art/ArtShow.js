@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Header, Icon, Segment, Divider, Label } from "semantic-ui-react";
 import CopyButton from "../header/copyButton";
+import ShowDetails from "./ShowDetails";
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -81,9 +82,7 @@ const ArtShow = ({ match }) => {
     }
   };
 
-  const handleComments = (e) => {
-    e.preventDefault();
-  };
+
 
   const handleShowPrice = (e) => {
     e.preventDefault();
