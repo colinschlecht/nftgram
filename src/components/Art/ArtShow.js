@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Header, Icon, Segment, Divider, Label } from "semantic-ui-react";
 import ShowDetails from "./ShowDetails";
+import ShowLikes from "./ShowLikes";
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -81,8 +82,6 @@ const ArtShow = ({ match }) => {
     }
   };
 
-
-
   const handleShowPrice = (e) => {
     e.preventDefault();
     dispatch(raiseAlert("Item is not currently for sale"));
@@ -100,22 +99,31 @@ const ArtShow = ({ match }) => {
     e.preventDefault();
   };
 
-  const handleDisplayLikes = (e) => {
-    e.preventDefault()
-    setDisplayLikes(!displayLikes)
-  }
-  const handleDisplayComments = (e) => {
-    e.preventDefault()
-    setdisplayComments(!displayComments)
-  }
-  const handleDisplayEvents = (e) => {
-    e.preventDefault()
-    setDisplayEvents(!displayEvents)
-  }
-  const handleDisplayDetails = (e) => {
-    e.preventDefault()
-    setDisplayDetails(!displayDetails)
-  }
+  const handleDisplay = (e, display) => {
+    e.preventDefault();
+    setDisplayLikes(false);
+    setDisplayDetails(false);
+    setdisplayComments(false);
+    setDisplayEvents(false);
+    switch (display) {
+      case "LIKES":
+        return setDisplayLikes(!displayLikes);
+        break;
+      case "DETAILS":
+        return setDisplayDetails(!displayDetails);
+        break;
+      case "COMMENTS":
+        return setdisplayComments(!displayComments);
+        break;
+      case "EVENTS":
+        return setDisplayEvents(!displayEvents);
+        break;
+      default:
+        dispatch(raiseAlert("Error"));
+        dispatch(lowerAlert());
+    }
+  };
+
   return (
     <div className="container">
       <Segment className="artshow header">
@@ -149,38 +157,41 @@ const ArtShow = ({ match }) => {
                   <Icon name="fire" />
                 </a>
                 <a
-                href={`/art/show/${art.id}`}
-                className="like button icon"
-                onClick={(e) => handleDisplayLikes(e)}>{art.likes?.length} Likes</a>
+                  href={`/art/show/${art.id}`}
+                  className="like button icon"
+                  onClick={(e) => handleDisplay(e, "LIKES")}
+                >
+                  {art.likes?.length} Likes
+                </a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleDisplayComments(e)}
+                  onClick={(e) => handleDisplay(e, "COMMENTS")}
                 >
                   <Icon name="comment" />
-                {art.comments?.length} comments
+                  {art.comments?.length} comments
                 </a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleDisplayEvents(e)}
+                  onClick={(e) => handleDisplay(e, "EVENTS")}
                 >
                   <Icon name="calendar" />
-                {art.events?.length} events
+                  {art.events?.length} events
                 </a>
               </h4>
               <h4 className="displaychanger">
                 <a
                   href={`/art/show/${art.id}`}
                   className="like button icon"
-                  onClick={(e) => handleDisplayDetails(e)}
+                  onClick={(e) => handleDisplay(e, "DETAILS")}
                 >
                   <Icon name="info circle" />
-                {art.events?.length} details
+                  {art.events?.length} details
                 </a>
               </h4>
             </Segment>
@@ -264,7 +275,8 @@ const ArtShow = ({ match }) => {
           </Segment.Group>
         </div>
 
-        {displayDetails && <ShowDetails art={art}/>}
+        {displayDetails && <ShowDetails art={art} />}
+        {displayLikes && <ShowLikes art={art} />}
 
         <Segment
           className="artshowdetail description ui block header"
