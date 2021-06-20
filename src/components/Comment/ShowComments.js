@@ -7,7 +7,7 @@ import { createComment, raiseAlert, lowerAlert } from "../../actions";
 const ShowComments = ({ art }) => {
   const dispatch = useDispatch();
   const [cmt, setCmt] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => {
     if (!!state.auth.user) {
       return state.auth.user;
@@ -18,6 +18,7 @@ const ShowComments = ({ art }) => {
 
   const handleComment = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if (user) {
       dispatch(
         createComment({
@@ -27,9 +28,12 @@ const ShowComments = ({ art }) => {
           commentable_type: "Art",
         })
       );
+      setCmt("")
+      setLoading(false)
     } else {
       dispatch(raiseAlert("Please connect to MetaMask to interact"));
       dispatch(lowerAlert());
+      setLoading(false)
     }
   };
   return (
@@ -57,7 +61,7 @@ const ShowComments = ({ art }) => {
             onClick={(e) => handleComment(e)}
           >
             {" "}
-            <Icon name="edit" /> Add Comment
+            <Icon name="edit" loading={loading}/> Add Comment
           </a>
         </Header>
       </Form>

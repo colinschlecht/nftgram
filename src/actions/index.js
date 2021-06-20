@@ -14,12 +14,15 @@ import {
   LOADING_ARTS,
   RESET_ALL_LOADED,
   CREATE_ART_COMMENT,
+  CREATE_ART_SHOW_COMMENT,
   CREATE_COMMENT_COMMENT,
   CREATE_ART_LIKE,
   CREATE_COMMENT_LIKE,
   DESTROY_ART_LIKE,
   DESTROY_COMMENT_LIKE,
   CONNECT,
+  SEND_ART_TO_STATE,
+  SEND_ARTS_TO_STATE,
 } from "./types";
 
 //!METAMASK!//
@@ -97,8 +100,9 @@ export const explore = (page) => async (dispatch) => {
   return response;
 };
 
-export const showArt = async (id) => {
+export const showArt = (id) => async (dispatch) => {
   const response = await API_BASE.get(`/arts/${id}`);
+  dispatch({ type: SEND_ART_TO_STATE, payload: response.data });
   return response;
 };
 
@@ -121,6 +125,16 @@ export const showMenu = () => {
   };
 };
 
+//send previously fetched art object to state
+export const sendArtToState = (art) => async (dispatch) => {
+  dispatch({ type: SEND_ART_TO_STATE, payload: art });
+};
+//send previously fetched art array to state
+export const sendArtsToState = (art) => async (dispatch) => {
+  dispatch({ type: SEND_ARTS_TO_STATE, payload: art });
+};
+
+
 //!Comment Actions
 export const createComment = (formValues) => async (dispatch) => {
   const response = await API_BASE.post("/comments", { ...formValues });
@@ -130,6 +144,11 @@ export const createComment = (formValues) => async (dispatch) => {
 export const createCommentComment = (formValues) => async (dispatch) => {
   const response = await API_BASE.post("/comments", { ...formValues });
   dispatch({ type: CREATE_COMMENT_COMMENT, payload: response.data });
+  return response.data;
+};
+export const createArtShowComment = (comment) => async (dispatch) => {
+  const response = await API_BASE.post("/comments", { ...comment });
+  dispatch({ type: CREATE_ART_SHOW_COMMENT, payload: response.data });
   return response.data;
 };
 
