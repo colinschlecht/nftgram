@@ -224,6 +224,7 @@ html::-webkit-scrollbar {
   }
   .artshow.details {
     width: 100%;
+
   }
 }
 @media (max-width: 350.98px) {
@@ -428,7 +429,7 @@ html::-webkit-scrollbar {
   margin: auto;
   display: flex;
   flex-direction: column;
-  min-width: fill-available;
+  min-width: stretch;
   min-width: -moz-available;
   min-width: -webkit-fill-available;
 }

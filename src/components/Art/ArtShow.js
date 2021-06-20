@@ -8,14 +8,20 @@ import {
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
 
-import logo from '../../images/ethcam.svg'
+import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
 import ShowEvents from "./ShowEvents";
-import ShowComments from "./ShowComments";
+import ShowComments from "../Comment/ShowComments";
 
-import { Header, Icon, Segment, Divider, Label, Image } from "semantic-ui-react";
-
+import {
+  Header,
+  Icon,
+  Segment,
+  Divider,
+  Label,
+  Image,
+} from "semantic-ui-react";
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -147,10 +153,18 @@ const ArtShow = ({ match }) => {
           </Segment>
 
           <Segment.Group>
-            <Segment attached="top" className="artshow nftg-specs ui block header" as="h4">
-            {userAvi ? (<Image src={userAvi} alt={art?.user?.username} avatar></Image>) : (<Image src={logo} alt={art?.user?.username} avatar></Image>)}
-            {art?.user?.username}
-            </Segment>  
+            <Segment
+              attached="top"
+              className="artshow nftg-specs ui block header"
+              as="h4"
+            >
+              {userAvi ? (
+                <Image src={userAvi} alt={art?.user?.username} avatar></Image>
+              ) : (
+                <Image src={logo} alt={art?.user?.username} avatar></Image>
+              )}
+              {art?.user?.username}
+            </Segment>
             <Segment attached className="artshow nftg-specs">
               <h4 className="displaychanger">
                 <a
