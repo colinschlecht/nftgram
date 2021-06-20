@@ -24,14 +24,15 @@ const INITIAL_STATE = {
 };
 
 const artReducer = (state = INITIAL_STATE, action) => {
+  let fetchedArts;
   switch (action.type) {
     case FETCH_ARTS:
-      // let fetchedArts = action.payload.data;
-      return { ...state };
+      fetchedArts = action.payload;
+      return { ...state, arts: [fetchedArts] };
     case LOADING_ARTS:
       return { ...state, loading: true };
     case FETCH_ARTS_INF_SCROLL:
-      let fetchedArts = action.payload;
+      fetchedArts = action.payload;
       return {
         ...state,
         arts: [...state.arts, ...fetchedArts],

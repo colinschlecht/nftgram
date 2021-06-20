@@ -102,7 +102,7 @@ export const explore = (page) => async (dispatch) => {
 
 export const showArt = (id) => async (dispatch) => {
   const response = await API_BASE.get(`/arts/${id}`);
-  dispatch({ type: SEND_ART_TO_STATE, payload: response.data });
+  dispatch({ type: FETCH_ARTS, payload: response.data });
   return response;
 };
 
