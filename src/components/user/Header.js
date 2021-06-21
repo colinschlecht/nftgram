@@ -26,7 +26,7 @@ const Header = ({ user }) => {
         <h5>{user.metamask_account}<CopyButton message={user.metamask_account}></CopyButton></h5>
         <div>
           {wallet.account === user.metamask_account ? (
-            <Link className="edit icon">
+            <Link className="edit icon" to="/">
             <Icon name="edit outline"></Icon>
             </Link>
           ) : null}
