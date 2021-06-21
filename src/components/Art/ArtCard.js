@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
-import { createArtLike, destroyArtLike } from "../../actions";
+import { createArtLike, destroyArtLike, raiseAlert, lowerAlert } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -29,17 +29,17 @@ export const ArtCard = ({ art }) => {
   );
 
   useEffect(() => {
-    //! Get natural height and natural width and set className for image display accordingly
-    const getImageDim = async () => {
-      const width = await imgEl.current.naturalWidth;
-      const height = await imgEl.current.naturalHeight;
-      if (width > height) {
-        return (imgEl.current.className = "landscape");
-      } else {
-        return (imgEl.current.className = "portrait");
-      }
-    };
-    getImageDim();
+    //! works but causes crash
+    // const getImageDim = async () => {
+    //   const width = await imgEl.current.naturalWidth;
+    //   const height = await imgEl.current.naturalHeight;
+    //   if (width > height) {
+    //     return (imgEl.current.className = "explore landscape");
+    //   } else {
+    //     return (imgEl.current.className = "explore portrait");
+    //   }
+    // };
+    // getImageDim();
     //! Sets liked status in local state on render
     setLiked(
       !!art.likes.find((like) => {
@@ -71,7 +71,8 @@ export const ArtCard = ({ art }) => {
         dispatch(destroyArtLike(disLike.id, disLike));
       }
     } else {
-      alert("Please connect to MetaMask to interact");
+      dispatch(raiseAlert("please connect to MetaMask to interract"));
+      dispatch(lowerAlert());
     }
   };
 
@@ -88,6 +89,7 @@ export const ArtCard = ({ art }) => {
   return (
     <>
       <Card fluid id="art-card">
+        <div className="explore picture container">
         {art.link ? (
           <img
             src={`https://ipfs.io/ipfs/${art.cid}`}
@@ -95,6 +97,7 @@ export const ArtCard = ({ art }) => {
               handleLike(e);
             }}
             ref={imgEl}
+            className="explore portrait"
             alt={`An NFT posted with a description of: ${art.description}`}
           />
         ) : (
@@ -104,6 +107,7 @@ export const ArtCard = ({ art }) => {
             onClick={(e) => handleLike(e)}
           />
         )}
+         </div>
         <Card.Content>
           <Card.Header>
             <>
