@@ -1,9 +1,10 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { explore, resetAllLoaded, loadingArts } from "../../actions";
 import { ArtCard } from "./ArtCard";
 import { LoadingArt } from "./LoadingArt";
 import { FullLoaded } from "./FullLoaded";
+import Dummy from "./Dummy";
 
 const ArtList = () => {
   const dispatch = useDispatch();
@@ -15,23 +16,31 @@ const ArtList = () => {
   const allLoaded = useSelector((state) => state.art.allLoaded);
   //array of art objects
   const arts = useSelector((state) => state.art.arts);
+  // const [initialLoad, setInitialLoad] = useState(true)
 
   // initial fetch for comonent mounting
   useEffect(() => {
-    if (page === 0) dispatch(explore(page)).then(console.log);
-  });
+    if (page === 0) {
+      dispatch(explore(page));
+    }
+  }, [page, dispatch]);
 
   //checks if art-container element bottom is within window height
-  const isBottom = (el) =>
-    el.getBoundingClientRect().bottom <= window.innerHeight ||
-    el.getBoundingClientRect().bottom - window.innerHeight < 1;
+  const isBottom = (el) => {
+    console.log(window.innerHeight);
+    console.log(el.getBoundingClientRect().bottom);
+    return (
+      el.getBoundingClientRect().bottom <= window.innerHeight ||
+      el.getBoundingClientRect().bottom - window.innerHeight < 1
+    );
+  };
 
   //callback for whether or not to fetch during scroll
   const trackScroll = useCallback(() => {
     const wrappedElement = document.getElementById("arts-container");
     if (isBottom(wrappedElement) && !loading) {
       dispatch(loadingArts());
-      dispatch(explore(page)).then((res) => console.log(res));
+      dispatch(explore(page));
     }
   }, [page, dispatch, loading]);
 
@@ -48,19 +57,32 @@ const ArtList = () => {
     return () => dispatch(resetAllLoaded());
   }, [dispatch]);
 
+  const dummyArr = [1, 2, 3, 4];
   return (
     <>
-      <div id="arts-container">
-        <div className="ui column centered grid">
-          <div className="column">
-            {arts.map((art) => (
-              <ArtCard page={page} key={art.id} art={art} />
-            ))}
-          {allLoaded && <FullLoaded />}
+      {!page ? (
+        <div id="arts-container">
+          <div className="ui column centered grid">
+            <div className="column">
+              {dummyArr.map((dum) => (
+                <Dummy key={`dummy ${dum}`} />
+              ))}
+            </div>
           </div>
         </div>
-        {loading && <LoadingArt />}
-      </div>
+      ) : (
+        <div id="arts-container">
+          <div className="ui column centered grid">
+            <div className="column">
+              {arts.map((art) => (
+                <ArtCard page={page} key={art.id} art={art} />
+              ))}
+              {allLoaded && <FullLoaded />}
+            </div>
+          </div>
+          {loading && <LoadingArt />}
+        </div>
+      )}
     </>
   );
 };
