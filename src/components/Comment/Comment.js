@@ -1,6 +1,10 @@
 import React from "react";
 import Reply from "./Reply";
-import { Card, Image, Icon } from "semantic-ui-react";
+import { 
+  Card, 
+  Image, 
+  // Icon 
+} from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 
 const Comment = ({ comment }) => {

@@ -1,5 +1,9 @@
 import React from "react";
-import { Card, Image, Icon } from "semantic-ui-react";
+import { 
+  Card, 
+  Image, 
+  // Icon 
+} from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 
 const LikeCard = ({ like }) => {
