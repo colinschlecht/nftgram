@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { explore, resetAllLoaded, loadingArts } from "../../actions";
 import { ArtCard } from "./ArtCard";
@@ -16,7 +16,7 @@ const ArtList = () => {
   const allLoaded = useSelector((state) => state.art.allLoaded);
   //array of art objects
   const arts = useSelector((state) => state.art.arts);
-  // const [initialLoad, setInitialLoad] = useState(true)
+  
 
   // initial fetch for comonent mounting
   useEffect(() => {
