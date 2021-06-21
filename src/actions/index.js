@@ -23,6 +23,7 @@ import {
   CONNECT,
   SEND_ART_TO_STATE,
   SEND_ARTS_TO_STATE,
+  REMOVE_STATE,
 } from "./types";
 
 //!METAMASK!//
@@ -106,7 +107,12 @@ export const showArt = (id) => async (dispatch) => {
   return response;
 };
 
+export const removeState = () => async (dispatch) => {
+  dispatch({ type: REMOVE_STATE, payload: [] });
+};
+
 //resets state
+
 export const resetAllLoaded = () => {
   return {
     type: RESET_ALL_LOADED,
@@ -133,7 +139,6 @@ export const sendArtToState = (art) => async (dispatch) => {
 export const sendArtsToState = (art) => async (dispatch) => {
   dispatch({ type: SEND_ARTS_TO_STATE, payload: art });
 };
-
 
 //!Comment Actions
 export const createComment = (formValues) => async (dispatch) => {
