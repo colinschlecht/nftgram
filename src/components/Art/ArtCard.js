@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Image, Icon } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
-import { createArtLike, destroyArtLike, raiseAlert, lowerAlert } from "../../actions";
+import {
+  createArtLike,
+  destroyArtLike,
+  raiseAlert,
+  lowerAlert,
+} from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -28,18 +33,21 @@ export const ArtCard = ({ art }) => {
     })
   );
 
+  //! gets image orientation and sets class name accordingly
+  const getImageDim = async (imgEl) => {
+    if(imgEl){
+      const width = await imgEl.current.naturalWidth;
+      const height = await imgEl.current.naturalHeight;
+      if (width > height) {
+        return (imgEl.current.className = "explore landscape");
+      } else {
+        return (imgEl.current.className = "explore portrait");
+      }    
+    }
+    
+  };
+
   useEffect(() => {
-    //! works but causes crash
-    // const getImageDim = async () => {
-    //   const width = await imgEl.current.naturalWidth;
-    //   const height = await imgEl.current.naturalHeight;
-    //   if (width > height) {
-    //     return (imgEl.current.className = "explore landscape");
-    //   } else {
-    //     return (imgEl.current.className = "explore portrait");
-    //   }
-    // };
-    // getImageDim();
     //! Sets liked status in local state on render
     setLiked(
       !!art.likes.find((like) => {
@@ -50,6 +58,7 @@ export const ArtCard = ({ art }) => {
         }
       })
     );
+    getImageDim(imgEl)
   }, [user, art]);
 
   //!\///////// like a post/artwork or unlike /////////////
@@ -90,24 +99,27 @@ export const ArtCard = ({ art }) => {
     <>
       <Card fluid id="art-card">
         <div className="explore picture container">
-        {art.link ? (
-          <img
-            src={`https://ipfs.io/ipfs/${art.cid}`}
-            onClick={(e) => {
-              handleLike(e);
-            }}
-            ref={imgEl}
-            className="explore portrait"
-            alt={`An NFT posted with a description of: ${art.description}`}
-          />
-        ) : (
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/image.png"
-            fluid
-            onClick={(e) => handleLike(e)}
-          />
-        )}
-         </div>
+          {art.link ? (
+            <>
+            <img
+              src={`https://ipfs.io/ipfs/${art.cid}`}
+              onClick={(e) => {
+                handleLike(e);
+              }}
+              ref={imgEl}
+              className="explore"
+              alt={`An NFT posted with a description of: ${art.description}`}
+            />
+           
+            </>
+          ) : (
+            <Image
+              src="https://react.semantic-ui.com/images/wireframe/image.png"
+              fluid
+              onClick={(e) => handleLike(e)}
+            />
+          )}
+        </div>
         <Card.Content>
           <Card.Header>
             <>

@@ -57,8 +57,9 @@ const ArtList = () => {
     return () => dispatch(resetAllLoaded());
   }, [dispatch]);
 
-  const dummyArr = [1, 2, 3, 4];
-  return (
+  // create a dummy array with random keys to render placeholders while loading
+  const dummyArr = Array(20).fill(1).map( n => n * Math.random())
+return (
     <>
       {!page ? (
         <div id="arts-container">

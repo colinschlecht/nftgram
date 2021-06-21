@@ -12,13 +12,13 @@ import {
 const Dummy = () => {
   return (
     <>
-      <Card fluid id="loading-explorecard">
-        <Card.Content>
-          <div className="placeholderphotocontainer">
-            <Placeholder className="placeholderphotocontainer">
-              <Placeholder.Image square />
+      <Card fluid id="loading-explorecard" className="loading">
+        <Card.Content className="placeholderphotocontainer loading">
+        
+            <Placeholder className="placeholderphotocontainer loading">
+              <Placeholder.Image square className="picture"/>
             </Placeholder>
-          </div>
+         
         </Card.Content>
         <Card.Content>
           <Card.Header>
