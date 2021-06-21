@@ -13,6 +13,7 @@ import {
   CREATE_ART,
   SEND_ART_TO_STATE,
   SEND_ARTS_TO_STATE,
+  REMOVE_STATE,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -176,12 +177,17 @@ const artReducer = (state = INITIAL_STATE, action) => {
     case SEND_ART_TO_STATE:
       return {
         ...state,
-        art: {...action.payload}
+        art: { ...action.payload },
       };
     case SEND_ARTS_TO_STATE:
       return {
         ...state,
-        arts: [...action.payload]
+        arts: [...action.payload],
+      };
+    case REMOVE_STATE:
+      return {
+        ...state,
+        arts: [...action.payload],
       };
     default:
       return state;
