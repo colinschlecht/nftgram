@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Header from "./Header";
 import Body from "./Body";
-import { showUser, sendArtsToState } from "../../actions";
+import { showUser, sendArtsToState, resetAllLoaded } from "../../actions";
 
 const Profile = ({ match }) => {
   const dispatch = useDispatch()
@@ -14,10 +14,17 @@ useEffect(() => {
   const getUser = async () => {
     const resp = await showUser(match.params.id)
     setUser(resp.data)
-    dispatch(sendArtsToState(resp.data.arts))
+    // dispatch(sendArtsToState(resp.data.arts))
   }
   getUser()
+  
 },[match, dispatch])
+// useEffect(() => {
+ 
+//   return () => {
+//     dispatch(resetAllLoaded())
+//   }
+// }, [dispatch])
 
   return (
     <div className="profile container">
