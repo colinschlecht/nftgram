@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Comment as Comm, Divider } from "semantic-ui-react";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
-import { useSelector, useDispatch } from "react-redux";
-import { createComment } from "../../actions";
+import { useSelector, useDispatch, } from "react-redux";
+import { createComment, raiseAlert, lowerAlert } from "../../actions";
 
 export const CommentSection = ({ art }) => {
   const dispatch = useDispatch();
@@ -42,7 +42,8 @@ export const CommentSection = ({ art }) => {
           commentable_type: "Art",
         }));
     } else {
-      alert("Please connect to MetaMask to interract")
+      dispatch(raiseAlert("please connect to MetaMask to interract"));
+      dispatch(lowerAlert());
     }
   };
 

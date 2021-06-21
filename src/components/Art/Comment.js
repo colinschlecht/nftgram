@@ -6,6 +6,8 @@ import {
   createCommentComment,
   createCommentLike,
   destroyCommentLike,
+  raiseAlert,
+  lowerAlert
 } from "../../actions";
 
 export const Comment = ({ comment }) => {
@@ -67,7 +69,8 @@ export const Comment = ({ comment }) => {
         })
       );
     } else {
-      alert("Please connect to MetaMask to interact");
+      dispatch(raiseAlert("please connect to MetaMask to interract"));
+      dispatch(lowerAlert());
     }
   };
   //!\////////////////////////////
