@@ -224,7 +224,6 @@ html::-webkit-scrollbar {
   }
   .artshow.details {
     width: 100%;
-
   }
 }
 @media (max-width: 350.98px) {
@@ -290,7 +289,7 @@ html::-webkit-scrollbar {
   text-overflow: ellipsis;
 }
 .artshow.image.portrait {
-  max-height: 450px;
+  max-height: 380px;
   width: auto;
   margin: auto;
 }
@@ -302,6 +301,7 @@ html::-webkit-scrollbar {
   align-items: stretch;
 }
 .outer.artshow.left {
+  max-height: 723.55px;
   flex-grow: 2;
   flex-basis: auto;
   margin: 0;
@@ -316,6 +316,7 @@ html::-webkit-scrollbar {
   /* border: 1px solid #d4d4d5; */
 }
 .artshow.details {
+  max-height: 723.55px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -341,8 +342,7 @@ html::-webkit-scrollbar {
 
 .imagecontainer.artshow {
   margin: auto;
-  max-height: 600x;
-  max-width: 600px;
+  max-height: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -415,6 +415,12 @@ html::-webkit-scrollbar {
 }
 
 /*! -------- Likes --------- */
+
+.user.bio.combo {
+  margin-left: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
 .likes.background::-webkit-scrollbar {
   display: none;
 }
@@ -428,14 +434,68 @@ html::-webkit-scrollbar {
   max-width: 100%;
   margin: auto;
   display: flex;
-  flex-direction: column;
   min-width: stretch;
   min-width: -moz-available;
   min-width: -webkit-fill-available;
 }
 
+.liker.card.userdiv {
+  padding: .6em;
+  align-items: center;
+  display: flex;
+}
+
+.like.card.username {
+  margin-bottom: -0.2em;
+  margin-left: -0.3em;
+}
+
 .bio.small {
+  margin-top: -0.4em;
+  margin-left: -0.4em;
   color: #b0afaf;
+  font-style: italic;
+}
+
+/*! -------- Comments --------- */
+
+.comment.card.userdiv{
+  margin:0;
+  padding-bottom: .5em;
+  padding-top: .5em;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.comment.card.text-header{
+  padding: .6em;
+  align-items: center;
+  display: flex;
+}
+
+
+.comment.card.username{
+  margin-bottom: -0.2em;
+  margin-left: -0.3em;
+}
+
+.comment.card.metadata {
+  margin-top: -0.4em;
+  margin-left: -0.4em;
+  color: #b0afaf;
+  font-size: .8em;
+}
+
+.comment.card {
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: stretch;
+  min-width: -moz-available;
+  min-width: -webkit-fill-available;
 }
 
 /*! -------- ui/mm/copy --------- */
