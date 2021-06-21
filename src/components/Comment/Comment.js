@@ -23,7 +23,8 @@ const Comment = ({ comment }) => {
   };
   return (
     <>
-      <Card className="comment card">
+    
+      <Card className="comment card" id="comment-card">
         <Card.Content className="comment card userdiv">
           <Image src={userAvi} alt={comment.user?.username} avatar />
           <div className="comment card text-header">
@@ -40,11 +41,17 @@ const Comment = ({ comment }) => {
         <Card.Content extra> </Card.Content>
       </Card>
       {comment.comments.map((reply) => (
+        <>
+      
         <Reply
-          reply={reply}
-          key={`reply ${reply.id} to comment ${comment.id}`}
+        reply={reply}
+        key={`reply ${reply.id} to comment ${comment.id}`}
+        commentType="commentreply"
+        replyFor={comment.user.username}
         />
-      ))}
+        </>
+       
+        ))}
     </>
   );
 };

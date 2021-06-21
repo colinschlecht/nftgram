@@ -142,6 +142,7 @@ const ArtShow = ({ match }) => {
     <div className="container">
       <Segment className="artshow header">
         <div className="outer artshow left">
+          <Segment.Group>
           <Header as="h4" attached="top" className="artshow detail title" block>
             {art.name}
           </Header>
@@ -159,6 +160,7 @@ const ArtShow = ({ match }) => {
           <Segment attached="bottom" className="artshow caption bottom">
             <h4>{art.caption}</h4>
           </Segment>
+          </Segment.Group>
 
           <Segment.Group>
             <Segment
