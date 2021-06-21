@@ -5,7 +5,7 @@ import {
   destroyArtLike,
   raiseAlert,
   lowerAlert,
-  resetAllLoaded
+  removeState,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,11 +27,8 @@ import {
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
 
-  
-  
-  const arts = useSelector(state => state.art.arts)
+  const arts = useSelector((state) => state.art.arts);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
-
 
   const [displayLikes, setDisplayLikes] = useState(false);
   const [displayComments, setdisplayComments] = useState(false);
@@ -47,7 +44,6 @@ const ArtShow = ({ match }) => {
     }
   });
 
-  
   const [liked, setLiked] = useState(
     !!art.likes?.find((like) => {
       if (user) {
@@ -56,8 +52,7 @@ const ArtShow = ({ match }) => {
         return false;
       }
     })
-    );
-    
+  );
 
   const userAvi = art?.user?.avatar;
 
@@ -74,10 +69,13 @@ const ArtShow = ({ match }) => {
         })
       );
     });
-    return ()=> {
-      dispatch(resetAllLoaded())
-    }
   }, [match.params.id, user, liked, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeState());
+    };
+  }, [dispatch]);
 
   const handleLike = (e) => {
     e.preventDefault();
