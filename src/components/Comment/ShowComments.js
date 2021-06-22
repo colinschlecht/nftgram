@@ -41,19 +41,20 @@ const ShowComments = ({ art }) => {
       <Header as="h4" attached="top" className="artshow detail title" block>
         Comments
       </Header>
-      <Segment attached className="likes background">
+      <Segment attached className="likes background commentsection">
         {art.comments.map((comment) => (
           <>
           <Comment
             key={`comment ${comment.id} on art ${art.id}`}
             comment={comment} commentType="artcomment"
+            art={art}
           />
           </>
         ))}
       </Segment>
       <Form>
         <Segment attached>
-          <Form.TextArea onChange={(e) => setCmt(e.target.value)} value={cmt} />
+          <Form.TextArea onChange={(e) => setCmt(e.target.value)} value={cmt} placeholder={`Commenting on @${art.user.username}'s art ...`}/>
         </Segment>
         <Header attached="bottom" className="artshow detail title" block>
           <a
