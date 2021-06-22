@@ -8,7 +8,7 @@ const ShowLikes = ({ art }) => {
       <Header as="h4" attached="top" className="artshow detail title" block>
         Likers
       </Header>
-      <Segment attached className="likes background">
+      <Segment attached className="likes background likessection">
         {art.likes.map((like) => (
           <LikeCard key={like.id} like={like} />
         ))}
