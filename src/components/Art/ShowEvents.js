@@ -7,7 +7,7 @@ const ShowEvents = () => {
           <Header as="h4" attached="top" className="artshow detail title" block>
             Events
           </Header>
-          <Segment attached className="likes background">
+          <Segment attached className="likes background events">
            <i>Events coming soon!</i>
           </Segment>
           <Header as="h4" attached="bottom" className="artshow detail title" block>

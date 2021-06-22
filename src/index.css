@@ -540,6 +540,19 @@ html::-webkit-scrollbar {
   align-content: stretch;
   background-color: #b0afaf0b;
 }
+.likes.background.events {
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  background-color: #b0afaf0b;
+}
 .likes.background.likessection {
   overflow-y: auto;
   overflow-x: hidden;
