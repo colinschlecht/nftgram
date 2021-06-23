@@ -130,13 +130,14 @@ const Reply = ({ reply, commentType, replyFor }) => {
             </Card.Content>
           </>
         )}
-
       </Card>
 
       {reply.comments.map((replyreply, index) => (
         <Reply
           reply={replyreply}
-          key={index.toString() + replyreply.id.toString() + reply.id.toString()}
+          key={
+            index.toString() + replyreply.id.toString() + reply.id.toString()
+          }
           commentType="replyreply"
           replyFor={reply.user.username}
         />

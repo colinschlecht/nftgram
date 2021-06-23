@@ -43,13 +43,13 @@ const ShowComments = ({ art }) => {
       </Header>
       <Segment attached className="likes background commentsection">
         {art.comments.map((comment, index) => (
-          <>
+        
           <Comment
             key={index.toString() + comment.id.toString() + art.id.toString()}
             comment={comment} commentType="artcomment"
             art={art}
           />
-          </>
+       
         ))}
       </Segment>
       <Form>
