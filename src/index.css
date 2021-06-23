@@ -227,6 +227,7 @@ html::-webkit-scrollbar {
   height: 600px;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: nowrap;
 }
 
