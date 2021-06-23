@@ -42,10 +42,10 @@ const ShowComments = ({ art }) => {
         Comments
       </Header>
       <Segment attached className="likes background commentsection">
-        {art.comments.map((comment) => (
+        {art.comments.map((comment, index) => (
           <>
           <Comment
-            key={`comment ${comment.id} on art ${art.id}`}
+            key={index.toString() + comment.id.toString() + art.id.toString()}
             comment={comment} commentType="artcomment"
             art={art}
           />

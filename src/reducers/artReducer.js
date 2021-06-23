@@ -16,6 +16,23 @@ import {
   REMOVE_STATE,
 } from "../actions/types";
 
+const checkNextLevel = (comment, newcomment) => {
+  comment.comments.map((com) => {
+    if (com.id !== newcomment.commentable_id) {
+      console.log("running check function inside check function");
+      checkNextLevel(com, newcomment);
+      return com;
+    } else {
+      console.log("updating inside of check function");
+      let newCom = { ...com };
+      newCom.comments.push(newcomment);
+      return {
+        ...newCom,
+      };
+    }
+  });
+};
+
 const INITIAL_STATE = {
   arts: [],
   art: {},
@@ -23,6 +40,7 @@ const INITIAL_STATE = {
   allLoaded: false,
   loading: false,
 };
+
 
 const artReducer = (state = INITIAL_STATE, action) => {
   let fetchedArts;
@@ -76,14 +94,35 @@ const artReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
       };
+    // case CREATE_COMMENT_COMMENT:
+    //   return {
+    //     ...state,
+    //     arts: state.arts.map((item) => {
+    //       item.comments.map((com) => {
+    //         if (com.id !== action.payload.commentable_id) {
+    //           return com;
+    //         } else {
+    //           let newCom = { ...com };
+    //           newCom.comments.push(action.payload);
+    //           return {
+    //             ...newCom,
+    //           };
+    //         }
+    //       });
+    //       return item;
+    //     }),
+    //   };
     case CREATE_COMMENT_COMMENT:
       return {
         ...state,
-        arts: state.arts.map((item) => {
-          item.comments.map((com) => {
+        arts: state.arts.map((art) => {
+          art.comments.map((com) => {
             if (com.id !== action.payload.commentable_id) {
+              console.log("running check function");
+              checkNextLevel(com, action.payload);
               return com;
             } else {
+              console.log("updating");
               let newCom = { ...com };
               newCom.comments.push(action.payload);
               return {
@@ -91,7 +130,7 @@ const artReducer = (state = INITIAL_STATE, action) => {
               };
             }
           });
-          return item;
+          return art;
         }),
       };
 

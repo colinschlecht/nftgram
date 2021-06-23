@@ -128,11 +128,11 @@ const Comment = ({ comment }) => {
           </>
         )}
       </Card>
-      {comment.comments.map((reply) => (
+      {comment.comments.map((reply, index) => (
         <>
           <Reply
             reply={reply}
-            key={`reply ${reply.id} to comment ${comment.id}`}
+            key={ index.toString() + reply.id.toString() + comment.id.toString()}
             commentType="commentreply"
             replyFor={comment.user.username}
           />
