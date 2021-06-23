@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Comment as Comm, Divider } from "semantic-ui-react";
+import { Comment as Comm, Divider, Header, Segment,} from "semantic-ui-react";
 import { Comment } from "./Comment";
 import { CommentForm } from "./CommentForm";
 import { useSelector, useDispatch, } from "react-redux";

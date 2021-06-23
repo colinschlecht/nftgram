@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Image, Icon } from "semantic-ui-react";
+import { Card, Image, Icon, Segment, Header } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 import {
   createArtLike,
@@ -9,6 +9,7 @@ import {
 } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import ArtCardLikeCount from "./ArtCardLikeCount";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
@@ -35,16 +36,15 @@ export const ArtCard = ({ art }) => {
 
   //! gets image orientation and sets class name accordingly
   const getImageDim = async (imgEl) => {
-    if(imgEl){
+    if (imgEl) {
       const width = await imgEl.current.naturalWidth;
       const height = await imgEl.current.naturalHeight;
       if (width > height) {
         return (imgEl.current.className = "explore landscape");
       } else {
         return (imgEl.current.className = "explore portrait");
-      }    
+      }
     }
-    
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const ArtCard = ({ art }) => {
         }
       })
     );
-    getImageDim(imgEl)
+    getImageDim(imgEl);
   }, [user, art]);
 
   //!\///////// like a post/artwork or unlike /////////////
@@ -97,125 +97,80 @@ export const ArtCard = ({ art }) => {
 
   return (
     <>
-      <Card fluid id="art-card">
-        <div className="explore picture container">
-          {art.link ? (
-            <>
-            <img
-              src={`https://ipfs.io/ipfs/${art.cid}`}
-              onClick={(e) => {
-                handleLike(e);
-              }}
-              ref={imgEl}
-              className="explore"
-              alt={`An NFT posted with a description of: ${art.description}`}
-            />
-           
-            </>
-          ) : (
-            <Image
-              src="https://react.semantic-ui.com/images/wireframe/image.png"
-              fluid
+      <div>
+        <Segment.Group id="art-card">
+          <Header as="h4" attached="top" className="artshow detail title" block>
+            {art.name}
+          </Header>
+          <Segment attached>
+            <div className="explore picture container">
+              {art.link ? (
+                <>
+                  <img
+                    src={`https://ipfs.io/ipfs/${art.cid}`}
+                    onClick={(e) => {
+                      handleLike(e);
+                    }}
+                    ref={imgEl}
+                    className="explore"
+                    alt={`An NFT posted with a description of: ${art.description}`}
+                  />
+                </>
+              ) : (
+                <Image
+                  src="https://react.semantic-ui.com/images/wireframe/image.png"
+                  fluid
+                  onClick={(e) => handleLike(e)}
+                />
+              )}
+            </div>
+          </Segment>
+          <Segment attached className="explore main likes">
+            <a
+              id="like-button-main"
+              href="/"
+              className="like button icon"
               onClick={(e) => handleLike(e)}
+            >
+              <Icon name="fire" className="likebutton edit" />
+            </a>
+                <div className="explore likers head">
+            <ArtCardLikeCount
+              art={art}
+              handleLikeCountClick={handleLikeCountClick}
             />
-          )}
-        </div>
-        <Card.Content>
-          <Card.Header>
+            </div>
+          </Segment>
+          <Segment attached>
             <>
-              <a
-                id="like-button-main"
-                href="/"
-                className="like button icon"
-                onClick={(e) => handleLike(e)}
-              >
-                <Icon name="fire" />
-              </a>
-            </>
-          </Card.Header>
-          <>
-            {art.likes.length > 3 ? (
               <p className="explore art card">
-                liked by{" "}
-                <Link
-                  id="user-link"
-                  key={art.likes[0].user.id + "u"}
-                  to={`/profile/${art.likes[0].user.id}`}
-                >
-                  <span className="explore art card username">
-                    {art.likes[0].user.username}
-                  </span>{" "}
-                </Link>
-                and{" "}
-                <span className="explore art card likes">
-                  <a
-                    className="explore art card"
-                    href="/"
-                    onClick={(e) => handleLikeCountClick(e)}
-                  >
-                    {art.likes.length - 1} others
-                  </a>{" "}
-                </span>
-              </p>
-            ) : art.likes.length > 1 ? (
-              <p className="explore art card">
-                liked by{" "}
-                <Link
-                  id="user-link"
-                  key={art.likes[0].user.id + "u"}
-                  to={`/profile/${art.likes[0].user.id}`}
-                >
-                  <span className="explore art card username">
-                    {art.likes[0].user.username}
-                  </span>{" "}
-                </Link>
-                and{" "}
-                <Link
-                  id="user-link"
-                  key={art.likes[1].user.id + "u"}
-                  to={`/profile/${art.likes[1].user.id}`}
-                >
-                  <span className="explore art card username">
-                    {art.likes[1].user.username}
-                  </span>
-                </Link>
-                <span className="explore art card likes"></span>{" "}
-              </p>
-            ) : (
-              <p className="explore art card">
-                liked by{" "}
                 <span className="explore art card username">
-                  {art.likes.length > 0 ? (
-                    <Link
-                      id="user-link"
-                      key={art.likes[0].user.id + "u"}
-                      to={`/profile/${art.likes[0].user.id}`}
-                    >
-                      {art.likes[0].user.username}
-                    </Link>
-                  ) : (
-                    "nobody... yet!"
-                  )}
+                  <Link
+                    className="explore art card username"
+                    id="user-link"
+                    key={art.user.id + "u"}
+                    to={`/profile/${art.user.id}`}
+                  >
+                    {art.user.username}
+                  </Link>
                 </span>
+                &nbsp;&nbsp;{art.caption}
               </p>
-            )}
-
-            <p className="explore art card">
-              <span className="explore art card username">
-                <Link
-                  id="user-link"
-                  key={art.user.id + "u"}
-                  to={`/profile/${art.user.id}`}
-                >
-                  {art.user.username}
-                </Link>
-              </span>
-              &nbsp;&nbsp;{art.caption}
-            </p>
-            <CommentSection art={art} />
-          </>
-        </Card.Content>
-      </Card>
+              <CommentSection art={art} />
+            </>
+          </Segment>
+          <Header attached="bottom" className="artshow detail title" block>
+            <a
+              href="/addcomment"
+              className="show reply"
+              // onClick={(e) => handleComment(e)}
+            >
+              {" "}
+              <Icon name="edit" /> Add Comment
+            </a>
+          </Header>
+        </Segment.Group>
+      </div>
     </>
   );
 };

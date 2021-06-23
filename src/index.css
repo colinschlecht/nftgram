@@ -125,7 +125,7 @@ html::-webkit-scrollbar {
   background-color: rgba(255, 235, 205, 0.242);
 }
 
-/*! -------- explore art pictures --------- */
+/*! -------- explore art pictures and placeholder --------- */
 
 @media (max-width: 800px) {
   #art-card .explore.picture.container {
@@ -234,6 +234,40 @@ html::-webkit-scrollbar {
 .nll {
   color: #b0afaf !important;
 }
+
+
+/*! -------- explore art card likes --------- */
+
+.explore.likers.head{
+  margin-left: .5em;
+  font-size: 1.1em;
+
+}
+.likebutton.edit{
+  font-size: 1.5em;
+}
+.explore.main.likes{
+  display:flex;
+}
+
+.main.art.likes.avi.set-1{
+  z-index: 4;
+  margin-top: -.8em;
+}
+.avi.range{
+  font-size: .5em;
+}
+.main.art.likes.avi.set-2{
+  margin-left: -1.5em;
+  margin-top: -.8em;
+  z-index: 3;
+}
+.main.art.likes.avi.set-3{
+  margin-left: -1.5em;
+  margin-top: -.8em;
+  z-index: 2;
+}
+
 
 /*! -------- user showpage --------- */
 
