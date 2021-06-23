@@ -9,6 +9,8 @@ import CopyButton from "../header/copyButton";
 const Header = ({ user }) => {
   const wallet = useSelector((state) => state.MetaMask);
 
+  console.log(user)
+
   return (
     <>
       <div className="header container">
@@ -17,6 +19,7 @@ const Header = ({ user }) => {
             <img
               alt={`${user.username}'s profile pic. Nice!`}
               className="ui small circular image"
+              src={`https://ipfs.io/ipfs/${user.avatar}`}
             ></img>
           ) : (
             <PlaceholderExampleImage />
