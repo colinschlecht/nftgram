@@ -60,7 +60,6 @@ const ShowComments = ({ art }) => {
           <a
             href="/addcomment"
             className="show reply"
-            placeholder={`poop`}
             onClick={(e) => handleComment(e)}
           >
             {" "}

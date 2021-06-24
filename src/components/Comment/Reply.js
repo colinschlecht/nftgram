@@ -4,14 +4,16 @@ import { Card, Image, Icon, Form } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 import { createCommentComment, raiseAlert, lowerAlert } from "../../actions";
 
-const Reply = ({ reply, commentType, replyFor }) => {
+const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
   const dispatch = useDispatch();
 
   const [cmt, setCmt] = useState("");
   const [replying, setReplying] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [extended, setExtended] = useState(replyExtended)
 
   const userAvi = reply.user.avatar ? `https://ipfs.io/ipfs/${reply.user.avatar}` : logo;
+
 
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -35,6 +37,7 @@ const Reply = ({ reply, commentType, replyFor }) => {
       setReplying(!replying);
       setCmt("");
       setLoading(false);
+      setExtended(true);
     } else {
       dispatch(raiseAlert("Please connect to MetaMask to interact"));
       dispatch(lowerAlert());
@@ -50,6 +53,11 @@ const Reply = ({ reply, commentType, replyFor }) => {
     setReplying(!replying);
   };
 
+  const handleExtend = (e) => {
+    e.preventDefault();
+    setExtended(!extended);
+  };
+
   const getDate = () => {
     let ms = (Date.now() - Date.parse(reply.created_at)) / 1000 / 60 / 60 / 24;
     if (ms >= 1) {
@@ -63,7 +71,7 @@ const Reply = ({ reply, commentType, replyFor }) => {
 
   return (
     <>
-      <Card className={`comment card ${commentType}`} id="comment-card">
+      <Card className={`comment card ${commentType}`} id={`comment-card`}>
         <Card.Content className="comment card userdiv">
           <Image src={userAvi} alt={reply.user?.username} avatar />
           <div className="comment card text-header">
@@ -118,8 +126,21 @@ const Reply = ({ reply, commentType, replyFor }) => {
           <>
             <Card.Content extra>
               <a href="/replytocomment" onClick={(e) => handleReplyClick(e)}>
-                Reply
+                Reply <span> </span>
               </a>
+              {reply.comments.length ? (
+                <>
+                  {extended ? (
+                    <a className="hide replies trigger" href="/closereplies" onClick={(e) => handleExtend(e)}>
+                      Hide Replies
+                    </a>
+                  ) : (
+                    <a className="hide replies trigger" href="/viewreplies" onClick={(e) => handleExtend(e)}>
+                       View {reply.comments.length} Replies
+                    </a>
+                  )}
+                </>
+              ) : null}
               <a
                 href="/likethiscomment"
                 className="comment like button icon"
@@ -132,9 +153,10 @@ const Reply = ({ reply, commentType, replyFor }) => {
         )}
       </Card>
 
-      {reply.comments.map((replyreply, index) => (
+      {extended && reply.comments.map((replyreply, index) => (
         <Reply
           reply={replyreply}
+          replyExtended={extended}
           key={
             index.toString() + replyreply.id.toString() + reply.id.toString()
           }
