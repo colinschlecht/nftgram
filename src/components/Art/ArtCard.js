@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Image, Icon, Segment, Header } from "semantic-ui-react";
+import { Image, Icon, Segment, Header, Dropdown, Divider } from "semantic-ui-react";
 import { CommentSection } from "./CommentSection";
 import {
   createArtLike,
@@ -10,6 +10,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ArtCardLikeCount from "./ArtCardLikeCount";
+import ShowComments from "../Comment/ShowComments";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
@@ -125,23 +126,39 @@ export const ArtCard = ({ art }) => {
               )}
             </div>
           </Segment>
-          <Segment attached className="explore main likes">
-            <a
-              id="like-button-main"
-              href="/"
-              className="like button icon"
-              onClick={(e) => handleLike(e)}
-            >
-              <Icon name="fire" className="likebutton edit" />
-            </a>
-                <div className="explore likers head">
-            <ArtCardLikeCount
-              art={art}
-              handleLikeCountClick={handleLikeCountClick}
-            />
+          
+          <Segment attached className="artcard explore likes seg">
+            <div className="explore main likes">
+              <a
+                id="like-button-main"
+                href="/"
+                className="like button icon"
+                onClick={(e) => handleLike(e)}
+              >
+                <Icon name="fire" className="likebutton edit" />
+              </a>
+              <div className="explore likers head">
+                <ArtCardLikeCount
+                  art={art}
+                  handleLikeCountClick={handleLikeCountClick}
+                />
+              </div>
             </div>
+
+           
+              {/* <Icon name="ellipsis horizontal" className="ellips edit" /> */}
+              <Dropdown icon="ellipsis horizontal" id="ellips-edit" className="ellips edit" >
+                <Dropdown.Menu>
+                  <Dropdown.Item text="View artist page" />
+                  <Dropdown.Item text="View art page" />
+                  <Dropdown.Divider />
+                  <Dropdown.Item text="Comments" />
+                  <Dropdown.Item text="Likers" />
+                </Dropdown.Menu>
+              </Dropdown>
+           
           </Segment>
-          <Segment attached>
+          <Segment attached="bottom">
             <>
               <p className="explore art card">
                 <span className="explore art card username">
@@ -151,24 +168,23 @@ export const ArtCard = ({ art }) => {
                     key={art.user.id + "u"}
                     to={`/profile/${art.user.id}`}
                   >
+                     <Image
+                      className="artcard caption section"
+                      avatar
+                      src={`https://ipfs.io/ipfs/${art.user.avatar}`}
+                    />
                     {art.user.username}
                   </Link>
                 </span>
                 &nbsp;&nbsp;{art.caption}
               </p>
-              <CommentSection art={art} />
+              <Divider />
+              {/* <CommentSection art={art} /> */}
+              <ShowComments art={art}/>
             </>
+         
+
           </Segment>
-          <Header attached="bottom" className="artshow detail title" block>
-            <a
-              href="/addcomment"
-              className="show reply"
-              // onClick={(e) => handleComment(e)}
-            >
-              {" "}
-              <Icon name="edit" /> Add Comment
-            </a>
-          </Header>
         </Segment.Group>
       </div>
     </>

@@ -25,9 +25,6 @@ export const CommentForm = (props) => {
                         onChange={props.input.onChange}
                         placeholder={`Reply to @${art.user.username}`}
                       />
-                      <button type="submit" disabled={pristine}>
-                        Submit
-                      </button>
                     </>
                   ) : (
                     <>
@@ -36,9 +33,6 @@ export const CommentForm = (props) => {
                         onChange={props.input.onChange}
                         placeholder={`Reply to @${comment.user.username}`}
                       />
-                      <button type="submit" disabled={pristine}>
-                        Submit
-                      </button>
                     </>
                   )}
                 </>

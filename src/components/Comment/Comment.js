@@ -12,7 +12,7 @@ const Comment = ({ comment }) => {
   const [replying, setReplying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const userAvi = comment.user.avatar ? comment.user.avatar : logo;
+  const userAvi = comment.user.avatar ? `https://ipfs.io/ipfs/${comment.user.avatar}` : logo;
 
   const user = useSelector((state) => {
     if (!!state.auth.user) {

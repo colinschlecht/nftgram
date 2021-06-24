@@ -11,7 +11,7 @@ const Reply = ({ reply, commentType, replyFor }) => {
   const [replying, setReplying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const userAvi = reply.user.avatar ? reply.user.avatar : logo;
+  const userAvi = reply.user.avatar ? `https://ipfs.io/ipfs/${reply.user.avatar}` : logo;
 
   const user = useSelector((state) => {
     if (!!state.auth.user) {

@@ -1,3 +1,7 @@
+/*!----------- body / general / explore card details ------- */
+
+/*?-----------       TODO: refactor and cleanup       ------- */
+
 body {
   padding: 10px !important;
   caret-color: transparent;
@@ -6,85 +10,6 @@ textarea,
 .text,
 .area {
   caret-color: black;
-}
-.explore.art.card {
-  color: black;
-}
-.explore.art.card.username {
-  color: black;
-  font-weight: bold;
-}
-.explore.art.card.likes {
-  color: black;
-  font-weight: bold;
-}
-.explore.art.card.username:hover {
-  transition: color 0.1s ease;
-  color: rgba(0, 0, 0, 0.653) !important;
-  font-weight: bold;
-}
-.explore.art.card.likes:hover {
-  transition: color 0.1s ease;
-  color: rgba(0, 0, 0, 0.653);
-  font-weight: bold;
-}
-
-.reply.comment.expand {
-  color: rgba(0, 0, 0, 0.4);
-}
-.reply.comment.expand:hover {
-  color: rgba(0, 0, 0, 0.721);
-  transition: color 0.1s ease;
-}
-
-#small-like-btn {
-  font-size: 0.73em;
-  float: right;
-}
-#reply-count {
-  float: right;
-}
-#small-like-count {
-  float: right;
-  margin-left: 3px;
-}
-
-#art-card {
-  max-width: 600px;
-}
-#art-container {
-  position: absolute;
-  margin-left: 50%;
-  display: flex;
-  width: 1200px;
-}
-
-.column {
-  display: flex;
-  justify-content: center;
-}
-
-#comment-reply {
-  font-size: 1em;
-}
-
-.button {
-  background-color: rgba(68, 81, 155, 0.201);
-}
-.button:hover {
-  background-color: rgba(40, 45, 70, 0.201);
-}
-
-html::-webkit-scrollbar {
-  display: none;
-}
-
-.like.button.icon {
-  background-color: white !important;
-}
-
-#like-button-main {
-  background-color: white !important;
 }
 
 .ui.stacked.segment {
@@ -100,6 +25,21 @@ html::-webkit-scrollbar {
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
+.column {
+  display: flex;
+  justify-content: center;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+
+/*!----------- nav ------- */
+/*   *******************   */
+/*! -------- nav --------- */
+
 
 #nav {
   transition: all 0.2s ease-in-out;
@@ -125,6 +65,172 @@ html::-webkit-scrollbar {
   background-color: rgba(255, 235, 205, 0.242);
 }
 
+
+/*! -------- ui/mm/copy --------- */
+/*   ***************************   */
+/*! -------- ui/mm/copy --------- */
+@media (max-width: 767.98px) {
+  .alertbox {
+    margin-left: -7vw !important;
+    position: fixed;
+    display: flex;
+    width: 100vw !important;
+    height: fit-content;
+    z-index: 11;
+  }
+}
+
+.edit.icon {
+  color: rgba(65, 65, 65, 0.249);
+}
+.edit.icon:hover {
+  color: rgb(65, 65, 65);
+}
+.copy.outline {
+  color: rgba(65, 65, 65, 0.249);
+}
+.copy.outline:hover {
+  color: rgb(65, 65, 65);
+}
+
+.copy.outline.inverse {
+  color: rgba(255, 255, 255, 0.77);
+}
+.copy.outline.inverse:hover {
+  color: rgb(255, 255, 255);
+}
+
+.copied {
+  position: fixed;
+  margin: auto;
+}
+.message {
+  margin: auto;
+  color: white;
+}
+.banner {
+  background-color: rgba(255, 105, 180, 0.53);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 3em;
+  border: 0px solid hotpink;
+  border-radius: 0.15em;
+}
+
+.alertbox {
+  float: right;
+  margin-left: 60vw;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: fit-content;
+  z-index: 10;
+}
+
+.mm.alerts.container {
+  display: flex;
+  width: 100%;
+}
+
+.metamask.message.positive {
+  padding-left: 0.5em;
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2em;
+  border: 0px solid;
+  border-radius: 0.2em;
+  position: absolute;
+  z-index: 9;
+  background-color: rgb(0, 0, 0);
+}
+
+
+/*!----------- explore art card details ------- */
+/************ explore art card details ******* */
+/*!----------- explore art card details ------- */
+
+.explore.art.card {
+  color: black;
+}
+
+.explore.art.card.username {
+  color: black;
+  font-weight: bold;
+}
+.explore.art.card.likes {
+  color: black;
+  font-weight: bold;
+}
+.like.button.icon {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+#like-button-main {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.explore.art.card.username:hover {
+  transition: color 0.1s ease;
+  color: rgba(0, 0, 0, 0.653) !important;
+  font-weight: bold;
+}
+.explore.art.card.likes:hover {
+  transition: color 0.1s ease;
+  color: rgba(0, 0, 0, 0.653);
+  font-weight: bold;
+}
+
+#small-like-btn {
+  font-size: 0.73em;
+  float: right;
+}
+
+#reply-count {
+  float: right;
+}
+#small-like-count {
+  float: right;
+  margin-left: 3px;
+}
+
+#art-card {
+  max-width: 600px;
+}
+#art-container {
+  position: absolute;
+  margin-left: 50%;
+  display: flex;
+  width: 1200px;
+}
+
+.button {
+  background-color: rgba(68, 81, 155, 0.201);
+}
+.button:hover {
+  background-color: rgba(40, 45, 70, 0.201);
+}
+
+#comment-reply {
+  font-size: 1em;
+}
+
+.reply.comment.expand {
+  color: rgba(0, 0, 0, 0.4);
+}
+.reply.comment.expand:hover {
+  color: rgba(0, 0, 0, 0.721);
+  transition: color 0.1s ease;
+}
+
+
+/*! -------- explore art pictures and placeholder --------- */
+/* ******** explore art pictures and placeholder ********  */
 /*! -------- explore art pictures and placeholder --------- */
 
 @media (max-width: 800px) {
@@ -235,40 +341,62 @@ html::-webkit-scrollbar {
   color: #b0afaf !important;
 }
 
-
+/*! -------- explore art card likes --------- */
+/* ************** ************** ***************/
 /*! -------- explore art card likes --------- */
 
-.explore.likers.head{
-  margin-left: .5em;
-  font-size: 1.1em;
-
+.artcard.explore.likes.seg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.likebutton.edit{
+.explore.likers.head {
+  margin-left: 0.5em;
+  font-size: 1.1em;
+}
+.likebutton.edit {
   font-size: 1.5em;
 }
-.explore.main.likes{
-  display:flex;
+
+.artcard.caption.section.avi {
+  font-size: 0.8em;
+  margin-top: -.2em;
+  margin-right: .2em;
+}
+.ellips.edit .icon {
+  float: right;
+  margin: auto;
+  color: rgba(65, 65, 65, 0.249);
+}
+.ellips.edit .icon:hover {
+  float: right;
+  margin: auto;
+  color: rgb(0, 0, 0);
+}
+.explore.main.likes {
+  display: flex;
 }
 
-.main.art.likes.avi.set-1{
+.main.art.likes.avi.set-1 {
   z-index: 4;
-  margin-top: -.8em;
+  margin-top: -0.8em;
 }
-.avi.range{
-  font-size: .5em;
+.avi.range {
+  font-size: 0.5em;
 }
-.main.art.likes.avi.set-2{
+.main.art.likes.avi.set-2 {
   margin-left: -1.5em;
-  margin-top: -.8em;
+  margin-top: -0.8em;
   z-index: 3;
 }
-.main.art.likes.avi.set-3{
+.main.art.likes.avi.set-3 {
   margin-left: -1.5em;
-  margin-top: -.8em;
+  margin-top: -0.8em;
   z-index: 2;
 }
 
-
+/*! -------- user showpage --------- */
+/*************************************/
 /*! -------- user showpage --------- */
 
 .ui.placeholder.square.image {
@@ -306,6 +434,8 @@ html::-webkit-scrollbar {
   border-radius: 0.15em;
 }
 
+/*! ---------- user showpage body ----------- */
+/* *********** user showpage body *********** */
 /*! ---------- user showpage body ----------- */
 
 .outer.body.containter {
@@ -349,6 +479,8 @@ html::-webkit-scrollbar {
   margin-top: 10px;
 }
 
+/*! -------- art showpage --------- */
+/*  ******** art showpage ********* */
 /*! -------- art showpage --------- */
 @media (max-width: 1152.8px) {
   .outer.artshow.left {
@@ -553,6 +685,13 @@ html::-webkit-scrollbar {
 }
 
 /*! -------- Likes --------- */
+/*  ********* Likes *********  */
+/*! -------- Likes --------- */
+
+.likes.background{
+  width: auto;
+
+}
 
 .user.bio.combo {
   margin-left: 0.5em;
@@ -563,9 +702,11 @@ html::-webkit-scrollbar {
   display: none;
 }
 .likes.background.commentsection {
+  width: auto;
+
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
+
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -576,9 +717,11 @@ html::-webkit-scrollbar {
   background-color: #b0afaf0b;
 }
 .likes.background.events {
+  width: auto;
+
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
+
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -589,9 +732,11 @@ html::-webkit-scrollbar {
   background-color: #b0afaf0b;
 }
 .likes.background.likessection {
+  width: auto;
+
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
+ 
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -629,6 +774,8 @@ html::-webkit-scrollbar {
   font-style: italic;
 }
 
+/*! -------- Comments --------- */
+/* ********* Comments ***********/
 /*! -------- Comments --------- */
 
 .comment.card.userdiv {
@@ -686,6 +833,8 @@ html::-webkit-scrollbar {
 }
 
 /*! -------- Comment Reply --------- */
+/*!********Comment Reply ********* */
+/*! ---------Comment Reply --------- */
 
 .reply-thread {
   border: 1px solid black;
@@ -707,96 +856,14 @@ html::-webkit-scrollbar {
   /* margin-top: 2rem; */
 }
 
-.commentbuttonarea{
+.commentbuttonarea {
   display: flex;
   justify-content: center;
-
 }
 #comment-reply {
   background-color: #ffffff95;
 }
 
 .reply.form {
-  margin-top: .5em ;
-}
-/*! -------- ui/mm/copy --------- */
-@media (max-width: 767.98px) {
-  .alertbox {
-    margin-left: -7vw !important;
-    position: fixed;
-    display: flex;
-    width: 100vw !important;
-    height: fit-content;
-    z-index: 11;
-  }
-}
-
-.edit.icon {
-  color: rgba(65, 65, 65, 0.249);
-}
-.edit.icon:hover {
-  color: rgb(65, 65, 65);
-}
-.copy.outline {
-  color: rgba(65, 65, 65, 0.249);
-}
-.copy.outline:hover {
-  color: rgb(65, 65, 65);
-}
-
-.copy.outline.inverse {
-  color: rgba(255, 255, 255, 0.77);
-}
-.copy.outline.inverse:hover {
-  color: rgb(255, 255, 255);
-}
-
-.copied {
-  position: fixed;
-  margin: auto;
-}
-.message {
-  margin: auto;
-  color: white;
-}
-.banner {
-  background-color: rgba(255, 105, 180, 0.53);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  width: 100%;
-  height: 3em;
-  border: 0px solid hotpink;
-  border-radius: 0.15em;
-}
-
-.alertbox {
-  float: right;
-  margin-left: 60vw;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  height: fit-content;
-  z-index: 10;
-}
-
-.mm.alerts.container {
-  display: flex;
-  width: 100%;
-}
-
-.metamask.message.positive {
-  padding-left: 0.5em;
   margin-top: 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 2em;
-  border: 0px solid;
-  border-radius: 0.2em;
-  position: absolute;
-  z-index: 9;
-  background-color: rgb(0, 0, 0);
 }

@@ -54,7 +54,7 @@ const ArtShow = ({ match }) => {
     })
   );
 
-  const userAvi = art?.user?.avatar;
+  const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`
 
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {

@@ -7,7 +7,7 @@ import {
 import logo from "../../images/ethcam.svg";
 
 const LikeCard = ({ like }) => {
-  const userAvi = like.user.avatar;
+  const userAvi = `https://ipfs.io/ipfs/${like.user.avatar}`;
 
   return (
     <>
