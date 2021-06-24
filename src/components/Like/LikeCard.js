@@ -6,7 +6,7 @@ import {
 } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 
-const LikeCard = ({ like }) => {
+const LikeCard = ({ like, location }) => {
   const userAvi = `https://ipfs.io/ipfs/${like.user.avatar}`;
 
   return (
@@ -19,11 +19,11 @@ const LikeCard = ({ like }) => {
             <Image src={logo} alt={like.user.username} avatar></Image>
           )}
           <div className="user bio combo">
-            <span className="like card username">{like.user.username} </span>{" "}
+            <span className={`${location} like card username`}>{like.user.username} </span>{" "}
             {like.user.bio ? (
-              <span className="liker card biodiv trunc bio small"> {like.user.bio}</span>
+              <span className={`${location} liker card biodiv trunc bio small`}> {like.user.bio}</span>
             ) : (
-              <span className="liker card biodiv trunc bio small">
+              <span className={`${location} liker card biodiv trunc bio small`}>
                 User has not set up a bio...
               </span>
             )}

@@ -7,7 +7,7 @@ import {
   Dropdown,
   Divider,
   Form,
-  Loader
+  Loader,
 } from "semantic-ui-react";
 import {
   createComment,
@@ -20,6 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ArtCardLikeCount from "./ArtCardLikeCount";
 import ArtCardCommentSection from "./ArtCardCommentSection";
+import ArtCardLikesSection from "./ArtCardLikesSection";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
@@ -36,6 +37,11 @@ export const ArtCard = ({ art }) => {
       return false;
     }
   });
+
+  const [extended, setExtended] = useState(false);
+  const [likes, setLikes] = useState(false);
+  const [comments, setComments] = useState(true);
+
   //! Sets liked status in local state
   const [liked, setLiked] = useState(
     !!art.likes.find((like) => {
@@ -60,9 +66,16 @@ export const ArtCard = ({ art }) => {
     }
   };
 
-  const [extended, setExtended] = useState(false);
-  const [likes, setLikes] = useState(false);
-  const [comments, setComments] = useState(true);
+  const getDate = () => {
+    let ms = (Date.now() - Date.parse(art.created_at)) / 1000 / 60 / 60 / 24;
+    if (ms >= 1) {
+      return Math.floor(ms) + " days ago";
+    } else if (ms * 24 >= 1) {
+      return Math.floor(ms * 24) + " hours ago";
+    } else if (ms * 24 < 1) {
+      return Math.floor(ms * 24 * 60) + " minutes ago";
+    }
+  };
 
   useEffect(() => {
     //! Sets liked status in local state on render
@@ -128,32 +141,23 @@ export const ArtCard = ({ art }) => {
 
   //!\///////// select a user profile or list /////////////
 
-  const handleLikeCountClick = (e) => {
-    e.preventDefault();
-    //pull up all users who liked
-  };
   //!\///////////////////////////////////////////////
 
   const handleDisplay = (e, display) => {
+    setLikes(false);
+    setComments(false);
+    setExtended(false);
     e.preventDefault();
     switch (display) {
       case "LIKES":
-        if (likes) break;
-        setComments(false);
         setLikes(true);
         break;
       case "COMMENTS":
-        if (comments) break;
-        setLikes(false);
-        setComments(!comments);
+        setComments(true);
         break;
       case "EXTENDED":
-        if (!extended) {
-          setComments(true);
-          setExtended(true);
-        } else {
-          setExtended(false);
-        }
+        setExtended(true);
+        setComments(true);
         break;
       default:
         dispatch(raiseAlert("Error"));
@@ -190,13 +194,16 @@ export const ArtCard = ({ art }) => {
                 />
               )}
             </div>
+
           </Segment>
+          
 
           <Segment attached className="caption seg">
+            
             <span className="explore art card">
-              <span className="explore art card username">
+              <div className="explore art card username areadiv">
                 <Link
-                  className="explore art card username"
+                  className="explore art card username areadiv"
                   id="user-link"
                   key={art.user.id + "u"}
                   to={`/profile/${art.user.id}`}
@@ -206,38 +213,22 @@ export const ArtCard = ({ art }) => {
                     avatar
                     src={`https://ipfs.io/ipfs/${art.user.avatar}`}
                   />
-                  {art.user.username}
+                  <div>
+                    {art.user.username}
+                    <span id="cap" className="art card comment card metadata">
+                      {getDate()}
+                    </span>
+                  </div>
                 </Link>
-              </span>
-              <span className="art card caption caption">
+              </div>
+
+              <p className="art card caption caption">
                 &nbsp;&nbsp;{art.caption}
-              </span>
+              </p>
+              
             </span>
 
-            <Dropdown
-              icon="ellipsis horizontal"
-              id="ellips-edit"
-              className="ellips edit"
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item text="View artist page" />
-                <Dropdown.Item text="View art page" />
-                <Dropdown.Divider />
-                {comments && (
-                  <Dropdown.Item
-                    text="All Comms. & Replies"
-                    onClick={(e) => handleDisplay(e, "EXTENDED")}
-                  />
-                )}
-                {extended && (
-                  <Dropdown.Item
-                    text="Only Comments"
-                    onClick={(e) => handleDisplay(e, "COMMENTS")}
-                  />
-                )}
-                <Dropdown.Item text="All Likers" />
-              </Dropdown.Menu>
-            </Dropdown>
+          
           </Segment>
           <Segment attached>
             <div className="artcard explore likes seg">
@@ -251,15 +242,48 @@ export const ArtCard = ({ art }) => {
                   <Icon name="fire" className="likebutton edit" />
                 </a>
                 <div className="explore likers head">
-                  <ArtCardLikeCount
-                    art={art}
-                    handleLikeCountClick={handleLikeCountClick}
-                  />
+                  <ArtCardLikeCount art={art} handleDisplay={handleDisplay} />
                 </div>
               </div>
             </div>
 
             <Divider />
+
+            <Dropdown
+              icon="ellipsis horizontal"
+              id="ellips-edit"
+              className="ellips edit"
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item text="View artist page" />
+                <Dropdown.Item text="View art page" />
+                <Dropdown.Divider />
+                {!extended && (
+                  <Dropdown.Item
+                    text="All Comms. & Replies"
+                    onClick={(e) => handleDisplay(e, "EXTENDED")}
+                  />
+                )}
+                {extended && (
+                  <Dropdown.Item
+                    text="Comments"
+                    onClick={(e) => handleDisplay(e, "COMMENTS")}
+                  />
+                )}
+                {likes && (
+                  <Dropdown.Item
+                    text="Comments"
+                    onClick={(e) => handleDisplay(e, "COMMENTS")}
+                  />
+                )}
+                {comments && (
+                  <Dropdown.Item
+                    text="All Likers"
+                    onClick={(e) => handleDisplay(e, "LIKES")}
+                  />
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
 
             {comments && (
               <ArtCardCommentSection
@@ -268,7 +292,7 @@ export const ArtCard = ({ art }) => {
                 handleDisplay={handleDisplay}
               />
             )}
-            {likes && <ArtCardCommentSection art={art} />}
+            {likes && <ArtCardLikesSection art={art} />}
 
             <Divider />
 
@@ -284,9 +308,11 @@ export const ArtCard = ({ art }) => {
             <a
               href="/addcomment"
               className="show reply"
+              id="link-text-two"
               onClick={(e) => handleComment(e)}
             >
-              <Icon name="edit" /> {loading ? <Loader active inline size="mini"/> : "Add Comment"}
+              <Icon name="edit" />{" "}
+              {loading ? <Loader active inline size="mini" /> : "Add Comment"}
             </a>
           </Header>
         </Segment.Group>
