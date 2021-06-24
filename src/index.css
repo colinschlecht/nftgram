@@ -151,83 +151,6 @@ html::-webkit-scrollbar {
 }
 
 
-/*!----------- explore art card details ------- */
-/************ explore art card details ******* */
-/*!----------- explore art card details ------- */
-
-.explore.art.card {
-  color: black;
-}
-
-.explore.art.card.username {
-  color: black;
-  font-weight: bold;
-}
-.explore.art.card.likes {
-  color: black;
-  font-weight: bold;
-}
-.like.button.icon {
-  background-color: rgba(255, 255, 255, 0) !important;
-}
-
-#like-button-main {
-  background-color: rgba(255, 255, 255, 0) !important;
-}
-
-.explore.art.card.username:hover {
-  transition: color 0.1s ease;
-  color: rgba(0, 0, 0, 0.653) !important;
-  font-weight: bold;
-}
-.explore.art.card.likes:hover {
-  transition: color 0.1s ease;
-  color: rgba(0, 0, 0, 0.653);
-  font-weight: bold;
-}
-
-#small-like-btn {
-  font-size: 0.73em;
-  float: right;
-}
-
-#reply-count {
-  float: right;
-}
-#small-like-count {
-  float: right;
-  margin-left: 3px;
-}
-
-#art-card {
-  max-width: 600px;
-}
-#art-container {
-  position: absolute;
-  margin-left: 50%;
-  display: flex;
-  width: 1200px;
-}
-
-.button {
-  background-color: rgba(68, 81, 155, 0.201);
-}
-.button:hover {
-  background-color: rgba(40, 45, 70, 0.201);
-}
-
-#comment-reply {
-  font-size: 1em;
-}
-
-.reply.comment.expand {
-  color: rgba(0, 0, 0, 0.4);
-}
-.reply.comment.expand:hover {
-  color: rgba(0, 0, 0, 0.721);
-  transition: color 0.1s ease;
-}
-
 
 /*! -------- explore art pictures and placeholder --------- */
 /* ******** explore art pictures and placeholder ********  */
@@ -341,9 +264,268 @@ html::-webkit-scrollbar {
   color: #b0afaf !important;
 }
 
+
+/*!----------- explore art card base ------- */
+/************ explore art card base ******* */
+/*!----------- explore art card base ------- */
+
+.explore.art.card {
+  color: black;
+}
+
+.explore.art.card.likes {
+  color: black;
+  font-weight: bold;
+}
+.explore.art.card.username {
+  color: black;
+  font-weight: bold;
+}
+.like.button.icon {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+#like-button-main {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.explore.art.card.username:hover {
+  transition: color 0.1s ease;
+  color: rgba(0, 0, 0, 0.653) !important;
+  font-weight: bold;
+}
+.explore.art.card.likes:hover {
+  transition: color 0.1s ease;
+  color: rgba(0, 0, 0, 0.653);
+  font-weight: bold;
+}
+
+#small-like-btn {
+  font-size: 0.73em;
+  float: right;
+}
+
+#reply-count {
+  float: right;
+}
+#small-like-count {
+  float: right;
+  margin-left: 3px;
+}
+
+#art-card {
+  max-width: 600px;
+}
+#art-container {
+  position: absolute;
+  margin-left: 50%;
+  display: flex;
+  width: 1200px;
+}
+
+.button {
+  background-color: rgba(68, 81, 155, 0.201);
+}
+.button:hover {
+  background-color: rgba(40, 45, 70, 0.201);
+}
+
+#comment-reply {
+  font-size: 1em;
+}
+
+.reply.comment.expand {
+  color: rgba(0, 0, 0, 0.4);
+}
+.reply.comment.expand:hover {
+  color: rgba(0, 0, 0, 0.721);
+  transition: color 0.1s ease;
+}
+
+#art-card-container{
+  margin: 1em;;
+}
+
+/*! -------- explore art card comments --------- */
+/* ************** ************** ***************/
+/*! -------- explore art card comments --------- */
+
+.hide.replies.trigger{
+  margin-left: 2em;
+}
+
+#link-text{
+  color: #b0afaf;
+}
+.explore.art.card.comment.holder::-webkit-scrollbar {
+  display: none;
+}
+
+.explore.art.card.comment.section{
+  height: 20em;
+}
+.explore.art.card.comment.holder{
+  height: 20em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.comment.section.top{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  background: #f7f7f738;
+}
+.comment.section.bottom{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  background: #f7f7f738;
+}
+
+.segment.comment-even{
+  
+  background-color:rgba(196, 169, 169, 0.092) !important;
+}
+.segment.comment-odd{
+
+  background-color:rgba(175, 168, 134, 0.071) !important;
+  
+}
+
+
+/*! -------- Comments --------- */
+/* ********* Comments VVVVV from showpage ***********/
+/*! -------- Comments --------- */
+
+.comment.card.userdiv {
+  margin: 0;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.comment.card.text-header {
+  padding: 0.6em;
+  align-items: center;
+  display: flex;
+}
+
+.comment.card.username {
+  margin-bottom: -0.2em;
+  margin-left: -0.3em;
+}
+
+.comment.card.metadata {
+  display: flex;
+  max-width: fit-content;
+  margin-top: -0.4em;
+  margin-left: -0.4em;
+  color: #b0afaf;
+  font-size: 0.8em;
+}
+
+.metadata.username {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.comment.card {
+  min-height: fit-content;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: stretch;
+  min-width: -moz-available;
+  min-width: -webkit-fill-available;
+}
+
+.comment-odd > .comment.card.artcomment {
+  background: rgba(255, 255, 255, 0.503)
+}
+.comment-even > .comment.card.artcomment {
+  background: rgba(249, 249, 249, 0.523)
+}
+
+.comment-odd > .comment.card.commentreply {
+  background: rgba(255, 255, 255, 0.503)
+}
+.comment-even > .comment.card.commentreply {
+  background: rgba(249, 249, 249, 0.523)
+}
+
+
+
+.comment-odd > .comment.card.replyreply {
+  background: rgba(255, 255, 255, 0.503)
+}
+.comment-even > .comment.card.replyreply {
+  background: rgba(249, 249, 249, 0.523)
+}
+
+#comment-card {
+  margin-bottom: 1rem;
+}
+
+.comment.like.button.icon {
+  float: right;
+}
+
+/*! -------- Comment Reply --------- */
+/*!********Comment Reply ********* */
+/*! ---------Comment Reply --------- */
+
+.reply-thread {
+  border: 1px solid black;
+  margin-left: 1.5em;
+  margin-top: -2em;
+}
+
+.metadata.username {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.comment.card.commentreply {
+  margin-left: 3rem;
+  /* margin-top: 2rem; */
+}
+.comment.card.replyreply {
+  margin-left: 3rem;
+  /* margin-top: 2rem; */
+}
+
+.commentbuttonarea {
+  display: flex;
+  justify-content: center;
+}
+#comment-reply {
+  background-color: #ffffff95;
+}
+
+.reply.form {
+  margin-top: 0.5em;
+}
+
 /*! -------- explore art card likes --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card likes --------- */
+
+
+.art.card.caption.caption{
+  font-style: italic;
+  margin: auto;
+}
+.caption.seg{
+  display: flex;
+  justify-content: space-between
+}
 
 .artcard.explore.likes.seg {
   display: flex;
@@ -394,6 +576,98 @@ html::-webkit-scrollbar {
   margin-top: -0.8em;
   z-index: 2;
 }
+
+/*! -------- Likes --------- */
+/*  ********* Likes VVVVV from showpage *********  */
+/*! -------- Likes --------- */
+
+.likes.background{
+  width: auto;
+
+}
+
+.user.bio.combo {
+  margin-left: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+.likes.background::-webkit-scrollbar {
+  display: none;
+}
+.likes.background.commentsection {
+  width: auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  background-color: #b0afaf0b;
+}
+.likes.background.events {
+  width: auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  background-color: #b0afaf0b;
+}
+.likes.background.likessection {
+  width: auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+ 
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  background-color: #b0afaf0b;
+}
+
+.liker.card {
+  min-height: fit-content;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  min-width: stretch;
+  min-width: -moz-available;
+  min-width: -webkit-fill-available;
+}
+
+.liker.card.userdiv {
+  padding: 0.6em;
+  align-items: center;
+  display: flex;
+}
+
+.like.card.username {
+  margin-bottom: -0.2em;
+  margin-left: -0.3em;
+}
+
+.bio.small {
+  margin-top: -0.4em;
+  margin-left: -0.4em;
+  color: #b0afaf;
+  font-style: italic;
+}
+
+
 
 /*! -------- user showpage --------- */
 /*************************************/
@@ -684,186 +958,3 @@ html::-webkit-scrollbar {
   transform: scale(1.2);
 }
 
-/*! -------- Likes --------- */
-/*  ********* Likes *********  */
-/*! -------- Likes --------- */
-
-.likes.background{
-  width: auto;
-
-}
-
-.user.bio.combo {
-  margin-left: 0.5em;
-  display: flex;
-  flex-direction: column;
-}
-.likes.background::-webkit-scrollbar {
-  display: none;
-}
-.likes.background.commentsection {
-  width: auto;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  background-color: #b0afaf0b;
-}
-.likes.background.events {
-  width: auto;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  background-color: #b0afaf0b;
-}
-.likes.background.likessection {
-  width: auto;
-
-  overflow-y: auto;
-  overflow-x: hidden;
- 
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  background-color: #b0afaf0b;
-}
-
-.liker.card {
-  min-height: fit-content;
-  max-width: 100%;
-  margin: auto;
-  display: flex;
-  min-width: stretch;
-  min-width: -moz-available;
-  min-width: -webkit-fill-available;
-}
-
-.liker.card.userdiv {
-  padding: 0.6em;
-  align-items: center;
-  display: flex;
-}
-
-.like.card.username {
-  margin-bottom: -0.2em;
-  margin-left: -0.3em;
-}
-
-.bio.small {
-  margin-top: -0.4em;
-  margin-left: -0.4em;
-  color: #b0afaf;
-  font-style: italic;
-}
-
-/*! -------- Comments --------- */
-/* ********* Comments ***********/
-/*! -------- Comments --------- */
-
-.comment.card.userdiv {
-  margin: 0;
-  padding-bottom: 0.5em;
-  padding-top: 0.5em;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-}
-.comment.card.text-header {
-  padding: 0.6em;
-  align-items: center;
-  display: flex;
-}
-
-.comment.card.username {
-  margin-bottom: -0.2em;
-  margin-left: -0.3em;
-}
-
-.comment.card.metadata {
-  display: flex;
-  max-width: fit-content;
-  margin-top: -0.4em;
-  margin-left: -0.4em;
-  color: #b0afaf;
-  font-size: 0.8em;
-}
-
-.metadata.username {
-  font-size: 0.8em;
-  font-style: italic;
-}
-
-.comment.card {
-  min-height: fit-content;
-  max-width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  min-width: stretch;
-  min-width: -moz-available;
-  min-width: -webkit-fill-available;
-}
-
-#comment-card {
-  margin-bottom: 1rem;
-}
-
-.comment.like.button.icon {
-  float: right;
-}
-
-/*! -------- Comment Reply --------- */
-/*!********Comment Reply ********* */
-/*! ---------Comment Reply --------- */
-
-.reply-thread {
-  border: 1px solid black;
-  margin-left: 1.5em;
-  margin-top: -2em;
-}
-
-.metadata.username {
-  font-size: 0.8em;
-  font-style: italic;
-}
-
-.comment.card.commentreply {
-  margin-left: 3rem;
-  /* margin-top: 2rem; */
-}
-.comment.card.replyreply {
-  margin-left: 3rem;
-  /* margin-top: 2rem; */
-}
-
-.commentbuttonarea {
-  display: flex;
-  justify-content: center;
-}
-#comment-reply {
-  background-color: #ffffff95;
-}
-
-.reply.form {
-  margin-top: 0.5em;
-}
