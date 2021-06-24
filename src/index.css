@@ -114,6 +114,8 @@ html::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   width: 100%;
   height: 3em;
   border: 0px solid hotpink;
@@ -121,12 +123,11 @@ html::-webkit-scrollbar {
 }
 
 .alertbox {
-  float: right;
-  margin-left: 60vw;
+  margin-left: 50vw;
   position: fixed;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 40vw;
   height: fit-content;
   z-index: 10;
 }
@@ -151,6 +152,21 @@ html::-webkit-scrollbar {
 }
 
 
+
+#top-menu{
+  background: transparent;
+  position: fixed;
+}
+#metamask-button{
+  position: fixed;
+  background: transparent;
+  border: 1px solid rgb(250, 177, 114);
+}
+#metamask-button:hover{
+  position: fixed;
+  background: rgba(242, 220, 200, 0.201);
+  border: 1px solid rgb(250, 177, 114);
+}
 
 /*! -------- explore art pictures and placeholder --------- */
 /* ******** explore art pictures and placeholder ********  */
@@ -346,6 +362,12 @@ html::-webkit-scrollbar {
   margin: 1em;;
 }
 
+
+.explore.art.card.username.areadiv{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 /*! -------- explore art card comments --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card comments --------- */
@@ -356,6 +378,17 @@ html::-webkit-scrollbar {
 
 #link-text{
   color: #b0afaf;
+}
+
+#link-text-two{
+  color: #c6aaaa;
+}
+#link-text-two:hover{
+  color: #000000;
+}
+
+#link-text:hover{
+  color: #000000;
 }
 .explore.art.card.comment.holder::-webkit-scrollbar {
   display: none;
@@ -368,6 +401,7 @@ html::-webkit-scrollbar {
   height: 20em;
   overflow-x: hidden;
   overflow-y: scroll;
+  background: #f7f7f738;
 }
 
 .comment.section.top{
@@ -375,14 +409,17 @@ html::-webkit-scrollbar {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
-  background: #f7f7f738;
+  background: #f7f7f7;
 }
 .comment.section.bottom{
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
-  background: #f7f7f738;
+  background: #f7f7f7;
+}
+.comment.section.bottom:hover{
+  background: #f7f7f7;
 }
 
 .segment.comment-even{
@@ -518,11 +555,17 @@ html::-webkit-scrollbar {
 /*! -------- explore art card likes --------- */
 
 
+#cap.art.card.comment.card.metadata{
+  margin: auto;
+  margin-left: 0em;
+  margin-top: -.3em;
+}
 .art.card.caption.caption{
   font-style: italic;
   margin: auto;
 }
 .caption.seg{
+  overflow: hidden;
   display: flex;
   justify-content: space-between
 }
@@ -544,6 +587,12 @@ html::-webkit-scrollbar {
   font-size: 0.8em;
   margin-top: -.2em;
   margin-right: .2em;
+}
+.ellips.edit{
+  float: right;
+  margin: auto;
+  margin-top: -9em;
+
 }
 .ellips.edit .icon {
   float: right;
@@ -575,6 +624,12 @@ html::-webkit-scrollbar {
   margin-left: -1.5em;
   margin-top: -0.8em;
   z-index: 2;
+}
+
+
+.liker.card.biodiv.trunc.bio.small.explore.art.card{
+  margin-top: .01em;
+  color:darkgrey;
 }
 
 /*! -------- Likes --------- */

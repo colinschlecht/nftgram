@@ -96,13 +96,13 @@ const MetamaskButton = () => {
   const MetaMaskClientCheck = () => {
     if (!isMetaMaskInstalled()) {
       return (
-        <Button onClick={() => onClickInstall()}>
+        <Button id="metamask-button" onClick={() => onClickInstall()}>
           Click here to install MetaMask!
         </Button>
       );
     } else {
       return (
-        <Button loading={loading} onClick={() => onConnectClick()}>
+        <Button id="metamask-button" loading={loading} onClick={() => onConnectClick()}>
           {currentAcct.length > 0 ? "Connected" : "Connect to Metamask"}
         </Button>
       );
@@ -110,7 +110,7 @@ const MetamaskButton = () => {
   };
 
   return (
-    <div className="menu">
+    <div className="menu" id="top-menu">
       {MetaMaskClientCheck()}
       <div className="item">
         {message[0] === "0" ? (
