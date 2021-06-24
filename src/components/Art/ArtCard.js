@@ -1,7 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Image, Icon, Segment, Header, Dropdown, Divider } from "semantic-ui-react";
-import { CommentSection } from "./CommentSection";
 import {
+  Image,
+  Icon,
+  Segment,
+  Header,
+  Dropdown,
+  Divider,
+  Form,
+  Loader
+} from "semantic-ui-react";
+import {
+  createComment,
   createArtLike,
   destroyArtLike,
   raiseAlert,
@@ -10,12 +19,15 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ArtCardLikeCount from "./ArtCardLikeCount";
-import ShowComments from "../Comment/ShowComments";
+import ArtCardCommentSection from "./ArtCardCommentSection";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
   //! Used in setting classname for art image
   const imgEl = useRef();
+  //!for sending comment from comment form
+  const [cmt, setCmt] = useState("");
+  const [loading, setLoading] = useState(false);
   //! Makes use of the current user in global state
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -47,6 +59,10 @@ export const ArtCard = ({ art }) => {
       }
     }
   };
+
+  const [extended, setExtended] = useState(false);
+  const [likes, setLikes] = useState(false);
+  const [comments, setComments] = useState(true);
 
   useEffect(() => {
     //! Sets liked status in local state on render
@@ -87,6 +103,28 @@ export const ArtCard = ({ art }) => {
   };
 
   //!\///////////////////////////////////////////////
+  //!\/////////// Post a Comment ////////////////
+
+  const handleComment = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (user) {
+      dispatch(
+        createComment({
+          comment: cmt,
+          user_id: user.user.id,
+          commentable_id: art.id,
+          commentable_type: "Art",
+        })
+      );
+      setCmt("");
+      setLoading(false);
+    } else {
+      dispatch(raiseAlert("Please connect to MetaMask to interact"));
+      dispatch(lowerAlert());
+      setLoading(false);
+    }
+  };
 
   //!\///////// select a user profile or list /////////////
 
@@ -96,9 +134,36 @@ export const ArtCard = ({ art }) => {
   };
   //!\///////////////////////////////////////////////
 
+  const handleDisplay = (e, display) => {
+    e.preventDefault();
+    switch (display) {
+      case "LIKES":
+        if (likes) break;
+        setComments(false);
+        setLikes(true);
+        break;
+      case "COMMENTS":
+        if (comments) break;
+        setLikes(false);
+        setComments(!comments);
+        break;
+      case "EXTENDED":
+        if (!extended) {
+          setComments(true);
+          setExtended(true);
+        } else {
+          setExtended(false);
+        }
+        break;
+      default:
+        dispatch(raiseAlert("Error"));
+        dispatch(lowerAlert());
+    }
+  };
+
   return (
     <>
-      <div>
+      <div id="art-card-container">
         <Segment.Group id="art-card">
           <Header as="h4" attached="top" className="artshow detail title" block>
             {art.name}
@@ -126,65 +191,104 @@ export const ArtCard = ({ art }) => {
               )}
             </div>
           </Segment>
-          
-          <Segment attached className="artcard explore likes seg">
-            <div className="explore main likes">
-              <a
-                id="like-button-main"
-                href="/"
-                className="like button icon"
-                onClick={(e) => handleLike(e)}
-              >
-                <Icon name="fire" className="likebutton edit" />
-              </a>
-              <div className="explore likers head">
-                <ArtCardLikeCount
-                  art={art}
-                  handleLikeCountClick={handleLikeCountClick}
-                />
+
+          <Segment attached className="caption seg">
+            <span className="explore art card">
+              <span className="explore art card username">
+                <Link
+                  className="explore art card username"
+                  id="user-link"
+                  key={art.user.id + "u"}
+                  to={`/profile/${art.user.id}`}
+                >
+                  <Image
+                    className="artcard caption section"
+                    avatar
+                    src={`https://ipfs.io/ipfs/${art.user.avatar}`}
+                  />
+                  {art.user.username}
+                </Link>
+              </span>
+              <span className="art card caption caption">
+                &nbsp;&nbsp;{art.caption}
+              </span>
+            </span>
+
+            <Dropdown
+              icon="ellipsis horizontal"
+              id="ellips-edit"
+              className="ellips edit"
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item text="View artist page" />
+                <Dropdown.Item text="View art page" />
+                <Dropdown.Divider />
+                {comments && (
+                  <Dropdown.Item
+                    text="All Comms. & Replies"
+                    onClick={(e) => handleDisplay(e, "EXTENDED")}
+                  />
+                )}
+                {extended && (
+                  <Dropdown.Item
+                    text="Only Comments"
+                    onClick={(e) => handleDisplay(e, "COMMENTS")}
+                  />
+                )}
+                <Dropdown.Item text="All Likers" />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Segment>
+          <Segment attached>
+            <div className="artcard explore likes seg">
+              <div className="explore main likes">
+                <a
+                  id="like-button-main"
+                  href="/"
+                  className="like button icon"
+                  onClick={(e) => handleLike(e)}
+                >
+                  <Icon name="fire" className="likebutton edit" />
+                </a>
+                <div className="explore likers head">
+                  <ArtCardLikeCount
+                    art={art}
+                    handleLikeCountClick={handleLikeCountClick}
+                  />
+                </div>
               </div>
             </div>
 
-           
-              {/* <Icon name="ellipsis horizontal" className="ellips edit" /> */}
-              <Dropdown icon="ellipsis horizontal" id="ellips-edit" className="ellips edit" >
-                <Dropdown.Menu>
-                  <Dropdown.Item text="View artist page" />
-                  <Dropdown.Item text="View art page" />
-                  <Dropdown.Divider />
-                  <Dropdown.Item text="Comments" />
-                  <Dropdown.Item text="Likers" />
-                </Dropdown.Menu>
-              </Dropdown>
-           
-          </Segment>
-          <Segment attached="bottom">
-            <>
-              <p className="explore art card">
-                <span className="explore art card username">
-                  <Link
-                    className="explore art card username"
-                    id="user-link"
-                    key={art.user.id + "u"}
-                    to={`/profile/${art.user.id}`}
-                  >
-                     <Image
-                      className="artcard caption section"
-                      avatar
-                      src={`https://ipfs.io/ipfs/${art.user.avatar}`}
-                    />
-                    {art.user.username}
-                  </Link>
-                </span>
-                &nbsp;&nbsp;{art.caption}
-              </p>
-              <Divider />
-              {/* <CommentSection art={art} /> */}
-              <ShowComments art={art}/>
-            </>
-         
+            <Divider />
 
+            {comments && (
+              <ArtCardCommentSection
+                art={art}
+                extended={extended}
+                handleDisplay={handleDisplay}
+              />
+            )}
+            {likes && <ArtCardCommentSection art={art} />}
+
+            <Divider />
+
+            <Form>
+              <Form.TextArea
+                onChange={(e) => setCmt(e.target.value)}
+                value={cmt}
+                placeholder={`Commenting on @${art.user.username}'s art ...`}
+              />
+            </Form>
           </Segment>
+          <Header attached="bottom" className="artshow detail title" block>
+            <a
+              href="/addcomment"
+              className="show reply"
+              onClick={(e) => handleComment(e)}
+            >
+              <Icon name="edit" /> {loading ? <Loader active inline size="mini"/> : "Add Comment"}
+            </a>
+          </Header>
         </Segment.Group>
       </div>
     </>
