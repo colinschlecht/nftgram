@@ -8,7 +8,7 @@ const oddOrEven = (index) => (index % 2 === 0 ? "even" : "odd");
 const ArtCardCommentSection = ({ art, extended, handleDisplay }) => {
   return (
     <>
-      <Segment attached="top" className="comment section top">
+      <Segment attached="top" className="comment section top" id="link-text">
         {extended ? "Comments and Replies" : "Comments"}
       </Segment>
       <div className="explore art card comment holder">
@@ -60,7 +60,7 @@ const ArtCardCommentSection = ({ art, extended, handleDisplay }) => {
             href="/view/all/replies"
             id="link-text"
             className="like button icon"
-            onClick={(e) => handleDisplay(e, "EXTENDED")}
+            onClick={(e) => handleDisplay(e, "COMMENTS")}
           >
             View comments only
           </a>
