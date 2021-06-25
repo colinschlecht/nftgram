@@ -170,7 +170,9 @@ export const ArtCard = ({ art }) => {
       <div id="art-card-container">
         <Segment.Group id="art-card">
           <Header as="h4" attached="top" className="artshow detail title" block>
-            {art.name}
+           <Link  id="art-show-link"
+                  key={art.id + "a"}
+                  to={`/art/show/${art.id}`}> <span className="link-text-two">{art.name}</span></Link>
           </Header>
           <Segment attached>
             <div className="explore picture container">

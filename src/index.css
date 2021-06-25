@@ -197,25 +197,6 @@ html::-webkit-scrollbar {
   }
 }
 
-@media (pointer:coarse) {
-  /* #top-menu:hover #button-container {
-    margin-top: 2em;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-left: 1em;
-  }
-  #top-menu:hover #angled-icon-top {
-    margin-top: 2em;
-    transform: rotate(180deg);
-  }
-  #metamask-button:hover {
-    background: rgba(242, 220, 200, 0.201);
-    border: 1px solid rgb(250, 177, 114);
-  }
-   */
-}
-
 
 .metamask.message.positive {
   padding-left: 0.5em;
@@ -482,15 +463,27 @@ html::-webkit-scrollbar {
 #link-text {
   color: #b0afaf;
 }
+.link-text {
+  color: #b0afaf;
+}
 
 #link-text-two {
   color: #c6aaaa;
+}
+.link-text-two {
+  color: #c6aaaa;
+}
+.link-text-two:hover {
+  color: #000000;
 }
 #link-text-two:hover {
   color: #000000;
 }
 
 #link-text:hover {
+  color: #000000;
+}
+.link-text:hover {
   color: #000000;
 }
 .explore.art.card.comment.holder::-webkit-scrollbar {
@@ -593,14 +586,14 @@ html::-webkit-scrollbar {
   background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.commentreply {
-  background: rgba(249, 249, 249, 0.523);
+  background: rgba (249, 249, 249, 0.523);
 }
 
 .comment-odd > .comment.card.replyreply {
   background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.replyreply {
-  background: rgba(249, 249, 249, 0.523);
+  background: rgba (249, 249, 249, 0.523);
 }
 
 #comment-card {

@@ -125,7 +125,7 @@ const MetamaskButton = () => {
 
   return (
     <div className="menu" id="top-menu">
-        <a href="/expand-menu" onClick={(e) =>handleDropdown(e)}><Icon name="angle down" id={`angled-icon-top${dropped}`} /></a>
+        <a  href="/expand-menu" onClick={(e) =>handleDropdown(e)}><Icon name="angle down" id={`angled-icon-top${dropped}` } className="link-text"/></a>
       <div className="menu" id={`button-container${dropped}`}>
         {MetaMaskClientCheck()}
         {message[0] === "0" ? (
