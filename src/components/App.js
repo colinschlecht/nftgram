@@ -25,9 +25,9 @@ const App = () => {
           <Switch>
             <>
               <div className="mm alerts container">
-                <MetamaskButton />
                 {alerted && <Alert />}
               </div>
+              <MetamaskButton />
               <div id="main" className="ui centered grid">
                 <div id="nav">
                   <Nav />

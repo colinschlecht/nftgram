@@ -22,8 +22,13 @@ textarea,
 }
 
 #main {
+  display:flex;
   padding-top: 50px;
   padding-bottom: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
 .column {
@@ -35,11 +40,9 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-
 /*!----------- nav ------- */
 /*   *******************   */
 /*! -------- nav --------- */
-
 
 #nav {
   transition: all 0.2s ease-in-out;
@@ -64,7 +67,6 @@ html::-webkit-scrollbar {
   z-index: 1000;
   background-color: rgba(255, 235, 205, 0.242);
 }
-
 
 /*! -------- ui/mm/copy --------- */
 /*   ***************************   */
@@ -137,35 +139,138 @@ html::-webkit-scrollbar {
   width: 100%;
 }
 
+#top-menu {
+  top: -2em;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  width: fit-content;
+  background: transparent;
+  z-index: 100;
+  position: fixed;
+}
+
+#top-menu #button-container{
+  transition: all .3s;
+  margin-top: -10em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 1em;
+}
+#top-menu #button-containerdropped {
+  transition: all .3s;
+  margin-top: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 1em;
+}
+
+
+#top-menu #angled-icon-topdropped {
+  transition: all .3s;
+  margin-top: 2em;
+  transform: rotate(180deg);
+}
+#top-menu #angled-icon-top {
+  transition: all .3s;
+}
+
+@media(hover: hover) and (pointer: fine) {
+  #top-menu:hover #button-container {
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 1em;
+  }
+  #top-menu:hover #angled-icon-top {
+    margin-top: 2em;
+    transform: rotate(180deg);
+  }
+  #metamask-button:hover {
+    background: rgba(242, 220, 200, 0.201);
+    border: 1px solid rgb(250, 177, 114);
+  }
+}
+
+@media (pointer:coarse) {
+  /* #top-menu:hover #button-container {
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 1em;
+  }
+  #top-menu:hover #angled-icon-top {
+    margin-top: 2em;
+    transform: rotate(180deg);
+  }
+  #metamask-button:hover {
+    background: rgba(242, 220, 200, 0.201);
+    border: 1px solid rgb(250, 177, 114);
+  }
+   */
+}
+
+
 .metamask.message.positive {
   padding-left: 0.5em;
-  margin-top: 0.5em;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 2em;
   border: 0px solid;
   border-radius: 0.2em;
-  position: absolute;
   z-index: 9;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(79, 79, 79, 0.27);
+  box-shadow: 0.01em 0.01em, 0.1em 0 0.9em rgba(250, 177, 114, 0.359);
 }
 
-
-
-#top-menu{
-  background: transparent;
-  position: fixed;
-}
-#metamask-button{
-  position: fixed;
+#metamask-button {
   background: transparent;
   border: 1px solid rgb(250, 177, 114);
 }
-#metamask-button:hover{
-  position: fixed;
-  background: rgba(242, 220, 200, 0.201);
-  border: 1px solid rgb(250, 177, 114);
+
+@media (max-width: 500.98px) {
+  #button-container{
+    margin-top: -100em !important;
+  }
+  #button-containerdropped{
+    margin-top: 5em !important;
+  }
+  div.metamask.message.positive {
+    position: fixed;
+    margin-left: auto;
+    margin-top: 5em;
+    
+  
+  }
+  .metamask-message.trunc{
+    font-size: .9em;
+  }
+}
+@media (max-width: 380.98px) {
+  #button-container{
+    margin-top: -100em !important;
+  }
+  #button-containerdropped{
+    margin-top: 5em !important;
+  }
+  div.metamask.message.positive {
+    position: fixed;
+    margin-left: -3em;
+    margin-right: auto;
+    margin-top: 5em;
+    width: 99vw;
+  }
+  .metamask-message.trunc{
+    font-size: .9em;
+    max-width: 90vw;
+  }
 }
 
 /*! -------- explore art pictures and placeholder --------- */
@@ -280,7 +385,6 @@ html::-webkit-scrollbar {
   color: #b0afaf !important;
 }
 
-
 /*!----------- explore art card base ------- */
 /************ explore art card base ******* */
 /*!----------- explore art card base ------- */
@@ -358,12 +462,11 @@ html::-webkit-scrollbar {
   transition: color 0.1s ease;
 }
 
-#art-card-container{
-  margin: 1em;;
+#art-card-container {
+  margin: 1em;
 }
 
-
-.explore.art.card.username.areadiv{
+.explore.art.card.username.areadiv {
   display: flex;
   flex-wrap: nowrap;
 }
@@ -372,66 +475,62 @@ html::-webkit-scrollbar {
 /* ************** ************** ***************/
 /*! -------- explore art card comments --------- */
 
-.hide.replies.trigger{
+.hide.replies.trigger {
   margin-left: 2em;
 }
 
-#link-text{
+#link-text {
   color: #b0afaf;
 }
 
-#link-text-two{
+#link-text-two {
   color: #c6aaaa;
 }
-#link-text-two:hover{
+#link-text-two:hover {
   color: #000000;
 }
 
-#link-text:hover{
+#link-text:hover {
   color: #000000;
 }
 .explore.art.card.comment.holder::-webkit-scrollbar {
   display: none;
 }
 
-.explore.art.card.comment.section{
+.explore.art.card.comment.section {
   height: 20em;
 }
-.explore.art.card.comment.holder{
+.explore.art.card.comment.holder {
   height: 20em;
   overflow-x: hidden;
   overflow-y: scroll;
   background: #f7f7f738;
 }
 
-.comment.section.top{
+.comment.section.top {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
   background: #f7f7f7;
 }
-.comment.section.bottom{
+.comment.section.bottom {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
   background: #f7f7f7;
 }
-.comment.section.bottom:hover{
+.comment.section.bottom:hover {
   background: #f7f7f7;
 }
 
-.segment.comment-even{
-  
-  background-color:rgba(196, 169, 169, 0.092) !important;
+.segment.comment-even {
+  background-color: rgba(196, 169, 169, 0.092) !important;
 }
-.segment.comment-odd{
-
-  background-color:rgba(175, 168, 134, 0.071) !important;
-  
+.segment.comment-odd {
+  background-color: rgba(175, 168, 134, 0.071) !important;
 }
-
 
 /*! -------- Comments --------- */
 /* ********* Comments VVVVV from showpage ***********/
@@ -484,26 +583,24 @@ html::-webkit-scrollbar {
 }
 
 .comment-odd > .comment.card.artcomment {
-  background: rgba(255, 255, 255, 0.503)
+  background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.artcomment {
-  background: rgba(249, 249, 249, 0.523)
+  background: rgba(249, 249, 249, 0.523);
 }
 
 .comment-odd > .comment.card.commentreply {
-  background: rgba(255, 255, 255, 0.503)
+  background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.commentreply {
-  background: rgba(249, 249, 249, 0.523)
+  background: rgba(249, 249, 249, 0.523);
 }
-
-
 
 .comment-odd > .comment.card.replyreply {
-  background: rgba(255, 255, 255, 0.503)
+  background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.replyreply {
-  background: rgba(249, 249, 249, 0.523)
+  background: rgba(249, 249, 249, 0.523);
 }
 
 #comment-card {
@@ -554,20 +651,19 @@ html::-webkit-scrollbar {
 /* ************** ************** ***************/
 /*! -------- explore art card likes --------- */
 
-
-#cap.art.card.comment.card.metadata{
+#cap.art.card.comment.card.metadata {
   margin: auto;
   margin-left: 0em;
-  margin-top: -.3em;
+  margin-top: -0.3em;
 }
-.art.card.caption.caption{
+.art.card.caption.caption {
   font-style: italic;
   margin: auto;
 }
-.caption.seg{
+.caption.seg {
   overflow: hidden;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .artcard.explore.likes.seg {
@@ -585,14 +681,13 @@ html::-webkit-scrollbar {
 
 .artcard.caption.section.avi {
   font-size: 0.8em;
-  margin-top: -.2em;
-  margin-right: .2em;
+  margin-top: -0.2em;
+  margin-right: 0.2em;
 }
-.ellips.edit{
+.ellips.edit {
   float: right;
   margin: auto;
   margin-top: -9em;
-
 }
 .ellips.edit .icon {
   float: right;
@@ -626,19 +721,17 @@ html::-webkit-scrollbar {
   z-index: 2;
 }
 
-
-.liker.card.biodiv.trunc.bio.small.explore.art.card{
-  margin-top: .01em;
-  color:darkgrey;
+.liker.card.biodiv.trunc.bio.small.explore.art.card {
+  margin-top: 0.01em;
+  color: darkgrey;
 }
 
 /*! -------- Likes --------- */
 /*  ********* Likes VVVVV from showpage *********  */
 /*! -------- Likes --------- */
 
-.likes.background{
+.likes.background {
   width: auto;
-
 }
 
 .user.bio.combo {
@@ -684,7 +777,7 @@ html::-webkit-scrollbar {
 
   overflow-y: auto;
   overflow-x: hidden;
- 
+
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -721,8 +814,6 @@ html::-webkit-scrollbar {
   color: #b0afaf;
   font-style: italic;
 }
-
-
 
 /*! -------- user showpage --------- */
 /*************************************/
@@ -1012,4 +1103,3 @@ html::-webkit-scrollbar {
   transition: all 0.2s ease-in-out;
   transform: scale(1.2);
 }
-

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { ethErrors } from 'eth-rpc-errors'
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useDispatch } from "react-redux";
 import { connect, createUser, raiseAlert, lowerAlert } from "../../actions";
@@ -15,11 +15,21 @@ const MetamaskButton = () => {
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
+  const [dropped, setDropped] = useState("");
 
   // const handleNFTload = async (acct) => {
   //   const load = await getNFTHistory(acct)
   //   console.log(load)
   // }
+
+  const handleDropdown = (e) => {
+    e.preventDefault()
+    if(!dropped){
+      setDropped("dropped")
+    } else {
+      setDropped("")
+    }
+  }
 
   const clearMessage = () => {
     window.setTimeout(function () {
@@ -102,7 +112,11 @@ const MetamaskButton = () => {
       );
     } else {
       return (
-        <Button id="metamask-button" loading={loading} onClick={() => onConnectClick()}>
+        <Button
+          id="metamask-button"
+          loading={loading}
+          onClick={() => onConnectClick()}
+        >
           {currentAcct.length > 0 ? "Connected" : "Connect to Metamask"}
         </Button>
       );
@@ -111,11 +125,12 @@ const MetamaskButton = () => {
 
   return (
     <div className="menu" id="top-menu">
-      {MetaMaskClientCheck()}
-      <div className="item">
+        <a href="/expand-menu" onClick={(e) =>handleDropdown(e)}><Icon name="angle down" id={`angled-icon-top${dropped}`} /></a>
+      <div className="menu" id={`button-container${dropped}`}>
+        {MetaMaskClientCheck()}
         {message[0] === "0" ? (
           <div className="metamask message positive">
-            {message}
+           <span className="metamask-message trunc"> {message} </span>
             <CopyButton message={message} mod={"inverse"} />
           </div>
         ) : (
