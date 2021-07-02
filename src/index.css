@@ -22,7 +22,7 @@ textarea,
 }
 
 #main {
-  display:flex;
+  display: flex;
   padding-top: 50px;
   padding-bottom: 50px;
   flex-direction: column;
@@ -38,6 +38,11 @@ textarea,
 
 html::-webkit-scrollbar {
   display: none;
+}
+
+.container {
+  max-width: 90%;
+  margin: auto;
 }
 
 /*!----------- nav ------- */
@@ -140,8 +145,8 @@ html::-webkit-scrollbar {
 }
 
 #top-menu {
-  top: -2em;
-  height: 10vh;
+  top: 0;
+  height: 40px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -152,8 +157,8 @@ html::-webkit-scrollbar {
   position: fixed;
 }
 
-#top-menu #button-container{
-  transition: all .3s;
+#top-menu #button-container {
+  transition: all 0.3s;
   margin-top: -10em;
   display: flex;
   flex-wrap: wrap;
@@ -161,7 +166,7 @@ html::-webkit-scrollbar {
   margin-left: 1em;
 }
 #top-menu #button-containerdropped {
-  transition: all .3s;
+  transition: all 0.3s;
   margin-top: 2em;
   display: flex;
   flex-wrap: wrap;
@@ -169,17 +174,16 @@ html::-webkit-scrollbar {
   margin-left: 1em;
 }
 
-
 #top-menu #angled-icon-topdropped {
-  transition: all .3s;
+  transition: all 0.3s;
   margin-top: 2em;
   transform: rotate(180deg);
 }
 #top-menu #angled-icon-top {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
-@media(hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) {
   #top-menu:hover #button-container {
     margin-top: 2em;
     display: flex;
@@ -196,7 +200,6 @@ html::-webkit-scrollbar {
     border: 1px solid rgb(250, 177, 114);
   }
 }
-
 
 .metamask.message.positive {
   padding-left: 0.5em;
@@ -217,28 +220,26 @@ html::-webkit-scrollbar {
 }
 
 @media (max-width: 500.98px) {
-  #button-container{
+  #button-container {
     margin-top: -100em !important;
   }
-  #button-containerdropped{
+  #button-containerdropped {
     margin-top: 5em !important;
   }
   div.metamask.message.positive {
     position: fixed;
     margin-left: auto;
     margin-top: 5em;
-    
-  
   }
-  .metamask-message.trunc{
-    font-size: .9em;
+  .metamask-message.trunc {
+    font-size: 0.9em;
   }
 }
 @media (max-width: 380.98px) {
-  #button-container{
+  #button-container {
     margin-top: -100em !important;
   }
-  #button-containerdropped{
+  #button-containerdropped {
     margin-top: 5em !important;
   }
   div.metamask.message.positive {
@@ -248,8 +249,8 @@ html::-webkit-scrollbar {
     margin-top: 5em;
     width: 99vw;
   }
-  .metamask-message.trunc{
-    font-size: .9em;
+  .metamask-message.trunc {
+    font-size: 0.9em;
     max-width: 90vw;
   }
 }
@@ -452,6 +453,14 @@ html::-webkit-scrollbar {
   flex-wrap: nowrap;
 }
 
+
+#art-link-dd{
+  color: #000000;
+}
+#user-link-dd{
+  color: #000000;
+}
+
 /*! -------- explore art card comments --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card comments --------- */
@@ -579,21 +588,21 @@ html::-webkit-scrollbar {
   background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.artcomment {
-  background: rgba(249, 249, 249, 0.523);
+  background: rgba(255, 255, 255, 0.503);
 }
 
 .comment-odd > .comment.card.commentreply {
   background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.commentreply {
-  background: rgba (249, 249, 249, 0.523);
+  background: rgba(255, 255, 255, 0.503);
 }
 
 .comment-odd > .comment.card.replyreply {
   background: rgba(255, 255, 255, 0.503);
 }
 .comment-even > .comment.card.replyreply {
-  background: rgba (249, 249, 249, 0.523);
+  background: rgba(255, 255, 255, 0.503);
 }
 
 #comment-card {
@@ -643,6 +652,10 @@ html::-webkit-scrollbar {
 /*! -------- explore art card likes --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card likes --------- */
+
+#cap {
+  min-width: 12em;
+}
 
 #cap.art.card.comment.card.metadata {
   margin: auto;
@@ -817,15 +830,56 @@ html::-webkit-scrollbar {
   width: 150px !important;
   border-radius: 50% !important;
 }
-.container {
-  max-width: 90%;
-  margin: auto;
+
+.profile-edit-button {
+  float: right;
+  position: absolute;
 }
 
-.profile.container {
-  border: 1px solid rgba(138, 135, 135, 0.276);
-  padding: 1em;
+.edit-confirm {
+  right: 1em;
+  z-index: 11;
+  position: absolute;
 }
+
+.edit-name-button {
+  float: left;
+  position: relative;
+  margin-top: -0.5em !important;
+  z-index: 100;
+}
+
+#edit-name-button-placeholder {
+  min-width: 20em;
+  min-height: 2em;
+}
+#edit-name-input {
+  width: 20em;
+}
+
+.profileusername-div {
+  height: 4em;
+}
+
+#profile-username-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 5em;
+  align-content: center;
+}
+.profile.bio.area {
+  margin-top: 1em;
+  min-height: 7em;
+  width: 70vw;
+}
+.icon.edit-bio-button {
+  position: relative;
+  margin-top: -1em;
+  z-index: 100;
+}
+
 .header.container {
   display: flex;
   flex-direction: column;
