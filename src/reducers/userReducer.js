@@ -1,4 +1,4 @@
-import { /*GET_USER, SIGN_IN, SIGN_OUT,*/ SIGN_UP } from "../actions/types";
+import { /*GET_USER, SIGN_IN, SIGN_OUT,*/ SIGN_UP, UPDATE_USER } from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: false,
@@ -8,6 +8,8 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_UP:
+      return { ...state, isSignedIn: true, user: action.payload };
+    case UPDATE_USER:
       return { ...state, isSignedIn: true, user: action.payload };
     // case SIGN_IN:
     //   return { ...state, isSignedIn: true, user: action.payload };
