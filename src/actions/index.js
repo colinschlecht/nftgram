@@ -9,6 +9,7 @@ import {
   SIGN_UP,
   // GET_USER,
   // SHOW_USER,
+  UPDATE_USER,
   FETCH_ARTS,
   FETCH_ARTS_INF_SCROLL,
   LOADING_ARTS,
@@ -48,9 +49,14 @@ export const createUser = (account) => async (dispatch) => {
   dispatch({ type: SIGN_UP, payload: response.data });
   return response;
 };
-export const showUser = async (id) => {
+export const showUser = async (id) =>  {
   const response = await API_BASE.get(`/users/${id}`);
   // dispatch({ type: SHOW_USER, payload: response.data });
+  return response;
+};
+export const updateUser = (id, userInfo) => async (dispatch) => {
+  const response = await API_BASE.patch(`/users/${id}`, {...userInfo});
+  dispatch({ type: UPDATE_USER, payload: response.data });
   return response;
 };
 export const generate = async () => {
