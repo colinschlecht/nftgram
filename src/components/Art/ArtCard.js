@@ -170,9 +170,14 @@ export const ArtCard = ({ art }) => {
       <div id="art-card-container">
         <Segment.Group id="art-card">
           <Header as="h4" attached="top" className="artshow detail title" block>
-           <Link  id="art-show-link"
-                  key={art.id + "a"}
-                  to={`/art/show/${art.id}`}> <span className="link-text-two">{art.name}</span></Link>
+            <Link
+              id="art-show-link"
+              key={art.id + "a"}
+              to={`/art/show/${art.id}`}
+            >
+              {" "}
+              <span className="link-text-two">{art.name}</span>
+            </Link>
           </Header>
           <Segment attached>
             <div className="explore picture container">
@@ -196,12 +201,9 @@ export const ArtCard = ({ art }) => {
                 />
               )}
             </div>
-
           </Segment>
-          
 
           <Segment attached className="caption seg">
-            
             <span className="explore art card">
               <div className="explore art card username areadiv">
                 <Link
@@ -227,10 +229,7 @@ export const ArtCard = ({ art }) => {
               <p className="art card caption caption">
                 &nbsp;&nbsp;{art.caption}
               </p>
-              
             </span>
-
-          
           </Segment>
           <Segment attached>
             <div className="artcard explore likes seg">
@@ -257,8 +256,25 @@ export const ArtCard = ({ art }) => {
               className="ellips edit"
             >
               <Dropdown.Menu>
-                <Dropdown.Item text="View artist page" />
-                <Dropdown.Item text="View art page" />
+                <Dropdown.Item>
+                  <Link
+                    id="user-link-dd"
+                    key={art.user.id + "u"}
+                    to={`/profile/${art.user.id}`}
+                  >
+                    Artist page
+                  </Link>
+                </Dropdown.Item>
+
+                <Dropdown.Item>
+                  <Link
+                    id="art-link-dd"
+                    key={art.id + "a"}
+                    to={`/art/show/${art.id}`}
+                  >
+                    View art page
+                  </Link>
+                </Dropdown.Item>
                 <Dropdown.Divider />
                 {!extended && (
                   <Dropdown.Item
