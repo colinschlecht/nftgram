@@ -23,8 +23,8 @@ export default function Nav() {
         </Link>
 
         {user && (
-          <Link to={`/profile/${user.user.id}`} className="item">
-            account{" "}
+          <Link to={`/profile/${user.id}`} className="item">
+            profile{" "}
           </Link>
         )}
         <LogOut />
