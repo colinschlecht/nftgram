@@ -15,6 +15,8 @@ import ShowLikes from "./ShowLikes";
 import ShowEvents from "./ShowEvents";
 import ShowComments from "../Comment/ShowComments";
 
+import OpenSaleModal from "../modals/OpenSaleModal";
+
 import {
   Header,
   Icon,
@@ -35,6 +37,8 @@ const ArtShow = ({ match }) => {
   const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
 
+  const [openingSale, setOpeningSale] = useState(false);
+
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -54,7 +58,7 @@ const ArtShow = ({ match }) => {
     })
   );
 
-  const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`
+  const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
@@ -115,6 +119,7 @@ const ArtShow = ({ match }) => {
 
   const handleList = (e) => {
     e.preventDefault();
+    setOpeningSale(true);
   };
 
   const handleDisplay = (e, display) => {
@@ -143,23 +148,28 @@ const ArtShow = ({ match }) => {
       <Segment className="artshow header">
         <div className="outer artshow left">
           <Segment.Group>
-          <Header as="h4" attached="top" className="artshow detail title" block>
-            {art.name}
-          </Header>
+            <Header
+              as="h4"
+              attached="top"
+              className="artshow detail title"
+              block
+            >
+              {art.name}
+            </Header>
 
-          <Segment attached>
-            <div className="imagecontainer artshow">
-              <img
-                className="artshow image portrait"
-                src={`https://ipfs.io/ipfs/${art.cid}`}
-                alt={art.description}
-              />
-            </div>
-          </Segment>
+            <Segment attached>
+              <div className="imagecontainer artshow">
+                <img
+                  className="artshow image portrait"
+                  src={`https://ipfs.io/ipfs/${art.cid}`}
+                  alt={art.description}
+                />
+              </div>
+            </Segment>
 
-          <Segment attached="bottom" className="artshow caption bottom">
-            <h4>{art.caption}</h4>
-          </Segment>
+            <Segment attached="bottom" className="artshow caption bottom">
+              <h4>{art.caption}</h4>
+            </Segment>
           </Segment.Group>
 
           <Segment.Group>
@@ -168,12 +178,15 @@ const ArtShow = ({ match }) => {
               className="artshow nftg-specs ui block header"
               as="h4"
             >
-              {userAvi ? (
-                <Image src={userAvi} alt={art?.user?.username} avatar></Image>
-              ) : (
-                <Image src={logo} alt={art?.user?.username} avatar></Image>
-              )}
-              {art?.user?.username}
+              <div className="avatar placeholder">
+                {userAvi ? (
+                  <Image src={userAvi} alt={art?.user?.username} avatar></Image>
+                ) : (
+                  <Image src={logo} alt={art?.user?.username} avatar></Image>
+                )}
+              </div>
+
+              <span className="owner name">{art?.user?.username}</span>
             </Segment>
             <Segment attached className="artshow nftg-specs">
               <h4 className="displaychanger">
@@ -332,6 +345,8 @@ const ArtShow = ({ match }) => {
       </Segment>
 
       <Divider />
+
+      {openingSale && <OpenSaleModal />}
     </div>
   );
 };
