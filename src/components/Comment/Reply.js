@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Card, Image, Icon, Form } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 import { createCommentComment, raiseAlert, lowerAlert } from "../../actions";
@@ -10,10 +11,11 @@ const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
   const [cmt, setCmt] = useState("");
   const [replying, setReplying] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [extended, setExtended] = useState(replyExtended)
+  const [extended, setExtended] = useState(replyExtended);
 
-  const userAvi = reply.user.avatar ? `https://ipfs.io/ipfs/${reply.user.avatar}` : logo;
-
+  const userAvi = reply.user.avatar
+    ? `https://ipfs.io/ipfs/${reply.user.avatar}`
+    : logo;
 
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -73,7 +75,21 @@ const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
     <>
       <Card className={`comment card ${commentType}`} id={`comment-card`}>
         <Card.Content className="comment card userdiv">
-          <Image src={userAvi} alt={reply.user?.username} avatar />
+          <Link
+            className="explore art card username areadiv"
+            id="user-link"
+            key={reply.user.id + "u"}
+            to={`/profile/${reply.user.id}`}
+          >
+            <div className="avatar placeholder">
+            <Image
+              src={userAvi}
+              alt={reply.user?.username}
+              avatar
+              className="avatar"
+            />
+            </div>
+          </Link>
           <div className="comment card text-header">
             <span className="comment card username">{reply.user.username}</span>
             <div className="comment card metadata">
@@ -131,12 +147,20 @@ const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
               {reply.comments.length ? (
                 <>
                   {extended ? (
-                    <a className="hide replies trigger" href="/closereplies" onClick={(e) => handleExtend(e)}>
+                    <a
+                      className="hide replies trigger"
+                      href="/closereplies"
+                      onClick={(e) => handleExtend(e)}
+                    >
                       Hide Replies
                     </a>
                   ) : (
-                    <a className="hide replies trigger" href="/viewreplies" onClick={(e) => handleExtend(e)}>
-                       View {reply.comments.length} Replies
+                    <a
+                      className="hide replies trigger"
+                      href="/viewreplies"
+                      onClick={(e) => handleExtend(e)}
+                    >
+                      View {reply.comments.length} Replies
                     </a>
                   )}
                 </>
@@ -153,17 +177,18 @@ const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
         )}
       </Card>
 
-      {extended && reply.comments.map((replyreply, index) => (
-        <Reply
-          reply={replyreply}
-          replyExtended={extended}
-          key={
-            index.toString() + replyreply.id.toString() + reply.id.toString()
-          }
-          commentType="replyreply"
-          replyFor={reply.user.username}
-        />
-      ))}
+      {extended &&
+        reply.comments.map((replyreply, index) => (
+          <Reply
+            reply={replyreply}
+            replyExtended={extended}
+            key={
+              index.toString() + replyreply.id.toString() + reply.id.toString()
+            }
+            commentType="replyreply"
+            replyFor={reply.user.username}
+          />
+        ))}
     </>
   );
 };

@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { Icon } from "semantic-ui-react";
+import PlaceholderExampleImage from "./PPPlaceHolder";
 
-const AvatarDrop = () => {
+const AvatarDrop = ({ input, user, getFile, avatar }) => {
   const [file, setfile] = useState(input.value);
 
   const onDrop = useCallback(
@@ -15,26 +17,58 @@ const AvatarDrop = () => {
       reader.onloadend = () => {
         const data = reader.result;
         setfile(data);
+        getFile(upload)
       };
     },
-    [input]
+    [input, getFile]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const render =
     file.length !== 0 ? (
-      <img alt="uploaded art" src={file}></img>
+      <>
+        <div className="ui small circular image avatar editing">
+          <div className="edit image fill">
+            <Icon name="image outline" />
+            {isDragActive ? (
+              <p>Drop the files here ...</p>
+            ) : (
+              <p>Drag or click to select files</p>
+            )}
+          </div>
+        </div>
+        <img
+          alt="uploaded file"
+          src={file}
+          className="ui small circular image avatar"
+        ></img>
+      </>
     ) : (
-      <Segment placeholder>
-        <Header icon>
-          <Icon name="camera" />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
+      <>
+        <div className="image placeholder">
+          {avatar ? (
+            <>
+              <div className="ui small circular image avatar editing">
+                <div className="edit image fill">
+                  <Icon name="image outline" />
+                  {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                  ) : (
+                    <p>Drag or click to select files</p>
+                  )}
+                </div>
+              </div>
+              <img
+                alt={`${user.username}'s profile pic. Nice!`}
+                className="ui small circular image avatar"
+                src={`https://ipfs.io/ipfs/${avatar}`}
+              ></img>
+            </>
           ) : (
-            <p>Drag or click to select files</p>
+            <PlaceholderExampleImage />
           )}
-        </Header>
-      </Segment>
+        </div>
+      </>
     );
 
   return (
