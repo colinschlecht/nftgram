@@ -93,6 +93,18 @@ html::-webkit-scrollbar {
 .edit.icon:hover {
   color: rgb(65, 65, 65);
 }
+.icon.cancel {
+  color: rgba(65, 65, 65, 0.249);
+}
+.icon.cancel:hover {
+  color: rgb(65, 65, 65);
+}
+.icon.confirm {
+  color: rgba(65, 65, 65, 0.249);
+}
+.icon.confirm:hover {
+  color: rgb(65, 65, 65);
+}
 .copy.outline {
   color: rgba(65, 65, 65, 0.249);
 }
@@ -453,11 +465,10 @@ html::-webkit-scrollbar {
   flex-wrap: nowrap;
 }
 
-
-#art-link-dd{
+#art-link-dd {
   color: #000000;
 }
-#user-link-dd{
+#user-link-dd {
   color: #000000;
 }
 
@@ -779,24 +790,25 @@ html::-webkit-scrollbar {
   background-color: #b0afaf0b;
 }
 .likes.background.likessection {
-  width: auto;
+    width: auto;
+  
+    overflow-y: auto;
+    overflow-x: hidden;
+  
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    background-color: #b0afaf0b;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  background-color: #b0afaf0b;
 }
 
 .liker.card {
   min-height: fit-content;
   max-width: 100%;
-  margin: auto;
   display: flex;
   min-width: stretch;
   min-width: -moz-available;
@@ -829,6 +841,51 @@ html::-webkit-scrollbar {
   height: 150px !important;
   width: 150px !important;
   border-radius: 50% !important;
+}
+.ui.small.circular.image.avatar.editing {
+  position: absolute;
+  z-index: 100;
+  height: 150px !important;
+  width: 150px !important;
+  border-radius: 50% !important;
+  background-color: #00000090;
+  display: flex;
+}
+.ui.small.circular.image.avatar {
+  height: 150px !important;
+  width: 150px !important;
+}
+.avatar {
+  border-radius: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.edit.image.fill {
+  height: 150px !important;
+  width: 150px !important;
+  border-radius: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+}
+
+.icon.edit-img-button {
+  position: absolute;
+  margin-left: 4.7em;
+  z-index: 100;
+}
+.icon.edit-img-button.cancel {
+  position: absolute;
+  margin-left: -6em;
+  z-index: 100;
+}
+
+.avatar.placeholder {
+  width: 2em;
+  height: 2em;
 }
 
 .profile-edit-button {
@@ -879,6 +936,7 @@ html::-webkit-scrollbar {
   margin-top: -1em;
   z-index: 100;
 }
+
 
 .header.container {
   display: flex;
@@ -1098,7 +1156,9 @@ html::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
 }
-
+.owner.name{
+  margin-left: .4em;
+}
 .displaychanger {
   margin: auto;
 }
