@@ -25,6 +25,8 @@ import {
   SEND_ART_TO_STATE,
   SEND_ARTS_TO_STATE,
   REMOVE_STATE,
+  MODAL,
+  CLOSE_MODAL,
 } from "./types";
 
 //!METAMASK!//
@@ -35,6 +37,12 @@ export const connect = (accts) => async (dispatch) => {
 //! UI
 export const raiseAlert = (msg) => async (dispatch) => {
   dispatch({ type: ALERT, payload: msg });
+};
+export const openModal = (modal) => async (dispatch) => {
+  dispatch({ type: MODAL, payload: modal });
+};
+export const closeModal = () => async (dispatch) => {
+  dispatch({ type: CLOSE_MODAL, payload: false });
 };
 export const lowerAlert = () => async (dispatch) => {
   window.setTimeout(() => {
@@ -49,13 +57,13 @@ export const createUser = (account) => async (dispatch) => {
   dispatch({ type: SIGN_UP, payload: response.data });
   return response;
 };
-export const showUser = async (id) =>  {
+export const showUser = async (id) => {
   const response = await API_BASE.get(`/users/${id}`);
   // dispatch({ type: SHOW_USER, payload: response.data });
   return response;
 };
 export const updateUser = (id, userInfo) => async (dispatch) => {
-  const response = await API_BASE.patch(`/users/${id}`, {...userInfo});
+  const response = await API_BASE.patch(`/users/${id}`, { ...userInfo });
   dispatch({ type: UPDATE_USER, payload: response.data });
   return response;
 };

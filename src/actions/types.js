@@ -31,3 +31,5 @@ export const CONNECT = "CONNECT";
 export const ALERT = "ALERT";
 export const LOWER_ALERT = "LOWER_ALERT";
 export const SHOW_MENU = "SHOW_MENU";
+export const MODAL = "MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";
