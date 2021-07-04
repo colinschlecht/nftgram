@@ -14,9 +14,11 @@ import UserEdit from "./user/UserEdit";
 // import MainLogin from "./user/MainLogin";
 import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
+import OpenModal from "./modals/OpenModal";
 
 const App = () => {
   const alerted = useSelector((state) => !!state.UI.messages.length);
+  const modal = useSelector((state) => state.UI.modal);
 
   return (
     <>
@@ -24,9 +26,8 @@ const App = () => {
         <>
           <Switch>
             <>
-              <div className="mm alerts container">
-                {alerted && <Alert />}
-              </div>
+              <div className="mm alerts container">{alerted && <Alert />}</div>
+              {modal && <OpenModal modal={modal} />}
               <MetamaskButton />
               <div id="main" className="ui centered grid">
                 <div id="nav">

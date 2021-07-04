@@ -6,6 +6,8 @@ import {
   raiseAlert,
   lowerAlert,
   removeState,
+  openModal,
+  closeModal,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,8 +16,6 @@ import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
 import ShowEvents from "./ShowEvents";
 import ShowComments from "../Comment/ShowComments";
-
-import OpenSaleModal from "../modals/OpenSaleModal";
 
 import {
   Header,
@@ -30,14 +30,13 @@ const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
 
   const arts = useSelector((state) => state.art.arts);
+  const modal = useSelector((state) => state.UI.modal);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
 
   const [displayLikes, setDisplayLikes] = useState(false);
   const [displayComments, setdisplayComments] = useState(false);
   const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
-
-  const [openingSale, setOpeningSale] = useState(false);
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -81,6 +80,14 @@ const ArtShow = ({ match }) => {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    return () => {
+      if (modal) {
+        dispatch(closeModal());
+      }
+    };
+  }, [dispatch, modal]);
+
   const handleLike = (e) => {
     e.preventDefault();
     if (user) {
@@ -119,7 +126,7 @@ const ArtShow = ({ match }) => {
 
   const handleList = (e) => {
     e.preventDefault();
-    setOpeningSale(true);
+    dispatch(openModal({ type: "open sale" }));
   };
 
   const handleDisplay = (e, display) => {
@@ -144,210 +151,216 @@ const ArtShow = ({ match }) => {
   };
 
   return (
-    <div className="container">
-      <Segment className="artshow header">
-        <div className="outer artshow left">
-          <Segment.Group>
-            <Header
-              as="h4"
-              attached="top"
-              className="artshow detail title"
-              block
-            >
-              {art.name}
-            </Header>
+    <>
+      <div className="container">
+        <Segment className="artshow header">
+          <div className="outer artshow left">
+            <Segment.Group>
+              <Header
+                as="h4"
+                attached="top"
+                className="artshow detail title"
+                block
+              >
+                {art.name}
+              </Header>
 
-            <Segment attached>
-              <div className="imagecontainer artshow">
-                <img
-                  className="artshow image portrait"
-                  src={`https://ipfs.io/ipfs/${art.cid}`}
-                  alt={art.description}
-                />
-              </div>
-            </Segment>
+              <Segment attached>
+                <div className="imagecontainer artshow">
+                  <img
+                    className="artshow image portrait"
+                    src={`https://ipfs.io/ipfs/${art.cid}`}
+                    alt={art.description}
+                  />
+                </div>
+              </Segment>
 
-            <Segment attached="bottom" className="artshow caption bottom">
-              <h4>{art.caption}</h4>
-            </Segment>
-          </Segment.Group>
+              <Segment attached="bottom" className="artshow caption bottom">
+                <h4>{art.caption}</h4>
+              </Segment>
+            </Segment.Group>
 
-          <Segment.Group>
-            <Segment
-              attached="top"
-              className="artshow nftg-specs ui block header"
-              as="h4"
-            >
-              <div className="avatar placeholder">
-                {userAvi ? (
-                  <Image src={userAvi} alt={art?.user?.username} avatar></Image>
-                ) : (
-                  <Image src={logo} alt={art?.user?.username} avatar></Image>
-                )}
-              </div>
+            <Segment.Group>
+              <Segment
+                attached="top"
+                className="artshow nftg-specs ui block header"
+                as="h4"
+              >
+                <div className="avatar placeholder">
+                  {userAvi ? (
+                    <Image
+                      src={userAvi}
+                      alt={art?.user?.username}
+                      avatar
+                    ></Image>
+                  ) : (
+                    <Image src={logo} alt={art?.user?.username} avatar></Image>
+                  )}
+                </div>
 
-              <span className="owner name">{art?.user?.username}</span>
-            </Segment>
-            <Segment attached className="artshow nftg-specs">
-              <h4 className="displaychanger">
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="like button icon"
-                  onClick={(e) => handleLike(e)}
-                >
-                  <Icon name="fire" />
-                </a>
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="like button icon"
-                  onClick={(e) => handleDisplay(e, "LIKES")}
-                >
-                  {art.likes?.length} Likes
-                </a>
-              </h4>
-              <h4 className="displaychanger">
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="like button icon"
-                  onClick={(e) => handleDisplay(e, "COMMENTS")}
-                >
-                  <Icon name="comment" />
-                  {art.comments?.length} comments
-                </a>
-              </h4>
-              <h4 className="displaychanger">
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="like button icon"
-                  onClick={(e) => handleDisplay(e, "EVENTS")}
-                >
-                  <Icon name="calendar" />
-                  {art.events?.length} events
-                </a>
-              </h4>
-              <h4 className="displaychanger">
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="like button icon"
-                  onClick={(e) => handleDisplay(e, "DETAILS")}
-                >
-                  <Icon name="info circle" />
-                  {art.events?.length} details
-                </a>
-              </h4>
-            </Segment>
-            <Segment attached="bottom" className="buy sell bottom">
-              <Label tag className="pricetag">
-                {art.for_sale ? (
-                  //! if item IS for sale
-                  <>
-                    {art.user?.metamask_account === wallet?.account ? (
-                      //! if USER is OWNER
-                      <>
-                        <a
-                          href={`/art/show/${art.id}`}
-                          className="ethereum sale"
-                          color="green"
-                          onClick={(e) => handlePurchaseCancel(e)}
-                        >
-                          <Icon color="green" name="ethereum" />
-                        </a>
-                        <p className="pricemessage">Click to cancel listing</p>
-                      </>
-                    ) : (
-                      //! if USER is BUYER
-                      <>
-                        <a
-                          href={`/art/show/${art.id}`}
-                          className="ethereum sale"
-                          color="green"
-                          onClick={(e) => handlePurchase(e)}
-                        >
-                          <Icon color="green" name="ethereum" />
-                        </a>
-                        <p className="pricemessage">Click to purchase</p>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  //! if item NOT is for sale
-                  <>
-                    {art.user?.metamask_account === wallet?.account ? (
-                      //! User is OWNER
-                      <>
-                        <a
-                          href={`/art/show/${art.id}`}
-                          className="ethereum sale"
-                          onClick={(e) => handleList(e)}
-                        >
-                          <Icon color="red" name="ethereum" />
-                          <span>0.0 ETH</span>
-                        </a>
-                        <p className="pricemessage">List for sale</p>
-                      </>
-                    ) : (
-                      //! User is NOT OWNER
-                      <>
-                        <a
-                          href={`/art/show/${art.id}`}
-                          className="ethereum sale"
-                          onClick={(e) => handleShowPrice(e)}
-                        >
-                          <Icon color="red" name="ethereum" />
-                          <span>0.0 ETH</span>
-                        </a>
-                        <p className="pricemessage">Not for sale</p>
-                      </>
-                    )}
-                  </>
-                )}
-              </Label>
-              <span className="cartspan">
-                <a
-                  href={`/art/show/${art.id}`}
-                  className="ethereum sale shoppingcart"
-                  onClick={(e) => handleShowPrice(e)}
-                >
-                  <Icon color="red" name="cart" className="shoppingcart" />
-                </a>
-                <p className="salemessage">Not for sale</p>
-              </span>
-            </Segment>
-          </Segment.Group>
-        </div>
-        {
-          //! SHOW ART DETAILS
-        }
-        {displayDetails && <ShowDetails art={art} />}
-        {
-          //! SHOW ART LIKES
-        }
-        {displayLikes && <ShowLikes art={art} />}
-        {
-          //! SHOW ART EVENTS
-        }
-        {displayEvents && <ShowEvents art={art} />}
-        {
-          //! SHOW ART COMMENTS
-        }
-        {displayComments && <ShowComments art={art} />}
+                <span className="owner name">{art?.user?.username}</span>
+              </Segment>
+              <Segment attached className="artshow nftg-specs">
+                <h4 className="displaychanger">
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="like button icon"
+                    onClick={(e) => handleLike(e)}
+                  >
+                    <Icon name="fire" />
+                  </a>
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="like button icon"
+                    onClick={(e) => handleDisplay(e, "LIKES")}
+                  >
+                    {art.likes?.length} Likes
+                  </a>
+                </h4>
+                <h4 className="displaychanger">
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="like button icon"
+                    onClick={(e) => handleDisplay(e, "COMMENTS")}
+                  >
+                    <Icon name="comment" />
+                    {art.comments?.length} comments
+                  </a>
+                </h4>
+                <h4 className="displaychanger">
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="like button icon"
+                    onClick={(e) => handleDisplay(e, "EVENTS")}
+                  >
+                    <Icon name="calendar" />
+                    {art.events?.length} events
+                  </a>
+                </h4>
+                <h4 className="displaychanger">
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="like button icon"
+                    onClick={(e) => handleDisplay(e, "DETAILS")}
+                  >
+                    <Icon name="info circle" />
+                    {art.events?.length} details
+                  </a>
+                </h4>
+              </Segment>
+              <Segment attached="bottom" className="buy sell bottom">
+                <Label tag className="pricetag">
+                  {art.for_sale ? (
+                    //! if item IS for sale
+                    <>
+                      {art.user?.metamask_account === wallet?.account ? (
+                        //! if USER is OWNER
+                        <>
+                          <a
+                            href={`/art/show/${art.id}`}
+                            className="ethereum sale"
+                            color="green"
+                            onClick={(e) => handlePurchaseCancel(e)}
+                          >
+                            <Icon color="green" name="ethereum" />
+                          </a>
+                          <p className="pricemessage">
+                            Click to cancel listing
+                          </p>
+                        </>
+                      ) : (
+                        //! if USER is BUYER
+                        <>
+                          <a
+                            href={`/art/show/${art.id}`}
+                            className="ethereum sale"
+                            color="green"
+                            onClick={(e) => handlePurchase(e)}
+                          >
+                            <Icon color="green" name="ethereum" />
+                          </a>
+                          <p className="pricemessage">Click to purchase</p>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    //! if item NOT is for sale
+                    <>
+                      {art.user?.metamask_account === wallet?.account ? (
+                        //! User is OWNER
+                        <>
+                          <a
+                            href={`/art/show/${art.id}`}
+                            className="ethereum sale"
+                            onClick={(e) => handleList(e)}
+                          >
+                            <Icon color="red" name="ethereum" />
+                            <span>0.0 ETH</span>
+                          </a>
+                          <p className="pricemessage">List for sale</p>
+                        </>
+                      ) : (
+                        //! User is NOT OWNER
+                        <>
+                          <a
+                            href={`/art/show/${art.id}`}
+                            className="ethereum sale"
+                            onClick={(e) => handleShowPrice(e)}
+                          >
+                            <Icon color="red" name="ethereum" />
+                            <span>0.0 ETH</span>
+                          </a>
+                          <p className="pricemessage">Not for sale</p>
+                        </>
+                      )}
+                    </>
+                  )}
+                </Label>
+                <span className="cartspan">
+                  <a
+                    href={`/art/show/${art.id}`}
+                    className="ethereum sale shoppingcart"
+                    onClick={(e) => handleShowPrice(e)}
+                  >
+                    <Icon color="red" name="cart" className="shoppingcart" />
+                  </a>
+                  <p className="salemessage">Not for sale</p>
+                </span>
+              </Segment>
+            </Segment.Group>
+          </div>
+          {
+            //! SHOW ART DETAILS
+          }
+          {displayDetails && <ShowDetails art={art} />}
+          {
+            //! SHOW ART LIKES
+          }
+          {displayLikes && <ShowLikes art={art} />}
+          {
+            //! SHOW ART EVENTS
+          }
+          {displayEvents && <ShowEvents art={art} />}
+          {
+            //! SHOW ART COMMENTS
+          }
+          {displayComments && <ShowComments art={art} />}
 
-        <Segment
-          className="artshowdetail description ui block header"
-          as="h4"
-          attached="top"
-        >
-          Description
+          <Segment
+            className="artshowdetail description ui block header"
+            as="h4"
+            attached="top"
+          >
+            Description
+          </Segment>
+          <Segment attached="bottom" className="artshowdetail description ">
+            {art.description}
+          </Segment>
         </Segment>
-        <Segment attached="bottom" className="artshowdetail description ">
-          {art.description}
-        </Segment>
-      </Segment>
 
-      <Divider />
-
-      {openingSale && <OpenSaleModal />}
-    </div>
+        <Divider />
+      </div>
+    </>
   );
 };
 
