@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   Icon,
@@ -18,14 +18,13 @@ import {
 } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import ImageContainer from "./ImageContainer";
 import ArtCardLikeCount from "./ArtCardLikeCount";
 import ArtCardCommentSection from "./ArtCardCommentSection";
 import ArtCardLikesSection from "./ArtCardLikesSection";
 
 export const ArtCard = ({ art }) => {
   const dispatch = useDispatch();
-  //! Used in setting classname for art image
-  const imgEl = useRef();
   //!for sending comment from comment form
   const [cmt, setCmt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -53,19 +52,6 @@ export const ArtCard = ({ art }) => {
     })
   );
 
-  //! gets image orientation and sets class name accordingly
-  const getImageDim = async (imgEl) => {
-    if (imgEl) {
-      const width = await imgEl.current.naturalWidth;
-      const height = await imgEl.current.naturalHeight;
-      if (width > height) {
-        return (imgEl.current.className = "explore landscape");
-      } else {
-        return (imgEl.current.className = "explore portrait");
-      }
-    }
-  };
-
   const getDate = () => {
     let ms = (Date.now() - Date.parse(art.created_at)) / 1000 / 60 / 60 / 24;
     if (ms >= 1) {
@@ -88,7 +74,6 @@ export const ArtCard = ({ art }) => {
         }
       })
     );
-    getImageDim(imgEl);
   }, [user, art]);
 
   //!\///////// like a post/artwork or unlike /////////////
@@ -180,27 +165,11 @@ export const ArtCard = ({ art }) => {
             </Link>
           </Header>
           <Segment attached>
-            <div className="explore picture container">
-              {art.link ? (
-                <>
-                  <img
-                    src={`https://ipfs.io/ipfs/${art.cid}`}
-                    onClick={(e) => {
-                      handleLike(e);
-                    }}
-                    ref={imgEl}
-                    className="explore"
-                    alt={`An NFT posted with a description of: ${art.description}`}
-                  />
-                </>
-              ) : (
-                <Image
-                  src="https://react.semantic-ui.com/images/wireframe/image.png"
-                  fluid
-                  onClick={(e) => handleLike(e)}
-                />
-              )}
-            </div>
+            <ImageContainer
+              art={art}
+              location="art card"
+              handleLike={handleLike}
+            />
           </Segment>
 
           <Segment attached className="caption seg">

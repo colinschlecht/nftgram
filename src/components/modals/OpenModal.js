@@ -4,18 +4,19 @@ import { useDispatch } from "react-redux";
 import { closeModal } from "../../actions/";
 
 const OpenModal = ({ modal }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const handleCancel = (e) => {
-      e.preventDefault();
-      
-      dispatch(closeModal());
-    };
+  const handleCancel = (e) => {
+    e.preventDefault();
+    document.body.classList.remove('modal-open'); 
+    dispatch(closeModal());
+  };
 
   const renderModal = () => {
+    document.body.classList.add('modal-open');
     switch (modal.type) {
       case "open sale":
-        return <OpenSaleModal modal={modal}/>;
+        return <OpenSaleModal modal={modal} />;
       default:
         console.log("no modal rendered");
         break;
@@ -23,8 +24,10 @@ const OpenModal = ({ modal }) => {
   };
 
   return (
-    <div id="modal-background" onClick={e => handleCancel(e)}>
-      <div className="modal-container" onClick={(e)=> e.stopPropagation()}>{renderModal()}</div>
+    <div id="modal-background" onClick={(e) => handleCancel(e)}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        {renderModal()}
+      </div>
     </div>
   );
 };

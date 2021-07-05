@@ -7,6 +7,11 @@ body {
   caret-color: transparent;
   overflow-x: hidden;
 }
+
+body.modal-open {
+  overflow-y: hidden;
+}
+
 textarea,
 .text,
 .area {
@@ -59,30 +64,92 @@ html::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.558);
-  
 }
 .modal-container {
+  margin-left: -2.5vw;
   z-index: 100001;
   width: 70vw;
   height: 70vh;
-  border-radius: .3em;
+  border-radius: 0.28571429rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(200, 200, 200);
   box-shadow: 0.01em 0.04em, 0.01em 0 0.9em rgb(47, 47, 47);
 }
-.modal-heading {
-  color: black;
+.modal-title {
+  font-size: 0.7em;
+}
+.ui.attached.segment.image-holder.outer-seg {
+  min-height: auto !important;
+}
+.modal-content-image-segs {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 400px;
+}
+
+.modal-cap {
+  font-size: smaller;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 5%;
+  max-height: 5%;
 }
 .modal-body {
-  color: black;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 95%;
 }
 .modal-buttons {
   color: black;
 }
+.modal-price-form.segment-container {
+  width: 80%;
+}
+.modal-price-form.body {
+  width: auto;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 
+.ui.right.labeled.input.sale-value-input {
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  max-width: 60%;
+}
+
+#modal-price-label {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-price-logo {
+  margin: auto;
+}
+
+.modal-price-form.buttons-area {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
+}
 /*!----------- nav ------- */
 /*   *******************   */
 /*! -------- nav --------- */
@@ -270,12 +337,9 @@ html::-webkit-scrollbar {
 }
 
 @media (max-width: 500.98px) {
-  #button-container {
-    margin-top: -100em !important;
-  }
-  #button-containerdropped {
+  /* #button-containerdropped {
     margin-top: 5em !important;
-  }
+  } */
   div.metamask.message.positive {
     position: fixed;
     margin-left: auto;
@@ -286,12 +350,9 @@ html::-webkit-scrollbar {
   }
 }
 @media (max-width: 380.98px) {
-  #button-container {
-    margin-top: -100em !important;
-  }
-  #button-containerdropped {
+  /* #button-containerdropped {
     margin-top: 5em !important;
-  }
+  } */
   div.metamask.message.positive {
     position: fixed;
     margin-left: -3em;
@@ -316,6 +377,12 @@ html::-webkit-scrollbar {
     height: 400px;
     overflow: hidden;
   }
+  .image-holder.outer-seg .explore.picture.container {
+    display: flex;
+    width: 280px;
+    height: 280px;
+    overflow: hidden;
+  }
   .explore.portrait {
     max-height: 380px;
     height: 100%;
@@ -324,6 +391,18 @@ html::-webkit-scrollbar {
   }
   .explore.landscape {
     max-width: 380px;
+    width: 100%;
+    height: auto;
+    margin: auto;
+  }
+  .picture.container .explore.portrait {
+    max-height: 180px;
+    height: 100%;
+    height: auto;
+    margin: auto;
+  }
+  .picture.container .explore.landscape {
+    max-width: 30vw;
     width: 100%;
     height: auto;
     margin: auto;
@@ -348,6 +427,27 @@ html::-webkit-scrollbar {
     height: 90vw;
     overflow: hidden;
   }
+  /* vvv SALE MODAL */
+  .image-holder .explore.picture.container {
+    display: flex;
+    width: 130px !important;
+    height: 130px !important;
+    overflow: hidden;
+  }
+  .picture.container .explore.portrait {
+    max-height: 30vw !important;
+    height: 100%;
+    height: auto;
+    margin: auto;
+  }
+  .picture.container .explore.landscape {
+    max-width: 30vw !important;
+    width: 100%;
+    height: auto;
+    margin: auto;
+  }
+  /* ^^^ SALE MODAL */
+
   .explore.picture.container .explore.portrait {
     max-height: 380px;
     height: 100%;
@@ -376,7 +476,6 @@ html::-webkit-scrollbar {
 
 .explore.picture.container {
   display: flex;
-
   width: 600px;
   height: 600px;
   overflow: hidden;
@@ -394,6 +493,27 @@ html::-webkit-scrollbar {
   height: auto;
   margin: auto;
 }
+
+/* vvv SALE MODAL */
+.image-holder .explore.picture.container {
+  display: flex;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+.container .explore.portrait {
+  max-height: 280px;
+  height: 100%;
+  height: auto;
+  margin: auto;
+}
+.container .explore.landscape {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+/* ^^^ SALE MODAL */
 
 .explore.picture.placeholder {
   width: 100%;
