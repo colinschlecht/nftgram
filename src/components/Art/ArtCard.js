@@ -63,6 +63,8 @@ export const ArtCard = ({ art }) => {
     }
   };
 
+  console.log(user)
+
   useEffect(() => {
     //! Sets liked status in local state on render
     setLiked(

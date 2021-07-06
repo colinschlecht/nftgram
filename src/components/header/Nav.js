@@ -4,10 +4,9 @@ import LogOut from "../user/LogOut";
 import { useSelector } from "react-redux";
 
 export default function Nav() {
-
   const user = useSelector((state) => {
     if (!!state.auth.user) {
-      return state.auth.user;
+      return state.auth.user.user;
     } else {
       return false;
     }
@@ -23,7 +22,7 @@ export default function Nav() {
         </Link>
 
         {user && (
-          <Link to={`/profile/${user.id}`} className="item">
+          <Link to={`/profile/${user?.id}`} className="item">
             profile{" "}
           </Link>
         )}

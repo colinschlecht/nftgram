@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../actions/";
-import { Segment, Input, Label, Icon } from "semantic-ui-react";
-
+import { Segment, Input, Label, Icon, Button } from "semantic-ui-react";
+import { create } from "../../utils/SFInteract";
+import { approveSContractInteraction } from "../../utils/NFTInteract";
+import web3 from "../../utils/web3";
 import ImageContainer from "../Art/ImageContainer";
 
 const OpenSaleModal = () => {
@@ -10,6 +12,7 @@ const OpenSaleModal = () => {
   const dispatch = useDispatch();
   const arts = useSelector((state) => state.art.arts);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
+  const [price, setPrice] = useState(0);
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -17,8 +20,12 @@ const OpenSaleModal = () => {
     dispatch(closeModal());
   };
 
-  const handleConfirm = (e) => {
+  const handleConfirm = async (e) => {
+    const priceInWei = web3.utils.toWei(price, "ether");
     e.preventDefault();
+    const resp = await create(art.contract_address, art.tokenID, priceInWei);
+    await approveSContractInteraction(art.contract_address, art.tokenID)
+    console.log(resp);
   };
 
   useEffect(() => {
@@ -61,6 +68,7 @@ const OpenSaleModal = () => {
               type="number"
               placeholder="Amount in ETH"
               className="sale-value-input"
+              onChange={(e) => setPrice(e.target.value)}
             >
               <Label basic id="modal-price-label">
                 <Icon name="ethereum" id="modal-price-logo"></Icon>
@@ -71,16 +79,15 @@ const OpenSaleModal = () => {
           </Segment>
         </div>
         <div className="modal-price-form buttons-area">
-            <a href="cancel-listing" onClick={(e) => handleCancel(e)}>
-              <Icon name="cancel" />
-              cancel
-            </a>
-
-            <a href="confirm-listing" onClick={(e) => handleConfirm(e)}>
-              <Icon name="tags" className="confirm" />
-              list
-            </a>
-          </div>
+          <Button icon labelPosition="left" onClick={(e) => handleCancel(e)}>
+            <Icon name="cancel" />
+            cancel
+          </Button>
+          <Button icon labelPosition="left" onClick={(e) => handleConfirm(e)}>
+            <Icon name="tags" className="confirm" />
+            list
+          </Button>
+        </div>
       </Segment>
     </>
   );

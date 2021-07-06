@@ -57,19 +57,21 @@ html::-webkit-scrollbar {
 #modal-background {
   margin: -5vh -5vw;
   z-index: 100000;
-  position: absolute;
-  height: 110vh !important;
+  position: fixed;
   width: 110vw !important;
+  height: 110% !important;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.558);
 }
 .modal-container {
+  margin-top: -2.5vh;
+  margin-bottom: 2.5vh;
   margin-left: -2.5vw;
   z-index: 100001;
-  width: 70vw;
-  height: 70vh;
+  width: 80vw;
+  max-height: 99vh;
   border-radius: 0.28571429rem;
   display: flex;
   flex-direction: column;
@@ -77,18 +79,22 @@ html::-webkit-scrollbar {
   align-items: center;
   box-shadow: 0.01em 0.04em, 0.01em 0 0.9em rgb(47, 47, 47);
 }
+
 .modal-title {
   font-size: 0.7em;
 }
 .ui.attached.segment.image-holder.outer-seg {
   min-height: auto !important;
 }
+
 .modal-content-image-segs {
+  /* margin-top: 1vh; */
   display: flex;
   flex-direction: column;
   width: 80%;
-  height: 400px;
 }
+
+
 
 .modal-cap {
   font-size: smaller;
@@ -104,14 +110,20 @@ html::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  min-height: 95%;
+  overflow-y: scroll;
+  height: 95%;
 }
+
+.modal-body::-webkit-scrollbar {
+  display: none;
+} 
 .modal-buttons {
   color: black;
 }
 .modal-price-form.segment-container {
+  margin-top: 1em;
   width: 80%;
 }
 .modal-price-form.body {
@@ -144,6 +156,7 @@ html::-webkit-scrollbar {
 }
 
 .modal-price-form.buttons-area {
+  margin-top: 1em;
   width: 100%;
   display: flex;
   align-content: center;
