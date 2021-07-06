@@ -69,3 +69,9 @@ export const checkTransactionStatus = async (txHash) => {
     return { status: transaction.status };
   }
 };
+
+export const approveSContractInteraction = async (address, id) => {
+  const accounts = await web3.eth.getAccounts()
+  const contract = await new web3.eth.Contract(contractABI, contractAddress);
+  await contract.methods.approve(address, id).send({from: accounts[0]})
+};
