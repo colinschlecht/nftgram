@@ -15,20 +15,20 @@
 //    });
 
 //!Used to deploy SaleFactory (Sales.sol)
-// async function main() {
-//     const SaleFactory = await ethers.getContractFactory("SaleFactory");
+async function main() {
+    const SaleFactory = await ethers.getContractFactory("SaleFactory");
     
-//     // Start deployment, returning a promise that resolves to a contract object
-//     const Factory = await SaleFactory.deploy();
-//     console.log("Contract deployed to address:", Factory.address);
-//  }
+    // Start deployment, returning a promise that resolves to a contract object
+    const Factory = await SaleFactory.deploy();
+    console.log("Contract deployed to address:", Factory.address);
+ }
  
-//  main()
-//    .then(() => process.exit(0))
-//    .catch(error => {
-//      console.error(error);
-//      process.exit(1);
-//    });
+ main()
+   .then(() => process.exit(0))
+   .catch(error => {
+     console.error(error);
+     process.exit(1);
+   });
 
 //!Sale is deployed through SaleFactory -- technically (Sales.sol) 
 // async function main() {

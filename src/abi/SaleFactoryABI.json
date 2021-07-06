@@ -28,7 +28,9 @@
       { "internalType": "uint256", "name": "price", "type": "uint256" }
     ],
     "name": "createSale",
-    "outputs": [],
+    "outputs": [
+      { "internalType": "address", "name": "created", "type": "address" }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
