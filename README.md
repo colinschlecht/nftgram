@@ -26,7 +26,7 @@ WIP - contracts have been created and tested.
 * NFT Smart Contract: https://rinkeby.etherscan.io/address/0x3032107eAcD70a6590b24A1FD8A53Ecf4E9c3692#code
 
 
-* SaleFactory Smart Contract: https://rinkeby.etherscan.io/address/0x1b635fa4228eFc68D1a76fCA35Cce47D375bB700#code
+* SaleFactory Smart Contract: https://rinkeby.etherscan.io/address/0x570218FAB496BC093AbC565585cC5bd33EfBb2DC#code
 
 ### ToDo:
 
