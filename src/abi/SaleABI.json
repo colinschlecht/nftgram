@@ -22,6 +22,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "ad",
+        "type": "address"
+      }
+    ],
+    "name": "ContractCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "ad",
         "type": "uint256"

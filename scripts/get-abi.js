@@ -5,9 +5,9 @@
 
 //!SaleFactory ABI (Sale.sol)
 
-const contract = require("../artifacts/contracts/Sales.sol/SaleFactory.json"); 
+// const contract = require("../artifacts/contracts/Sales.sol/SaleFactory.json"); 
 
-console.log(JSON.stringify(contract.abi));
+// console.log(JSON.stringify(contract.abi));
 //!SaleFactory ABI (Sale.sol)
 
 // const contract = require("../artifacts/contracts/Sales.sol/Sale.json"); 

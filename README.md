@@ -47,7 +47,7 @@ Events tab on art.
 -------------------------------------------------------
 ## Bug squashing! 
 
-*  When switching MM accounts after liking a comment, if you click the same like button with another account the app crashes. Potential cause: "liked" state isn't updating on user swap, unless a re-render occurs. 
+* <s>  When switching MM accounts after liking a comment, if you click the same like button with another account the app crashes. Potential cause: "liked" state isn't updating on user swap, unless a re-render occurs. </s>
 
 -------------------------------------------------------
 ## Further Decentralization WIP
