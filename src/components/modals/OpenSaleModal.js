@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, raiseAlert, lowerAlert } from "../../actions/";
+import { closeModal, raiseAlert, lowerAlert, updateArt } from "../../actions/";
 import { Segment, Input, Label, Icon, Button } from "semantic-ui-react";
 import { create, getTransaction } from "../../utils/SFInteract";
 import { approveSContractInteraction } from "../../utils/NFTInteract";
@@ -84,22 +84,27 @@ const OpenSaleModal = () => {
     const status = await open(saleContract);
     setLoading(true);
     setDisabled(true);
+    //art will be listed for sale if successful
     getTransactionConf(status.transactionHash);
   };
 
   const getTransactionConf = async (txHash) => {
     const transaction = await getTransaction(txHash);
+    //if transaction has not processed, recursively search again for transaction
     if (!transaction) {
       window.setTimeout(async () => {
         await getTransactionConf(txHash);
       }, 3000);
     } else {
+      //if transaction has processed and is successful
       if (transaction.status) {
+        dispatch(updateArt(art.id, { for_sale: true }));
         simpleCancel();
         dispatch(raiseAlert("Listing Completed"));
         dispatch(lowerAlert());
         setLoading(false);
       } else {
+        //if transaction has processed but failed
         simpleCancel();
         dispatch(raiseAlert("COULD NOT COMPLETE REQUEST"));
         dispatch(lowerAlert());
