@@ -31,7 +31,7 @@ const ArtForm = () => {
   const getFile = (file) => {
     setfile(file);
   };
-console.log(wallet.account)
+  console.log(wallet.account);
   const pinataSDK = require("@pinata/sdk");
   const pinata = pinataSDK(key, secret);
 
@@ -125,23 +125,6 @@ console.log(wallet.account)
         return null;
       } else {
         setStatus("Minting NFT");
-        
-        //! art object data for DB
-        const tokenInfo = await getTokenId(wallet.account);
-        art = {
-          user_id: user.user.id,
-          artist_id: user.user.artist.id,
-          for_sale: false,
-          description: data.description,
-          caption: data.caption,
-          category: data.category,
-          name: data.name,
-          link: `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`,
-          cid: cid.string,
-          tokenURI: `ipfs://${pinResponse.IpfsHash}`,
-          contract_address: tokenInfo.address,
-          tokenID: tokenInfo.id,
-        };
       }
 
       //! checks status via web3 interaction, if successfully minted post is made to DB
@@ -161,11 +144,32 @@ console.log(wallet.account)
                   `transaction ${mintResponse.transactionHash} unsuccessful`
                 );
               } else {
-                const post = await handlePost(art);
-                setLoading(false);
-                await ipfs.stop();
-                setStatus(post.status);
-                setMessage(post.message);
+                //! art object data for DB
+                const tokenInfo = await getTokenId(
+                  wallet.account,
+                  `ipfs://${pinResponse.IpfsHash}`
+                );
+                art = {
+                  user_id: user.user.id,
+                  artist_id: user.user.artist.id,
+                  for_sale: false,
+                  description: data.description,
+                  caption: data.caption,
+                  category: data.category,
+                  name: data.name,
+                  link: `https://gateway.pinata.cloud/ipfs/${pinResponse.IpfsHash}`,
+                  cid: cid.string,
+                  tokenURI: `ipfs://${pinResponse.IpfsHash}`,
+                  contract_address: tokenInfo.address,
+                  tokenID: tokenInfo.id,
+                };
+                if(art.tokenID){
+                  const post = await handlePost(art);
+                  setLoading(false);
+                  await ipfs.stop();
+                  setStatus(post.status);
+                  setMessage(post.message);
+                }
               }
             }
           }

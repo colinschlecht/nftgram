@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../actions/";
+import { closeModal, raiseAlert, lowerAlert } from "../../actions/";
 import { Segment, Input, Label, Icon, Button } from "semantic-ui-react";
-import { create, saleContractAddress } from "../../utils/SFInteract";
+import { create, getTransaction } from "../../utils/SFInteract";
 import { approveSContractInteraction } from "../../utils/NFTInteract";
-import { open } from "../../utils/SaleInteract"
+import { open } from "../../utils/SaleInteract";
 import web3 from "../../utils/web3";
 import ImageContainer from "../Art/ImageContainer";
 
@@ -18,17 +18,25 @@ const OpenSaleModal = () => {
   const [approved, setApproved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [cancelDisabled, setCancelDisabled] = useState(false);
+  const [inputDisabled, setInputDisabled] = useState(false);
   const [saleContract, setSaleContract] = useState("");
 
   const handleCancel = (e) => {
     e.preventDefault();
     document.body.classList.remove("modal-open");
     dispatch(closeModal());
+    setInputDisabled(false);
+  };
+  const simpleCancel = () => {
+    document.body.classList.remove("modal-open");
+    dispatch(closeModal());
+    setInputDisabled(false);
   };
 
   const handleList = async (e) => {
     e.preventDefault();
     setCancelDisabled(true);
+    setInputDisabled(true);
     setDisabled(true);
     setLoading(true);
     const priceInWei = web3.utils.toWei(price, "ether");
@@ -39,7 +47,7 @@ const OpenSaleModal = () => {
   };
 
   const getSaleContract = async (txHash) => {
-    const transaction = await saleContractAddress(txHash);
+    const transaction = await getTransaction(txHash);
     if (!transaction) {
       window.setTimeout(async () => {
         await getSaleContract(txHash);
@@ -49,6 +57,7 @@ const OpenSaleModal = () => {
       //sets state of sales contract for ref
       setSaleContract(transaction.logs[0].address);
       //TODO error handling for canceling approval of transfer to escrow:
+      //TODO error handling for failure due to not being owner
       try {
         //approves interraction of sales contract with NFT
         await approveSContractInteraction(
@@ -56,20 +65,48 @@ const OpenSaleModal = () => {
           art.tokenID
         );
         setApproved(true);
-      } catch (error) {
+        setLoading(false);
         setDisabled(false);
+      } catch (error) {
+        setLoading(false);
+        setDisabled(true);
         setCancelDisabled(false);
         setApproved(false);
-        setLoading(false);
-        console.log(error);
+        dispatch(raiseAlert("Could not approve contract interaction"));
+        dispatch(lowerAlert());
       }
     }
   };
 
-  const handleConfirm = (e) => {
-    e.preventDefault()
-    open(saleContract)
-  }
+  //user confirms transaction to be opened, transaction will fail or succeed
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+    const status = await open(saleContract);
+    setLoading(true);
+    setDisabled(true);
+    getTransactionConf(status.transactionHash);
+  };
+
+  const getTransactionConf = async (txHash) => {
+    const transaction = await getTransaction(txHash);
+    if (!transaction) {
+      window.setTimeout(async () => {
+        await getTransactionConf(txHash);
+      }, 3000);
+    } else {
+      if (transaction.status) {
+        simpleCancel();
+        dispatch(raiseAlert("Listing Completed"));
+        dispatch(lowerAlert());
+        setLoading(false);
+      } else {
+        simpleCancel();
+        dispatch(raiseAlert("COULD NOT COMPLETE REQUEST"));
+        dispatch(lowerAlert());
+        setLoading(false);
+      }
+    }
+  };
 
   useEffect(() => {
     setArt(arts[0]);
@@ -117,6 +154,7 @@ const OpenSaleModal = () => {
           </Segment>
           <Segment attached="bottom" className="modal-price-form body">
             <Input
+              disabled={inputDisabled}
               labelPosition="right"
               type="number"
               placeholder="Amount in ETH"

@@ -37,7 +37,7 @@ export const create = async (itemAddress, item, price) => {
   }
 };
 
-export const saleContractAddress = async (txHash) => {
+export const getTransaction = async (txHash) => {
   let transaction = await web3.eth.getTransactionReceipt(txHash);
   return transaction
 

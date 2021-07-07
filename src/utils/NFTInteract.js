@@ -41,23 +41,19 @@ export const mintNFT = async (uri) => {
   }
 };
 
-export const getTokenId = async (account) => {
-  const arr = [];
+export const getTokenId = async (account, URI) => {
+  let itemId;
   const contract = new web3.eth.Contract(contractABI, contractAddress);
   const supply = await contract.methods.totalSupply().call();
-
   const total = parseInt(supply);
-  for (let i = 1; i < total; i++) {
-    try {
-      const id = await contract.methods.ownerOf(i).call();
-      if (id.toLowerCase() === account) {
-        arr.push(i);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const tokenURI = await contract.methods.tokenURI(total).call();
+  const id = await contract.methods.ownerOf(total).call();
+  if (id.toLowerCase() === account && tokenURI.toString() === URI) {
+    itemId = total;
+    return { id: itemId, address: contractAddress };
+  } else {
+    return { id: null, address: contractAddress };
   }
-  return { id: arr[arr.length - 1], address: contractAddress };
 };
 
 export const checkTransactionStatus = async (txHash) => {
@@ -71,7 +67,27 @@ export const checkTransactionStatus = async (txHash) => {
 };
 
 export const approveSContractInteraction = async (address, id) => {
-  const accounts = await web3.eth.getAccounts()
+  const accounts = await web3.eth.getAccounts();
   const contract = await new web3.eth.Contract(contractABI, contractAddress);
-  await contract.methods.approve(address, id).send({from: accounts[0]})
+  await contract.methods.approve(address, id).send({ from: accounts[0] });
 };
+
+//! I like the idea, but it doesn't work as intended.
+// export const getTokenId = async (account) => {
+//   const arr = [];
+//   const contract = new web3.eth.Contract(contractABI, contractAddress);
+//   const supply = await contract.methods.totalSupply().call();
+
+//   const total = parseInt(supply);
+//   for (let i = 1; i < total; i++) {
+//     try {
+//       const id = await contract.methods.ownerOf(i).call();
+//       if (id.toLowerCase() === account) {
+//         arr.push(i);
+//       }
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+//   return { id: arr[arr.length - 1], address: contractAddress };
+// };

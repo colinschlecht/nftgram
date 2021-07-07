@@ -2,13 +2,12 @@ require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
-const contractABI = require("../abi/SaleFactoryABI.json");
+const contractABI = require("../abi/SaleABI.json");
 
 
 export const open = async (contractAddress) => {
 
-    let saleContract = new web3.eth.Contract(contractABI, contractAddress);
-  
+    let saleContract = await new web3.eth.Contract(contractABI, contractAddress);
     //set up the Ethereum transaction
     const transactionParameters = {
       to: contractAddress,
