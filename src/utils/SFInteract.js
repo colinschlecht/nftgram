@@ -6,10 +6,9 @@ const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../abi/SaleFactoryABI.json");
 const contractAddress = "0x570218FAB496BC093AbC565585cC5bd33EfBb2DC";
 
-let saleFactory;
+const saleFactory = new web3.eth.Contract(contractABI, contractAddress);
 
 export const create = async (itemAddress, item, price) => {
-  saleFactory = new web3.eth.Contract(contractABI, contractAddress);
 
   //set up the Ethereum transaction
   const transactionParameters = {
@@ -36,6 +35,15 @@ export const create = async (itemAddress, item, price) => {
     };
   }
 };
+
+export const sales = async () => {
+  const listings = await saleFactory.methods.getSales().call()
+  return listings
+}
+export const salesDetailed = async () => {
+  const listings = await saleFactory.methods.getSalesDetailed().call()
+  return listings
+}
 
 export const getTransaction = async (txHash) => {
   let transaction = await web3.eth.getTransactionReceipt(txHash);
