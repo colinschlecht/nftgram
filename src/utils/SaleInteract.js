@@ -7,14 +7,14 @@ const contractABI = require("../abi/SaleFactoryABI.json");
 
 export const open = async (contractAddress) => {
 
-    saleFactory = new web3.eth.Contract(contractABI, contractAddress);
+    let saleContract = new web3.eth.Contract(contractABI, contractAddress);
   
     //set up the Ethereum transaction
     const transactionParameters = {
       to: contractAddress,
       from: window.ethereum.selectedAddress, // must match user's active address.
-      data: saleFactory.methods
-        .openTrade(itemAddress, item, price)
+      data: saleContract.methods
+        .openTrade()
         .encodeABI(), //make call to smart contract
     };
   
