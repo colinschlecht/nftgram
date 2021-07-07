@@ -20,24 +20,24 @@ const App = () => {
   const alerted = useSelector((state) => !!state.UI.messages.length);
   const modal = useSelector((state) => state.UI.modal);
 
-  const [allSales, setSales] = useState("");
-  const [allDetailedSales, setAllDetailedSales] = useState("");
+  // const [allSales, setSales] = useState("");
+  // const [allDetailedSales, setAllDetailedSales] = useState("");
 
 
-  useEffect(() => {
-    const getSales = async () => {
-      const theSales = await sales();
-      const detailedSales = await salesDetailed();
-      setSales({ ...theSales });
-      setAllDetailedSales({ ...detailedSales });
-    };
-    if (!allSales) {
-      getSales();
-    }
-  }, [allSales]);
+  // useEffect(() => {
+  //   const getSales = async () => {
+  //     const theSales = await sales();
+  //     const detailedSales = await salesDetailed();
+  //     setSales({ ...theSales });
+  //     setAllDetailedSales({ ...detailedSales });
+  //   };
+  //   if (!allSales) {
+  //     getSales();
+  //   }
+  // }, [allSales]);
 
-  console.log(allSales)
-  console.log(allDetailedSales)
+  // console.log(allSales)
+  // console.log(allDetailedSales)
 
   return (
     <>
