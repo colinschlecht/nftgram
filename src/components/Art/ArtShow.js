@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { sales, salesDetailed } from "../../utils/SFInteract";
 // import { approveSContractInteraction } from "../../utils/NFTInteract";
-// import { open } from "../../utils/SaleInteract";
 
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
@@ -127,8 +126,9 @@ const ArtShow = ({ match }) => {
   const handlePurchase = (e) => {
     e.preventDefault();
   };
-  const handlePurchaseCancel = (e) => {
+  const handleCancelSale = (e) => {
     e.preventDefault();
+    dispatch(openModal({ type: "cancel sale" }))
   };
 
   const handleList = (e) => {
@@ -267,7 +267,7 @@ const ArtShow = ({ match }) => {
                             href={`/art/show/${art.id}`}
                             className="ethereum sale"
                             color="green"
-                            onClick={(e) => handlePurchaseCancel(e)}
+                            onClick={(e) => handleCancelSale(e)}
                           >
                             <Icon color="green" name="ethereum" />
                           </a>
