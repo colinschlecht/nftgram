@@ -4,6 +4,7 @@ import { closeModal } from "../../actions/";
 import { Segment, Input, Label, Icon, Button } from "semantic-ui-react";
 import { create, saleContractAddress } from "../../utils/SFInteract";
 import { approveSContractInteraction } from "../../utils/NFTInteract";
+import { open } from "../../utils/SaleInteract"
 import web3 from "../../utils/web3";
 import ImageContainer from "../Art/ImageContainer";
 
@@ -67,6 +68,7 @@ const OpenSaleModal = () => {
 
   const handleConfirm = (e) => {
     e.preventDefault()
+    open(saleContract)
   }
 
   useEffect(() => {
