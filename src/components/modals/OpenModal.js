@@ -1,5 +1,6 @@
 import React from "react";
 import OpenSaleModal from "./OpenSaleModal";
+import CancelSaleModal from "./CancelSaleModal";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../actions/";
 
@@ -17,6 +18,8 @@ const OpenModal = ({ modal }) => {
     switch (modal.type) {
       case "open sale":
         return <OpenSaleModal modal={modal} />;
+      case "cancel sale":
+        return <CancelSaleModal modal={modal} />;
       default:
         console.log("no modal rendered");
         break;
