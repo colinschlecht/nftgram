@@ -16,12 +16,12 @@ contract SaleFactory {
     address[] public sales;
 
     struct Trade {
-    address ale;
-    address oster;
-    address temTokenAddress;
-    uint256 tem;
-    uint256 rice;
-    bytes32 tatus; 
+    address sale;
+    address poster;
+    address itemTokenAddress;
+    uint256 item;
+    uint256 price;
+    bytes32 status; 
 }
 
     Trade[] public trades;
@@ -35,12 +35,12 @@ contract SaleFactory {
 
     function addStruct(address _address, address _poster, address _itemTokenAddress, uint256 _item, uint256 _price, bytes32 _status) external {
          Trade memory newtrade = Trade({
-            ale: _address,
-            oster: _poster,
-            temTokenAddress: _itemTokenAddress,
-            tem: _item,
-            rice: _price,
-            tatus: _status
+            sale: _address,
+            poster: _poster,
+            itemTokenAddress: _itemTokenAddress,
+            item: _item,
+            price: _price,
+            status: _status
         });
         trades.push(newtrade);
     }
