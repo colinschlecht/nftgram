@@ -11,6 +11,10 @@ import {
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
 
+import { sales, salesDetailed } from "../../utils/SFInteract";
+// import { approveSContractInteraction } from "../../utils/NFTInteract";
+// import { open } from "../../utils/SaleInteract";
+
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
@@ -37,6 +41,7 @@ const ArtShow = ({ match }) => {
   const [displayComments, setdisplayComments] = useState(false);
   const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
+
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -87,6 +92,8 @@ const ArtShow = ({ match }) => {
       }
     };
   }, [dispatch, modal]);
+
+
 
   const handleLike = (e) => {
     e.preventDefault();

@@ -100,6 +100,11 @@ export const createArt = (formValues) => async (dispatch) => {
   dispatch({ type: CREATE_ART, payload: response.data });
   return response;
 };
+export const updateArt = (id, artInfo) => async (dispatch) => {
+  const response = await API_BASE.patch(`/arts/${id}`, { ...artInfo });
+  dispatch({ type: FETCH_ARTS, payload: response.data });
+  return response;
+};
 
 //fetch to index route w/o filter
 export const fetchArts = () => async (dispatch) => {
