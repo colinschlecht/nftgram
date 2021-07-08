@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Nav from "./header/Nav";
@@ -12,32 +12,18 @@ import UserEdit from "./user/UserEdit";
 import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
-
-import { sales, salesDetailed } from "../utils/SFInteract";
-
+import { getSales } from "../actions";
 
 const App = () => {
+  const dispatch = useDispatch();
   const alerted = useSelector((state) => !!state.UI.messages.length);
   const modal = useSelector((state) => state.UI.modal);
 
-  // const [allSales, setSales] = useState("");
-  // const [allDetailedSales, setAllDetailedSales] = useState("");
+  useEffect(() => {
+    dispatch(getSales());
+  });
 
 
-  // useEffect(() => {
-  //   const getSales = async () => {
-  //     const theSales = await sales();
-  //     const detailedSales = await salesDetailed();
-  //     setSales({ ...theSales });
-  //     setAllDetailedSales({ ...detailedSales });
-  //   };
-  //   if (!allSales) {
-  //     getSales();
-  //   }
-  // }, [allSales]);
-
-  // console.log(allSales)
-  // console.log(allDetailedSales)
 
   return (
     <>
