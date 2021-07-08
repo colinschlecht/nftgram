@@ -1,4 +1,6 @@
 import API_BASE from "../api";
+import { sales, salesDetailed } from "../utils/SFInteract";
+
 import {
   ALERT,
   LOWER_ALERT,
@@ -27,6 +29,7 @@ import {
   REMOVE_STATE,
   MODAL,
   CLOSE_MODAL,
+  FETCH_ALL_SALES_AND_CONTRACTS,
 } from "./types";
 
 //!METAMASK!//
@@ -34,7 +37,17 @@ export const connect = (accts) => async (dispatch) => {
   dispatch({ type: CONNECT, payload: accts });
 };
 
-//! UI
+//!SALE!//
+export const getSales = () => async (dispatch) => {
+  const salesContracts = await sales();
+  const salesDetails = await salesDetailed();
+  dispatch({
+    type: FETCH_ALL_SALES_AND_CONTRACTS,
+    payload: { contracts: salesContracts, sales: salesDetails },
+  });
+};
+
+//!UI!//
 export const raiseAlert = (msg) => async (dispatch) => {
   dispatch({ type: ALERT, payload: msg });
 };

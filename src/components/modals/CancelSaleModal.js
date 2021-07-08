@@ -6,32 +6,39 @@ import { cancel } from "../../utils/SaleInteract";
 import ImageContainer from "../Art/ImageContainer";
 import ModalPlaceholder from "./ModalPlaceholder";
 
+import web3 from "../../utils/web3";
+
 const CancelSaleModal = () => {
   console.log("hi");
   const dispatch = useDispatch();
 
   const arts = useSelector((state) => state.art.arts);
-  const saleContract = useSelector((state) => state.art.arts);
-
-
+  const sales = useSelector((state) => state.sales.sales);
+  console.log(sales);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [cancelled, setCancelled] = useState(false);
+  const [saleContract, setSaleContract] = useState("");
 
   const handleCancel = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setDisabled(true);
-    //function call to cancel sale
-    const status = await cancel(saleContract);
-    //process cancellation until transaction is mined
-    cancelProcessing(status.transactionHash);
+    // setLoading(true);
+    // setDisabled(true);
+    // //function call to cancel sale
+    // const status = await cancel(saleContract);
+    // //process cancellation until transaction is mined
+    // cancelProcessing(status.transactionHash);
   };
 
   const cancelProcessing = async () => {
+    //if successful
     document.body.classList.remove("modal-open");
+    setLoading(false);
+    setCancelled(true);
     dispatch(closeModal());
+    dispatch(raiseAlert("Cancellation Completed"));
+    dispatch(lowerAlert());
   };
 
   const cancelCancel = () => {
@@ -41,6 +48,7 @@ const CancelSaleModal = () => {
 
   useEffect(() => {
     setArt(arts[0]);
+    setSaleContract(sales);
   }, [arts]);
 
   return art ? (
