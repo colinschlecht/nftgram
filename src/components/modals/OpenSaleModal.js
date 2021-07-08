@@ -23,14 +23,14 @@ const OpenSaleModal = () => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    document.body.classList.remove("modal-open");
     dispatch(closeModal());
     setInputDisabled(false);
+    document.body.classList.remove("modal-open");
   };
   const simpleCancel = () => {
-    document.body.classList.remove("modal-open");
     dispatch(closeModal());
     setInputDisabled(false);
+    document.body.classList.remove("modal-open");
   };
 
   const handleList = async (e) => {
@@ -81,9 +81,9 @@ const OpenSaleModal = () => {
   //user confirms transaction to be opened, transaction will fail or succeed
   const handleConfirm = async (e) => {
     e.preventDefault();
-    const status = await open(saleContract);
     setLoading(true);
     setDisabled(true);
+    const status = await open(saleContract);
     //art will be listed for sale if successful
     getTransactionConf(status.transactionHash);
   };
@@ -179,6 +179,7 @@ const OpenSaleModal = () => {
             <Button
               icon
               labelPosition="left"
+              loading={loading}
               disabled={disabled}
               onClick={(e) => handleConfirm(e)}
             >

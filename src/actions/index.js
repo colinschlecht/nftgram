@@ -1,5 +1,5 @@
 import API_BASE from "../api";
-import { sales, salesDetailed } from "../utils/SFInteract";
+import { salesDetailed, oneSaleDetailed } from "../utils/SFInteract";
 
 import {
   ALERT,
@@ -29,7 +29,8 @@ import {
   REMOVE_STATE,
   MODAL,
   CLOSE_MODAL,
-  FETCH_ALL_SALES_AND_CONTRACTS,
+  FETCH_ALL_SALES,
+  FETCH_SALE,
 } from "./types";
 
 //!METAMASK!//
@@ -39,11 +40,17 @@ export const connect = (accts) => async (dispatch) => {
 
 //!SALE!//
 export const getSales = () => async (dispatch) => {
-  const salesContracts = await sales();
   const salesDetails = await salesDetailed();
   dispatch({
-    type: FETCH_ALL_SALES_AND_CONTRACTS,
-    payload: { contracts: salesContracts, sales: salesDetails },
+    type: FETCH_ALL_SALES,
+    payload: { sales: salesDetails },
+  });
+};
+export const getOneSale = (id) => async (dispatch) => {
+  const salesDetails = await oneSaleDetailed(id);
+  dispatch({
+    type: FETCH_SALE,
+    payload: { sale: salesDetails },
   });
 };
 

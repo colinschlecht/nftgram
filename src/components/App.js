@@ -1,5 +1,9 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { 
+  // useEffect 
+} from "react";
+import { useSelector, 
+  // useDispatch
+ } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Nav from "./header/Nav";
@@ -12,16 +16,16 @@ import UserEdit from "./user/UserEdit";
 import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
-import { getSales } from "../actions";
+// import { getSales } from "../actions";
 
 const App = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const alerted = useSelector((state) => !!state.UI.messages.length);
   const modal = useSelector((state) => state.UI.modal);
 
-  useEffect(() => {
-    dispatch(getSales());
-  });
+  // useEffect(() => {
+  //   dispatch(getSales());
+  // });
 
 
 

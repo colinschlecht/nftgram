@@ -5,6 +5,9 @@ const web3 = createAlchemyWeb3(alchemyKey);
 
 const contractABI = require("../abi/NFTgramIOABI.json");
 const contractAddress = "0x3032107eAcD70a6590b24A1FD8A53Ecf4E9c3692";
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+
 
 export const mintNFT = async (uri) => {
   const tokenURI = uri;
@@ -43,7 +46,6 @@ export const mintNFT = async (uri) => {
 
 export const getTokenId = async (account, URI) => {
   let itemId;
-  const contract = new web3.eth.Contract(contractABI, contractAddress);
   const supply = await contract.methods.totalSupply().call();
   const total = parseInt(supply);
   const tokenURI = await contract.methods.tokenURI(total).call();
@@ -68,10 +70,12 @@ export const checkTransactionStatus = async (txHash) => {
 
 export const approveSContractInteraction = async (address, id) => {
   const accounts = await web3.eth.getAccounts();
-  const contract = await new web3.eth.Contract(contractABI, contractAddress);
   await contract.methods.approve(address, id).send({ from: accounts[0] });
 };
 
+export const getOwner = async (id) => {
+  return await contract.methods.ownerOf(id).call()
+}
 //! I like the idea, but it doesn't work as intended.
 // export const getTokenId = async (account) => {
 //   const arr = [];

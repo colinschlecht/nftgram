@@ -1,4 +1,6 @@
+import { getOwner } from "./NFTInteract";
 require("dotenv").config();
+
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
@@ -9,7 +11,6 @@ const contractAddress = "0x570218FAB496BC093AbC565585cC5bd33EfBb2DC";
 const saleFactory = new web3.eth.Contract(contractABI, contractAddress);
 
 export const create = async (itemAddress, item, price) => {
-
   //set up the Ethereum transaction
   const transactionParameters = {
     to: contractAddress,
@@ -36,18 +37,33 @@ export const create = async (itemAddress, item, price) => {
   }
 };
 
-export const sales = async () => {
-  const listings = await saleFactory.methods.getSales().call()
-  return listings
-}
+export const salesContracts = async () => {
+  const listingContracts = await saleFactory.methods.getSales().call();
+  return listingContracts;
+};
 export const salesDetailed = async () => {
-  const listings = await saleFactory.methods.getSalesDetailed().call()
-  return listings
-}
+  const listings = await saleFactory.methods.getSalesDetailed().call();
+  return [
+    ...Object.values(listings).map((item) => {
+      return Object.assign({
+        contract: item[0],
+        poster: item[1],
+        tokenAddress: item[2],
+        tokenID: item[3],
+        price: web3.utils.fromWei(item[4], "ether"),
+        status: web3.utils.hexToAscii(item[5]),
+      });
+    }),
+  ];
+};
+
+export const oneSaleDetailed = async (id) => {
+  let saleContract = await getOwner(id);
+  const allSales = await salesDetailed();
+  return allSales.find((sale) => sale.contract === saleContract);
+};
 
 export const getTransaction = async (txHash) => {
   let transaction = await web3.eth.getTransactionReceipt(txHash);
-  return transaction
-
-}
-
+  return transaction;
+};

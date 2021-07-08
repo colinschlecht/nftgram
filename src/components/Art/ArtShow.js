@@ -8,11 +8,9 @@ import {
   removeState,
   openModal,
   closeModal,
+  getOneSale,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
-
-import { sales, salesDetailed } from "../../utils/SFInteract";
-// import { approveSContractInteraction } from "../../utils/NFTInteract";
 
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
@@ -33,6 +31,7 @@ const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
 
   const arts = useSelector((state) => state.art.arts);
+  const sale = useSelector((state) => state.sales.sale);
   const modal = useSelector((state) => state.UI.modal);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
 
@@ -40,7 +39,6 @@ const ArtShow = ({ match }) => {
   const [displayComments, setdisplayComments] = useState(false);
   const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
-
 
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -63,6 +61,7 @@ const ArtShow = ({ match }) => {
 
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
+  //on component mount - make api call and store art object in state
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
       setArt(resp.data);
@@ -75,6 +74,8 @@ const ArtShow = ({ match }) => {
           }
         })
       );
+      //if art for sale, place sale object in state from eth api call
+      if (resp.data.for_sale) dispatch(getOneSale(resp.data.tokenID));
     });
   }, [match.params.id, user, liked, dispatch]);
 
@@ -91,8 +92,6 @@ const ArtShow = ({ match }) => {
       }
     };
   }, [dispatch, modal]);
-
-
 
   const handleLike = (e) => {
     e.preventDefault();
@@ -122,13 +121,13 @@ const ArtShow = ({ match }) => {
     dispatch(raiseAlert("Item is not currently for sale"));
     dispatch(lowerAlert());
   };
-
+  console.log(sale);
   const handlePurchase = (e) => {
     e.preventDefault();
   };
   const handleCancelSale = (e) => {
     e.preventDefault();
-    dispatch(openModal({ type: "cancel sale" }))
+    dispatch(openModal({ type: "cancel sale" }));
   };
 
   const handleList = (e) => {
@@ -157,7 +156,7 @@ const ArtShow = ({ match }) => {
     }
   };
 
-  return (
+  return art ? (
     <>
       <div className="container">
         <Segment className="artshow header">
@@ -368,7 +367,7 @@ const ArtShow = ({ match }) => {
         <Divider />
       </div>
     </>
-  );
+  ) : null;
 };
 
 export default ArtShow;
