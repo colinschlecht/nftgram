@@ -23,22 +23,24 @@ const ImageContainer = ({ art, location, handleLike }) => {
 
   return (
     <div className="explore picture container">
-      {art && (art.link ? (
-        <>
-          <img
-            src={`https://ipfs.io/ipfs/${art.cid}`}
-            onClick={location === "art card" ? (e) => handleLike(e) : null}
+      {art &&
+        (art.link ? (
+          <>
+            <img
+              src={`https://ipfs.io/ipfs/${art.cid}`}
+              onClick={location === "art card" ? (e) => handleLike(e) : null}
+              ref={imgEl}
+              className="explore"
+              alt={`An NFT posted with a description of: ${art.description}`}
+            />
+          </>
+        ) : (
+          <Image
+            src="https://react.semantic-ui.com/images/wireframe/image.png"
+            fluid
             ref={imgEl}
-            className="explore"
-            alt={`An NFT posted with a description of: ${art.description}`}
           />
-        </>
-      ) : (
-        <Image
-          src="https://react.semantic-ui.com/images/wireframe/image.png"
-          fluid
-        />
-      ))}
+        ))}
     </div>
   );
 };

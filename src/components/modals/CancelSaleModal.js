@@ -19,6 +19,12 @@ const CancelSaleModal = () => {
   const [disabled, setDisabled] = useState(false);
   const [cancelled, setCancelled] = useState(false);
 
+  const cancelCancel = () => {
+      dispatch(closeModal());
+      setDisabled("false")
+      document.body.classList.remove("modal-open");
+  };
+
   const handleCancel = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,28 +46,28 @@ const CancelSaleModal = () => {
       //if transaction and successful update art and exit modal
       if (transaction.status) {
         dispatch(updateArt(art.id, { for_sale: false }));
-        setLoading(false);
-        setCancelled(true);
-        cancelCancel();
+        cancelCancel()
         dispatch(raiseAlert("Cancellation Completed"));
         dispatch(lowerAlert());
+        setLoading(false);
+        setCancelled(true);
       } else {
         setDisabled(true);
         setLoading(false);
-        cancelCancel();
         dispatch(raiseAlert("Could not Cancel Sale"));
         dispatch(lowerAlert());
       }
     }
   };
 
-  const cancelCancel = () => {
-    document.body.classList.remove("modal-open");
-    dispatch(closeModal());
-  };
-
   useEffect(() => {
     setArt(arts[0]);
+  }, [arts]);
+
+  useEffect(() => {
+    return () => {
+      setArt("");
+    };
   }, [arts]);
 
   return art ? (

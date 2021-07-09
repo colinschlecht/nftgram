@@ -50,6 +50,7 @@ const ArtShow = ({ match }) => {
   });
 
   const [liked, setLiked] = useState(
+    
     !!art.likes?.find((like) => {
       if (user) {
         return like.user_id === user.user.id;
@@ -58,7 +59,7 @@ const ArtShow = ({ match }) => {
       }
     })
   );
-
+console.log("")
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
   //on component mount - make api call and store art object in state
@@ -121,7 +122,6 @@ const ArtShow = ({ match }) => {
     dispatch(raiseAlert("Item is not currently for sale"));
     dispatch(lowerAlert());
   };
-  console.log(sale);
   const handlePurchase = (e) => {
     e.preventDefault();
   };

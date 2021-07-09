@@ -24,6 +24,7 @@ const OpenSaleModal = () => {
   const handleCancel = (e) => {
     e.preventDefault();
     dispatch(closeModal());
+    console.log("closing")
     setInputDisabled(false);
     document.body.classList.remove("modal-open");
   };
@@ -45,7 +46,6 @@ const OpenSaleModal = () => {
     //gets sale contract from event log in txhash
     getSaleContract(resp.transactionHash);
   };
-
   const getSaleContract = async (txHash) => {
     const transaction = await getTransaction(txHash);
     if (!transaction) {
@@ -115,6 +115,12 @@ const OpenSaleModal = () => {
 
   useEffect(() => {
     setArt(arts[0]);
+  }, [arts]);
+
+  useEffect(() => {
+    return () => {
+      setArt("");
+    };
   }, [arts]);
 
   const handleChange = (e, value) => {

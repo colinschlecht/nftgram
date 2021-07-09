@@ -1,5 +1,4 @@
 import { FETCH_ALL_SALES, FETCH_SALE } from "../actions/types";
-import web3 from "../utils/web3";
 const INITIAL_STATE = {
   saleContracts: {},
   sales: [],
