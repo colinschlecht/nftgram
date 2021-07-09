@@ -9,7 +9,6 @@ import web3 from "../../utils/web3";
 import ImageContainer from "../Art/ImageContainer";
 
 const OpenSaleModal = () => {
-  console.log("hi");
   const dispatch = useDispatch();
   const arts = useSelector((state) => state.art.arts);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
@@ -24,7 +23,6 @@ const OpenSaleModal = () => {
   const handleCancel = (e) => {
     e.preventDefault();
     dispatch(closeModal());
-    console.log("closing")
     setInputDisabled(false);
     document.body.classList.remove("modal-open");
   };
@@ -53,7 +51,6 @@ const OpenSaleModal = () => {
         await getSaleContract(txHash);
       }, 3000);
     } else {
-      console.log(transaction.logs[0]);
       //sets state of sales contract for ref
       setSaleContract(transaction.logs[0].address);
       //TODO error handling for canceling approval of transfer to escrow:

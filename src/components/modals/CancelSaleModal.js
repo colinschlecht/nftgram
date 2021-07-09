@@ -9,7 +9,6 @@ import ModalPlaceholder from "./ModalPlaceholder";
 import { getTransaction } from "../../utils/web3";
 
 const CancelSaleModal = () => {
-  console.log("hi");
   const dispatch = useDispatch();
 
   const arts = useSelector((state) => state.art.arts);

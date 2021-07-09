@@ -9,19 +9,19 @@ const OpenModal = ({ modal }) => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    document.body.classList.remove('modal-open'); 
+    document.body.classList.remove("modal-open");
     dispatch(closeModal());
   };
 
   const renderModal = () => {
-    document.body.classList.add('modal-open');
+    document.body.classList.add("modal-open");
     switch (modal.type) {
       case "open sale":
         return <OpenSaleModal modal={modal} />;
       case "cancel sale":
         return <CancelSaleModal modal={modal} />;
       default:
-        console.log("no modal rendered");
+        document.body.classList.remove("modal-open");
         break;
     }
   };

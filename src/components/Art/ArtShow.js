@@ -59,7 +59,6 @@ const ArtShow = ({ match }) => {
       }
     })
   );
-console.log("")
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
   //on component mount - make api call and store art object in state
