@@ -12,7 +12,8 @@ import {
   getSales,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
-import { getSaleStatus, getSaleSummary } from "../../utils/SaleInteract";
+import { getSaleSummary } from "../../utils/SaleInteract";
+import { salesCompressed } from "../../utils/SFInteract";
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
@@ -257,7 +258,7 @@ const ArtShow = ({ match }) => {
                 </h4>
               </Segment>
               <Segment attached="bottom" className="buy sell bottom">
-                <button onClick={async () =>  console.log(await getSaleStatus(sale.contract))}>
+                <button onClick={async () =>  console.log(await salesCompressed())}>
                   Status
                 </button>
                 <button onClick={async () =>  console.log(await getSaleSummary(sale.contract))}>

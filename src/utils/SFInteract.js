@@ -56,6 +56,25 @@ export const salesDetailed = async () => {
     }),
   ];
 };
+export const salesCompressed = async () => {
+  const listings = await saleFactory.methods.getSalesDetailed().call();
+  const listingsAOH = [
+    ...Object.values(listings).map((item) => {
+      return Object.assign({
+        contract: item[0],
+        poster: item[1],
+        tokenAddress: item[2],
+        tokenID: item[3],
+        price: web3.utils.fromWei(item[4], "ether"),
+        status: web3.utils.hexToAscii(item[5]),
+      });
+    }),
+  ];
+  const compressed = Object.fromEntries(
+    listingsAOH.map((list) => [list.contract, list])
+  );
+  return compressed;
+};
 
 export const oneSaleDetailed = async (id) => {
   let saleContract = await getOwner(id);
