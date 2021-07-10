@@ -1379,3 +1379,11 @@ html::-webkit-scrollbar {
   transition: all 0.2s ease-in-out;
   transform: scale(1.2);
 }
+
+
+.admin.contract-holder{
+  display: flex;
+  justify-content: space-around;
+  max-height: 400px;
+  overflow-y: scroll;
+}

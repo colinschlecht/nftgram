@@ -9,9 +9,10 @@ import {
   openModal,
   closeModal,
   getOneSale,
+  getSales,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
-
+import { getSaleStatus, getSaleSummary } from "../../utils/SaleInteract";
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
@@ -32,14 +33,8 @@ const ArtShow = ({ match }) => {
 
   const arts = useSelector((state) => state.art.arts);
   const sale = useSelector((state) => state.sales.sale);
+  const sales = useSelector((state) => state.sales.sales);
   const modal = useSelector((state) => state.UI.modal);
-  const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
-
-  const [displayLikes, setDisplayLikes] = useState(false);
-  const [displayComments, setdisplayComments] = useState(false);
-  const [displayDetails, setDisplayDetails] = useState(true);
-  const [displayEvents, setDisplayEvents] = useState(false);
-
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -49,8 +44,12 @@ const ArtShow = ({ match }) => {
     }
   });
 
+  const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
+  const [displayLikes, setDisplayLikes] = useState(false);
+  const [displayComments, setdisplayComments] = useState(false);
+  const [displayDetails, setDisplayDetails] = useState(true);
+  const [displayEvents, setDisplayEvents] = useState(false);
   const [liked, setLiked] = useState(
-    
     !!art.likes?.find((like) => {
       if (user) {
         return like.user_id === user.user.id;
@@ -59,8 +58,11 @@ const ArtShow = ({ match }) => {
       }
     })
   );
+
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
+  console.log(sale);
+  console.log(sales);
   //on component mount - make api call and store art object in state
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
@@ -74,6 +76,7 @@ const ArtShow = ({ match }) => {
           }
         })
       );
+      dispatch(getSales());
       //if art for sale, place sale object in state from eth api call
       if (resp.data.for_sale) dispatch(getOneSale(resp.data.tokenID));
     });
@@ -254,6 +257,12 @@ const ArtShow = ({ match }) => {
                 </h4>
               </Segment>
               <Segment attached="bottom" className="buy sell bottom">
+                <button onClick={async () =>  console.log(await getSaleStatus(sale.contract))}>
+                  Status
+                </button>
+                <button onClick={async () =>  console.log(await getSaleSummary(sale.contract))}>
+                  Summary
+                </button>
                 <Label tag className="pricetag">
                   {art.for_sale ? (
                     //! if item IS for sale

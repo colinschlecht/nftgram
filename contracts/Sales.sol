@@ -9,32 +9,41 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-
 //factory constructor to create a sale contract
 contract SaleFactory {
-    
     address[] public sales;
 
     struct Trade {
-    address sale;
-    address poster;
-    address itemTokenAddress;
-    uint256 item;
-    uint256 price;
-    bytes32 status; 
-}
+        address sale;
+        address poster;
+        address itemTokenAddress;
+        uint256 item;
+        uint256 price;
+        bytes32 status;
+    }
 
     Trade[] public trades;
 
-
-    function createSale(address _itemTokenAddress, uint256 _item, uint256 price) public {
-        address newSale = address(new Sale(msg.sender, _itemTokenAddress, _item, price));
+    function createSale(
+        address _itemTokenAddress,
+        uint256 _item,
+        uint256 price
+    ) public {
+        address newSale = address(
+            new Sale(msg.sender, _itemTokenAddress, _item, price)
+        );
         sales.push(newSale);
     }
 
-
-    function addStruct(address _address, address _poster, address _itemTokenAddress, uint256 _item, uint256 _price, bytes32 _status) external {
-         Trade memory newtrade = Trade({
+    function addStruct(
+        address _address,
+        address _poster,
+        address _itemTokenAddress,
+        uint256 _item,
+        uint256 _price,
+        bytes32 _status
+    ) external {
+        Trade memory newtrade = Trade({
             sale: _address,
             poster: _poster,
             itemTokenAddress: _itemTokenAddress,
@@ -44,22 +53,20 @@ contract SaleFactory {
         });
         trades.push(newtrade);
     }
-    
 
     function getSales() public view returns (address[] memory) {
         return sales;
     }
 
-    function getSalesDetailed() public view returns (Trade[] memory){
+    function getSalesDetailed() public view returns (Trade[] memory) {
         return trades;
     }
 }
 
 contract Sale {
-    
     event TradeStatusChange(uint256 ad, bytes32 status);
     event ContractCreated(address ad);
-    
+
     IERC721 itemToken;
     address public parent;
     address payable public poster;
@@ -67,10 +74,9 @@ contract Sale {
     address public itemTokenAddress;
     uint256 public item;
     uint256 public price;
-    uint public payment;
+    uint256 public payment;
     bool public purchaser;
     bytes32 public status; // Pending, Open, Locked, Executed, Cancelled
-
 
     /**
      * @dev Opens a new trade. Puts _item in escrow.
@@ -79,7 +85,12 @@ contract Sale {
      * @param _price The amount of currency for which to trade the item.
      */
 
-    constructor(address payable _poster, address _itemTokenAddress, uint256 _item, uint256 _price) {
+    constructor(
+        address payable _poster,
+        address _itemTokenAddress,
+        uint256 _item,
+        uint256 _price
+    ) {
         parent = msg.sender;
         itemToken = IERC721(_itemTokenAddress);
         itemTokenAddress = _itemTokenAddress;
@@ -89,20 +100,27 @@ contract Sale {
         status = "Pending";
         emit ContractCreated(address(this));
     }
-    
+
     /**
      * @dev Opens a new trade. Puts item in escrow.
      */
-     
-    function openTrade() public virtual{
-            require(status == "Pending", "Trade is not openable."); 
-             status = "Open";
-             purchaser = false;
-             itemToken.transferFrom(msg.sender, address(this), item);
-             SaleFactory(parent).addStruct(address(this), poster, itemTokenAddress, item, price, status);
-            emit TradeStatusChange(item, "Open");
-            
-}
+
+    function openTrade() public virtual {
+        require(status == "Pending", "Trade is not openable.");
+        status = "Open";
+        purchaser = false;
+        itemToken.transferFrom(msg.sender, address(this), item);
+        SaleFactory(parent).addStruct(
+            address(this),
+            poster,
+            itemTokenAddress,
+            item,
+            price,
+            status
+        );
+        emit TradeStatusChange(item, "Open");
+    }
+
     /**
      * @dev Returns the details for a trade.
      */
@@ -131,22 +149,32 @@ contract Sale {
         );
     }
 
-
     /**
      * @dev Engages the execution of a trade. Transfers funds to the contract.
      */
 
     function purchaseToken() public payable virtual {
         require(status == "Open", "Trade is not Open.");
-        require(msg.value >= price, "Payment must meet or exceed asking price.");
+        require(
+            msg.value >= price,
+            "Payment must meet or exceed asking price."
+        );
         require(purchaser == false, "Item is no longer available");
         purchaser = true;
         payment = msg.value;
         status = "Locked";
         buyer = msg.sender;
+        SaleFactory(parent).addStruct(
+            address(this),
+            poster,
+            itemTokenAddress,
+            item,
+            price,
+            status
+        );
         emit TradeStatusChange(item, "Locked");
         executeTrade();
-    } 
+    }
 
     /**
      * @dev Executes a trade. Transfers ownership of the
@@ -158,6 +186,14 @@ contract Sale {
         itemToken.safeTransferFrom(address(this), buyer, item);
         poster.transfer(payment);
         status = "Executed";
+        SaleFactory(parent).addStruct(
+            address(this),
+            poster,
+            itemTokenAddress,
+            item,
+            price,
+            status
+        );
         emit TradeStatusChange(item, "Executed");
     }
 
@@ -168,8 +204,18 @@ contract Sale {
         require(status == "Open", "Trade is not Open.");
         status = "Cancelled";
         itemToken.safeTransferFrom(address(this), poster, item);
+        SaleFactory(parent).addStruct(
+            address(this),
+            poster,
+            itemTokenAddress,
+            item,
+            price,
+            status
+        );
+
         emit TradeStatusChange(item, "Cancelled");
     }
+
     /**
      * @dev Cancels a Pending trade by the poster. (Trade has yet to be confirmed.)
      */
