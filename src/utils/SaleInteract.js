@@ -65,3 +65,12 @@ export const cancel = async (contractAddress) => {
       };
     }
   };
+
+  export const getSaleStatus = async (contractAddress) => {
+    let saleContract = await new web3.eth.Contract(contractABI, contractAddress);
+    return saleContract.methods.status().call()
+  }
+  export const getSaleSummary = async (contractAddress) => {
+    let saleContract = await new web3.eth.Contract(contractABI, contractAddress);
+    return saleContract.methods.getSummary().call()
+  }

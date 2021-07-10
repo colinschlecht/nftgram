@@ -16,6 +16,7 @@ import UserEdit from "./user/UserEdit";
 import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
+import ContractQuery from "../utils/ContractQuery";
 // import { getSales } from "../actions";
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
               </div>
               <Route path="/art/show/:id" exact component={ArtShow} />
               <Route path="/profile/:id" exact component={Profile} />
+              <Route path="/admin/contracts/query" exact component={ContractQuery} />
             </>
           </Switch>
         </>
