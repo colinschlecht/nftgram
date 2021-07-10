@@ -10,8 +10,8 @@
 // console.log(JSON.stringify(contract.abi));
 //!SaleFactory ABI (Sale.sol)
 
-// const contract = require("../artifacts/contracts/Sales.sol/Sale.json"); 
+const contract = require("../artifacts/contracts/Sales.sol/Sale.json"); 
 
-// console.log(JSON.stringify(contract.abi));
+console.log(JSON.stringify(contract.abi));
 
-//node scripts/get-abi.js 
+// node scripts/get-abi.js 

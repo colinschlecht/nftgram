@@ -47,16 +47,16 @@
     "outputs": [
       {
         "components": [
-          { "internalType": "address", "name": "ale", "type": "address" },
-          { "internalType": "address", "name": "oster", "type": "address" },
+          { "internalType": "address", "name": "sale", "type": "address" },
+          { "internalType": "address", "name": "poster", "type": "address" },
           {
             "internalType": "address",
-            "name": "temTokenAddress",
+            "name": "itemTokenAddress",
             "type": "address"
           },
-          { "internalType": "uint256", "name": "tem", "type": "uint256" },
-          { "internalType": "uint256", "name": "rice", "type": "uint256" },
-          { "internalType": "bytes32", "name": "tatus", "type": "bytes32" }
+          { "internalType": "uint256", "name": "item", "type": "uint256" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "bytes32", "name": "status", "type": "bytes32" }
         ],
         "internalType": "struct SaleFactory.Trade[]",
         "name": "",
@@ -77,16 +77,16 @@
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "trades",
     "outputs": [
-      { "internalType": "address", "name": "ale", "type": "address" },
-      { "internalType": "address", "name": "oster", "type": "address" },
+      { "internalType": "address", "name": "sale", "type": "address" },
+      { "internalType": "address", "name": "poster", "type": "address" },
       {
         "internalType": "address",
-        "name": "temTokenAddress",
+        "name": "itemTokenAddress",
         "type": "address"
       },
-      { "internalType": "uint256", "name": "tem", "type": "uint256" },
-      { "internalType": "uint256", "name": "rice", "type": "uint256" },
-      { "internalType": "bytes32", "name": "tatus", "type": "bytes32" }
+      { "internalType": "uint256", "name": "item", "type": "uint256" },
+      { "internalType": "uint256", "name": "price", "type": "uint256" },
+      { "internalType": "bytes32", "name": "status", "type": "bytes32" }
     ],
     "stateMutability": "view",
     "type": "function"
