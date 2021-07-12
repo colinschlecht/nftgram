@@ -14,6 +14,7 @@ import {
   SEND_ART_TO_STATE,
   SEND_ARTS_TO_STATE,
   REMOVE_STATE,
+  UPDATE_ARTS,
 } from "../actions/types";
 
 const checkNextLevel = (comment, newcomment) => {
@@ -41,13 +42,25 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-
 const artReducer = (state = INITIAL_STATE, action) => {
   let fetchedArts;
   switch (action.type) {
     case FETCH_ARTS:
       fetchedArts = action.payload;
       return { ...state, arts: [fetchedArts] };
+    case UPDATE_ARTS:
+      fetchedArts = action.payload;
+      return {
+        ...state,
+        arts: state.arts.map((art) => {
+          if (art.id !== fetchedArts.id) {
+            return art;
+          } else {
+            let newArt = {...art, ...fetchedArts}
+            return newArt
+          }
+        }),
+      };
     case LOADING_ARTS:
       return { ...state, loading: true };
     case FETCH_ARTS_INF_SCROLL:

@@ -15,6 +15,7 @@ export const CREATE_ART = "CREATE_ART";
 export const SEND_ART_TO_STATE = "SEND_ART_TO_STATE";
 export const SEND_ARTS_TO_STATE = "SEND_ARTS_TO_STATE";
 export const REMOVE_STATE = "REMOVE_STATE";
+export const UPDATE_ARTS = "UPDATE_ARTS";
 
 //!COMMENT
 export const CREATE_ART_COMMENT = "CREATE_ART_COMMENT";

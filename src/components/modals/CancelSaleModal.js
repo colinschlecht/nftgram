@@ -67,6 +67,7 @@ const CancelSaleModal = ({ setLocked }) => {
   useEffect(() => {
     return () => {
       setArt("");
+      
     };
   }, [arts]);
 

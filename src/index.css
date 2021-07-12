@@ -1361,12 +1361,18 @@ html::-webkit-scrollbar {
   padding-bottom: 0;
   color: #b0afaf;
 }
+
+#pricetag.pricetag {
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+}
 .pricetag:hover {
   transition: all 0.2s ease-in-out;
   transform: scale(1.01);
 }
 
 .cartspan {
+  margin-bottom: -.5em;
   display: flex;
   flex-direction: column;
   align-items: center;

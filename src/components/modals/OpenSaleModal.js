@@ -96,11 +96,11 @@ const OpenSaleModal = ({ setLocked }) => {
     } else {
       //if transaction has processed and is successful
       if (transaction.status) {
-        dispatch(updateArt(art.id, { for_sale: true }));
         simpleCancel();
         dispatch(raiseAlert("Listing Completed"));
         dispatch(lowerAlert());
         setLoading(false);
+        dispatch(updateArt(art.id, { for_sale: true }));
       } else {
         //if transaction has processed but failed
         simpleCancel();
@@ -118,6 +118,7 @@ const OpenSaleModal = ({ setLocked }) => {
   useEffect(() => {
     return () => {
       setArt("");
+      
     };
   }, [arts]);
 

@@ -1,5 +1,9 @@
 import API_BASE from "../api";
-import { salesDetailed, oneSaleDetailed, salesCompressed } from "../utils/SFInteract";
+import {
+  salesDetailed,
+  oneSaleDetailed,
+  salesCompressed,
+} from "../utils/SFInteract";
 
 import {
   ALERT,
@@ -32,7 +36,8 @@ import {
   FETCH_ALL_SALES,
   FETCH_SALE,
   FETCH_ALL_SALES_COMPRESSED,
-  REMOVE_SALE_STATE
+  REMOVE_SALE_STATE,
+  UPDATE_ARTS,
 } from "./types";
 
 //!METAMASK!//
@@ -64,7 +69,7 @@ export const getSalesCompressed = (id) => async (dispatch) => {
 };
 
 export const removeSaleState = () => async (dispatch) => {
-  dispatch({ type: REMOVE_SALE_STATE, payload: {sales: [], sale: {}} });
+  dispatch({ type: REMOVE_SALE_STATE, payload: { sales: [], sale: {} } });
 };
 
 //!UI!//
@@ -135,7 +140,7 @@ export const createArt = (formValues) => async (dispatch) => {
 };
 export const updateArt = (id, artInfo) => async (dispatch) => {
   const response = await API_BASE.patch(`/arts/${id}`, { ...artInfo });
-  dispatch({ type: FETCH_ARTS, payload: response.data });
+  dispatch({ type: UPDATE_ARTS, payload: response.data });
   return response;
 };
 

@@ -23,9 +23,10 @@ import {
   Icon,
   Segment,
   Divider,
-  Label,
   Image,
 } from "semantic-ui-react";
+import Cart from "./Cart";
+import Tag from "./Tag";
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ const ArtShow = ({ match }) => {
   const [displayComments, setdisplayComments] = useState(false);
   const [displayDetails, setDisplayDetails] = useState(true);
   const [displayEvents, setDisplayEvents] = useState(false);
+  const [cartScenario, setCartScenario] = useState("");
+  const [tagScenario, setTagScenario] = useState("");
   const [liked, setLiked] = useState(
     !!art.likes?.find((like) => {
       if (user) {
@@ -58,6 +61,8 @@ const ArtShow = ({ match }) => {
   );
 
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
+
+  
   //on component mount - make api call and store art object in state
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
@@ -75,6 +80,8 @@ const ArtShow = ({ match }) => {
       if (resp.data.for_sale) dispatch(getOneSale(resp.data.tokenID));
     });
   }, [match.params.id, user, liked, dispatch]);
+
+  console.log(art)
 
   useEffect(() => {
     return () => {
@@ -126,16 +133,31 @@ const ArtShow = ({ match }) => {
   };
   const handlePurchase = (e) => {
     e.preventDefault();
-    dispatch(openModal({ type: "purchase" }));
+    if (user) {
+      dispatch(openModal({ type: "purchase" }));
+    } else {
+      dispatch(raiseAlert("Please connect to MetaMask to interact"));
+      dispatch(lowerAlert());
+    }
   };
   const handleCancelSale = (e) => {
     e.preventDefault();
-    dispatch(openModal({ type: "cancel sale" }));
+    if (user) {
+      dispatch(openModal({ type: "cancel sale" }));
+    } else {
+      dispatch(raiseAlert("Please connect to MetaMask to interact"));
+      dispatch(lowerAlert());
+    }
   };
 
   const handleList = (e) => {
     e.preventDefault();
-    dispatch(openModal({ type: "open sale" }));
+    if (user) {
+      dispatch(openModal({ type: "open sale" }));
+    } else {
+      dispatch(raiseAlert("Please connect to MetaMask to interact"));
+      dispatch(lowerAlert());
+    }
   };
 
   const handleDisplay = (e, display) => {
@@ -158,6 +180,33 @@ const ArtShow = ({ match }) => {
         dispatch(lowerAlert());
     }
   };
+
+  useEffect(() => {
+   if(arts[0] && arts[0] !== art){
+     setArt(arts[0])
+     if (arts[0].for_sale) dispatch(getOneSale(arts[0].tokenID))
+   }
+  }, [arts, art, dispatch])
+
+  useEffect(() => {
+    if (art.for_sale) {
+      if (art.user?.metamask_account === wallet?.account) {
+        setCartScenario("for sale owner");
+        setTagScenario("for sale owner");
+      } else {
+        setCartScenario("for sale not owner");
+        setTagScenario("for sale not owner");
+      }
+    } else {
+      if (art.user?.metamask_account === wallet?.account) {
+        setCartScenario("not for sale owner");
+        setTagScenario("not for sale owner");
+      } else {
+        setCartScenario("not for sale not owner");
+        setTagScenario("not for sale not owner");
+      }
+    }
+  }, [art.for_sale, art.user, wallet]);
 
   return art ? (
     <>
@@ -260,98 +309,25 @@ const ArtShow = ({ match }) => {
                 </h4>
               </Segment>
               <Segment attached="bottom" className="buy sell bottom">
-                <Label tag className="pricetag">
-                  {art.for_sale ? (
-                    //! if item IS for sale
-                    <>
-                      {art.user?.metamask_account === wallet?.account ? (
-                        //! if USER is OWNER
-                        <>
-                          <a
-                            href={`/art/show/${art.id}`}
-                            className="ethereum sale"
-                            color="green"
-                            onClick={(e) => handleCancelSale(e)}
-                          >
-                            <Icon color="green" name="ethereum" />
-                            <span>{sale.price} ETH</span>
-                          </a>
-                          <p className="pricemessage">
-                            Click to cancel listing
-                          </p>
-                        </>
-                      ) : (
-                        //! if USER is BUYER
-                        <>
-                          <a
-                            href={`/art/show/${art.id}`}
-                            className="ethereum sale"
-                            color="green"
-                            onClick={(e) => handlePurchase(e)}
-                          >
-                            <Icon color="green" name="ethereum" />
-                            <span>{sale.price} ETH</span>
-                          </a>
-                          <p className="pricemessage">Click to purchase</p>
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    //! if item NOT is for sale
-                    <>
-                      {art.user?.metamask_account === wallet?.account ? (
-                        //! User is OWNER
-                        <>
-                          <a
-                            href={`/art/show/${art.id}`}
-                            className="ethereum sale"
-                            onClick={(e) => handleList(e)}
-                          >
-                            <Icon color="red" name="ethereum" />
-                            <span>0.0 ETH</span>
-                          </a>
-                          <p className="pricemessage">List for sale</p>
-                        </>
-                      ) : (
-                        //! User is NOT OWNER
-                        <>
-                          <a
-                            href={`/art/show/${art.id}`}
-                            className="ethereum sale"
-                            onClick={(e) => handleShowPrice(e)}
-                          >
-                            <Icon color="red" name="ethereum" />
-                            <span>0.0 ETH</span>
-                          </a>
-                          <p className="pricemessage">Not for sale</p>
-                        </>
-                      )}
-                    </>
-                  )}
-                </Label>
-                {art.for_sale ? (
-                  <span className="cartspan">
-                    <a
-                      href={`/art/show/${art.id}`}
-                      className="ethereum sale shoppingcart"
-                      onClick={(e) => handlePurchase(e)}
-                    >
-                      <Icon color="green" name="cart" className="shoppingcart" />
-                    </a>
-                    <p className="salemessage">purchase</p>
-                  </span>
-                ) : (
-                  <span className="cartspan">
-                    <a
-                      href={`/art/show/${art.id}`}
-                      className="ethereum sale shoppingcart"
-                      onClick={(e) => handleShowPrice(e)}
-                    >
-                      <Icon color="red" name="cart" className="shoppingcart" />
-                    </a>
-                    <p className="salemessage">Not for sale</p>
-                  </span>
-                )}
+                
+                  <Tag
+                    scenario={tagScenario}
+                    sale={sale}
+                    art={art}
+                    handleCancelSale={handleCancelSale}
+                    handlePurchase={handlePurchase}
+                    handleList={handleList}
+                    handleShowPrice={handleShowPrice}
+                  />
+                  <Cart
+                    scenario={cartScenario}
+                    sale={sale}
+                    art={art}
+                    handleCancelSale={handleCancelSale}
+                    handlePurchase={handlePurchase}
+                    handleList={handleList}
+                    handleShowPrice={handleShowPrice}
+                  />
               </Segment>
             </Segment.Group>
           </div>
