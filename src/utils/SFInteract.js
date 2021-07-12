@@ -78,8 +78,8 @@ export const salesCompressed = async () => {
 
 export const oneSaleDetailed = async (id) => {
   let saleContract = await getOwner(id);
-  const allSales = await salesDetailed();
-  return allSales.find((sale) => sale.contract === saleContract);
+  const allSales = await salesCompressed();
+  return allSales[saleContract];
 };
 
 export const getTransaction = async (txHash) => {

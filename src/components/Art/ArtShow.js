@@ -6,20 +6,18 @@ import {
   raiseAlert,
   lowerAlert,
   removeState,
+  removeSaleState,
   openModal,
   closeModal,
   getOneSale,
-  getSales,
 } from "../../actions/";
 import { useDispatch, useSelector } from "react-redux";
-import { getSaleSummary } from "../../utils/SaleInteract";
-import { salesCompressed } from "../../utils/SFInteract";
 import logo from "../../images/ethcam.svg";
 import ShowDetails from "./ShowDetails";
 import ShowLikes from "./ShowLikes";
 import ShowEvents from "./ShowEvents";
 import ShowComments from "../Comment/ShowComments";
-
+import ImageContainer from "./ImageContainer";
 import {
   Header,
   Icon,
@@ -34,7 +32,6 @@ const ArtShow = ({ match }) => {
 
   const arts = useSelector((state) => state.art.arts);
   const sale = useSelector((state) => state.sales.sale);
-  const sales = useSelector((state) => state.sales.sales);
   const modal = useSelector((state) => state.UI.modal);
   const wallet = useSelector((state) => state.MetaMask);
   const user = useSelector((state) => {
@@ -61,9 +58,6 @@ const ArtShow = ({ match }) => {
   );
 
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
-
-  console.log(sale);
-  console.log(sales);
   //on component mount - make api call and store art object in state
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
@@ -77,7 +71,6 @@ const ArtShow = ({ match }) => {
           }
         })
       );
-      dispatch(getSales());
       //if art for sale, place sale object in state from eth api call
       if (resp.data.for_sale) dispatch(getOneSale(resp.data.tokenID));
     });
@@ -86,6 +79,12 @@ const ArtShow = ({ match }) => {
   useEffect(() => {
     return () => {
       dispatch(removeState());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeSaleState());
     };
   }, [dispatch]);
 
@@ -127,6 +126,7 @@ const ArtShow = ({ match }) => {
   };
   const handlePurchase = (e) => {
     e.preventDefault();
+    dispatch(openModal({ type: "purchase" }));
   };
   const handleCancelSale = (e) => {
     e.preventDefault();
@@ -175,12 +175,14 @@ const ArtShow = ({ match }) => {
               </Header>
 
               <Segment attached>
-                <div className="imagecontainer artshow">
-                  <img
-                    className="artshow image portrait"
-                    src={`https://ipfs.io/ipfs/${art.cid}`}
-                    alt={art.description}
-                  />
+                <div className="imagecontainer artshow" id="art-show">
+                  {art && (
+                    <ImageContainer
+                      art={art}
+                      handleLike={handleLike}
+                      location="art card"
+                    />
+                  )}
                 </div>
               </Segment>
 
@@ -258,12 +260,6 @@ const ArtShow = ({ match }) => {
                 </h4>
               </Segment>
               <Segment attached="bottom" className="buy sell bottom">
-                <button onClick={async () =>  console.log(await salesCompressed())}>
-                  Status
-                </button>
-                <button onClick={async () =>  console.log(await getSaleSummary(sale.contract))}>
-                  Summary
-                </button>
                 <Label tag className="pricetag">
                   {art.for_sale ? (
                     //! if item IS for sale
@@ -278,6 +274,7 @@ const ArtShow = ({ match }) => {
                             onClick={(e) => handleCancelSale(e)}
                           >
                             <Icon color="green" name="ethereum" />
+                            <span>{sale.price} ETH</span>
                           </a>
                           <p className="pricemessage">
                             Click to cancel listing
@@ -293,6 +290,7 @@ const ArtShow = ({ match }) => {
                             onClick={(e) => handlePurchase(e)}
                           >
                             <Icon color="green" name="ethereum" />
+                            <span>{sale.price} ETH</span>
                           </a>
                           <p className="pricemessage">Click to purchase</p>
                         </>
@@ -331,16 +329,29 @@ const ArtShow = ({ match }) => {
                     </>
                   )}
                 </Label>
-                <span className="cartspan">
-                  <a
-                    href={`/art/show/${art.id}`}
-                    className="ethereum sale shoppingcart"
-                    onClick={(e) => handleShowPrice(e)}
-                  >
-                    <Icon color="red" name="cart" className="shoppingcart" />
-                  </a>
-                  <p className="salemessage">Not for sale</p>
-                </span>
+                {art.for_sale ? (
+                  <span className="cartspan">
+                    <a
+                      href={`/art/show/${art.id}`}
+                      className="ethereum sale shoppingcart"
+                      onClick={(e) => handlePurchase(e)}
+                    >
+                      <Icon color="green" name="cart" className="shoppingcart" />
+                    </a>
+                    <p className="salemessage">purchase</p>
+                  </span>
+                ) : (
+                  <span className="cartspan">
+                    <a
+                      href={`/art/show/${art.id}`}
+                      className="ethereum sale shoppingcart"
+                      onClick={(e) => handleShowPrice(e)}
+                    >
+                      <Icon color="red" name="cart" className="shoppingcart" />
+                    </a>
+                    <p className="salemessage">Not for sale</p>
+                  </span>
+                )}
               </Segment>
             </Segment.Group>
           </div>

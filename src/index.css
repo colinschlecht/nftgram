@@ -94,8 +94,6 @@ html::-webkit-scrollbar {
   width: 80%;
 }
 
-
-
 .modal-cap {
   font-size: smaller;
   display: flex;
@@ -118,7 +116,7 @@ html::-webkit-scrollbar {
 
 .modal-body::-webkit-scrollbar {
   display: none;
-} 
+}
 .modal-buttons {
   color: black;
 }
@@ -491,6 +489,12 @@ html::-webkit-scrollbar {
   display: flex;
   width: 600px;
   height: 600px;
+  overflow: hidden;
+}
+#art-show .explore.picture.container {
+  display: flex;
+  max-width: 400px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -1380,8 +1384,7 @@ html::-webkit-scrollbar {
   transform: scale(1.2);
 }
 
-
-.admin.contract-holder{
+.admin.contract-holder {
   display: flex;
   justify-content: space-around;
   max-height: 400px;

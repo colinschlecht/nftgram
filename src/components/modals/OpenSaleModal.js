@@ -8,7 +8,7 @@ import { open } from "../../utils/SaleInteract";
 import web3 from "../../utils/web3";
 import ImageContainer from "../Art/ImageContainer";
 
-const OpenSaleModal = () => {
+const OpenSaleModal = ({ setLocked }) => {
   const dispatch = useDispatch();
   const arts = useSelector((state) => state.art.arts);
   const [art, setArt] = useState(arts.length > 0 ? arts[0] : {});
@@ -34,6 +34,7 @@ const OpenSaleModal = () => {
 
   const handleList = async (e) => {
     e.preventDefault();
+    setLocked(true);
     setCancelDisabled(true);
     setInputDisabled(true);
     setDisabled(true);
