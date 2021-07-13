@@ -32,6 +32,7 @@ const ArtForm = () => {
     setfile(file);
   };
   console.log(wallet.account);
+
   const pinataSDK = require("@pinata/sdk");
   const pinata = pinataSDK(key, secret);
 
