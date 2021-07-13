@@ -190,7 +190,7 @@ const Header = ({ user }) => {
               <img
                 alt={`${user.username}'s profile pic. Nice!`}
                 className="ui small circular image avatar"
-                src={`https://ipfs.io/ipfs/${avatar}`}
+                src={`https://gateway.pinata.cloud/ipfs/${avatar}`}
               ></img>
             ) : (
               <PlaceholderExampleImage />
