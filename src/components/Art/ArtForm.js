@@ -150,8 +150,8 @@ const ArtForm = () => {
                   `ipfs://${pinResponse.IpfsHash}`
                 );
                 art = {
-                  user_id: user.user.id,
-                  artist_id: user.user.artist.id,
+                  user_id: user.id,
+                  artist_id: user.artist.id,
                   for_sale: false,
                   description: data.description,
                   caption: data.caption,
@@ -163,7 +163,7 @@ const ArtForm = () => {
                   contract_address: tokenInfo.address,
                   tokenID: tokenInfo.id,
                 };
-                if(art.tokenID){
+                if (art.tokenID) {
                   const post = await handlePost(art);
                   setLoading(false);
                   await ipfs.stop();
