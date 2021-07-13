@@ -65,9 +65,6 @@ const Header = ({ user }) => {
     e.preventDefault();
     setEditing(!editing);
     if (editing) {
-      if (avatar !== user.avatar) {
-        await pinata.unpin(avatar);
-      }
       setEditingIMG(false);
       setEditingName(false);
       setEditingBio(false);
