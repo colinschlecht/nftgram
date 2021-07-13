@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   modal: false,
 };
 
-const uiReducer = (state = INITIAL_STATE, action) => {
+const UIReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ALERT:
       return {
@@ -24,4 +24,4 @@ const uiReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default uiReducer;
+export default UIReducer;
