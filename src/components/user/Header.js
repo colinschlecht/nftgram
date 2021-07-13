@@ -42,12 +42,12 @@ const Header = ({ user }) => {
 
   const confirmAvatarChange = async (e) => {
     e.preventDefault();
-    if (
-      user.avatar !==
-      "bafkreicprdfalt566bpr37jj6fo2omfir4alvqgmnk6p6m2qeyu4ipjspq"
-    ) {
-      await pinata.unpin(avatar);
-    }
+    // if (
+    //   user.avatar !==
+    //   "bafkreicprdfalt566bpr37jj6fo2omfir4alvqgmnk6p6m2qeyu4ipjspq"
+    // ) {
+    //   await pinata.unpin(avatar);
+    // }
     const IPFS = require("ipfs-core");
     const ipfs = await IPFS.create();
     const { cid } = await ipfs.add(upload, {
