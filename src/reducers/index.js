@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import userReducer from "./userReducer";
 import UIReducer from "./UIReducer";
+import userReducer from "./userReducer";
 import artReducer from "./artReducer";
 import metaMaskReducer from "./metaMaskReducer";
 import saleReducer from "./saleReducer";

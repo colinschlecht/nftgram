@@ -42,12 +42,6 @@ const Header = ({ user }) => {
 
   const confirmAvatarChange = async (e) => {
     e.preventDefault();
-    // if (
-    //   user.avatar !==
-    //   "bafkreicprdfalt566bpr37jj6fo2omfir4alvqgmnk6p6m2qeyu4ipjspq"
-    // ) {
-    //   await pinata.unpin(avatar);
-    // }
     const IPFS = require("ipfs-core");
     const ipfs = await IPFS.create();
     const { cid } = await ipfs.add(upload, {
@@ -65,9 +59,6 @@ const Header = ({ user }) => {
     e.preventDefault();
     setEditing(!editing);
     if (editing) {
-      // if (avatar !== user.avatar) {
-      //   await pinata.unpin(avatar);
-      // }
       setEditingIMG(false);
       setEditingName(false);
       setEditingBio(false);
@@ -193,7 +184,7 @@ const Header = ({ user }) => {
               <img
                 alt={`${user.username}'s profile pic. Nice!`}
                 className="ui small circular image avatar"
-                src={`https://ipfs.io/ipfs/${avatar}`}
+                src={`https://gateway.pinata.cloud/ipfs/${avatar}`}
               ></img>
             ) : (
               <PlaceholderExampleImage />

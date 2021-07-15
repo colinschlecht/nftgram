@@ -2,7 +2,7 @@
 
 ### Description
 
-NFTgramIO is a virtual art gallery/social media platform, where a user can view and create virtual art.
+NFTgramIO is a virtual art gallery/social media platform, where a user can view and create and trade virtual art.
 ## User stories:
 
 * A user is required to 'create an account' to interract with other users, by connecting their MetaMask account. 
@@ -21,7 +21,7 @@ Using a standard ERC-721 smart contract, the token is minted. Once complete - if
 
 ## Selling/Buying an NFT
 
-WIP - contracts have been created and tested. 
+A user can buy and sell NFT's for Ethereum by clicking on the ethereum tag or shopping cart on the show page of their NFT.
 
 * NFT Smart Contract: https://rinkeby.etherscan.io/address/0x3032107eAcD70a6590b24A1FD8A53Ecf4E9c3692#code
 
@@ -30,14 +30,14 @@ https://rinkeby.etherscan.io/address/0xC46578d68C8e876E8f6FB4759bd679A3B256D3c5#
 
 ### ToDo:
 
-Further decentralization - All login through MetaMask.
-Individual user show page.
-Individual art show page.
-List of users who have liked showpage.
+Further decentralization.
 User account settings.
 Following capability.
 Additional timelines.
 Events tab on art.
+Improve user Showpage.
+Sales page.
+User sales page.
 
 ### NFT ToDo:
 
@@ -55,13 +55,22 @@ Events tab on art.
 In order to further Decentralize, there are certain aspects about NFTgramIO that require updating:
 
 1. User profile
-    - User privacy/security are important. Currently NFTgramIO authorizes and authenticates users on the server side, using JWT. Metamask is NOT stored in the database, meaning a user has to have an account separate from signingin with metamask. 
+    <s>- User privacy/security are important. Currently NFTgramIO authorizes and authenticates users on the server side, using JWT. Metamask is NOT stored in the database, meaning a user has to have an account separate from signingin with metamask.</s> 
+
+    Currently NFTgramIO authorizes and authenticates users through their Metamask login. A user cannot access another user's Metamask account without knowing their password / seed phrase, therefore cannot login as anyone but themself. Currently, user info is still stored in the DB. 
+
 
     Potential Solutions:
     * decentralized database, using IPFS or ORBITDB below
     * refined user record. user login is handled 100% through metamask. each MM acct will be associated to a user obj:
-        user = { screen name, MM, bio, affiliations/alias }
-        Changing accounts will change the object. but a user can still list associated aliases or affiliations.
+user = {
+    t.string "metamask_account"
+    t.string "username"
+    t.string "bio"
+    t.string "avatar"
+}
+
+        Changing accounts will change the object. but a user can still list associated aliases or affiliations. 
 
 2. Art Pieces
     - An Art Piece is currently a centralized database record that points to an NFT stored on the blockchain. Comments/Likes are not stored with the NFT, even when created on NFTgramIO. NFT's created elsewhere will also not have this data stored.
