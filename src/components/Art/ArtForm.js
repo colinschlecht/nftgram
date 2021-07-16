@@ -151,7 +151,7 @@ const ArtForm = () => {
                   `ipfs://${pinResponse.IpfsHash}`
                 );
                 art = {
-                  user_id: user.id,
+                  user_id: user.user.id,
                   for_sale: false,
                   description: data.description,
                   caption: data.caption,
