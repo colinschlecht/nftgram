@@ -39,6 +39,7 @@ export const CONNECT = "CONNECT";
 
 //!UI
 export const ALERT = "ALERT";
+export const SET_DROPPED = "SET_DROPPED";
 export const LOWER_ALERT = "LOWER_ALERT";
 export const SHOW_MENU = "SHOW_MENU";
 export const MODAL = "MODAL";

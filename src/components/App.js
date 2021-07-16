@@ -17,6 +17,7 @@ import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
 import ContractQuery from "../utils/ContractQuery";
+import SideBar from "./header/SideBar";
 // import { getSales } from "../actions";
 
 const App = () => {
@@ -38,7 +39,10 @@ const App = () => {
             <>
               <div className="mm alerts container">{alerted && <Alert />}</div>
               {modal && <OpenModal modal={modal} />}
+              <div className="menu" id="top-menu">
               <MetamaskButton />
+              <SideBar />
+              </div>
               <div id="main" className="ui centered grid">
                 <div id="nav">
                   <Nav />

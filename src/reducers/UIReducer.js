@@ -1,8 +1,9 @@
-import { ALERT, LOWER_ALERT, MODAL, CLOSE_MODAL } from "../actions/types";
+import { ALERT, LOWER_ALERT, MODAL, CLOSE_MODAL, SET_DROPPED } from "../actions/types";
 
 const INITIAL_STATE = {
   messages: [],
   modal: false,
+  dropped: false
 };
 
 const UIReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +20,8 @@ const UIReducer = (state = INITIAL_STATE, action) => {
       return { ...state, modal: action.payload };
     case CLOSE_MODAL:
       return { ...state, modal: false};
+    case SET_DROPPED:
+      return { ...state, dropped: !state.dropped};
     default:
       return state;
   }

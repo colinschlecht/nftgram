@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LogOut from "../user/LogOut";
+import LogOut from "./LogOut";
+import Login from "./Login"
 import { useSelector } from "react-redux";
 
 export default function Nav() {
@@ -26,7 +27,7 @@ export default function Nav() {
             profile{" "}
           </Link>
         )}
-        <LogOut />
+        {user ? <LogOut /> : <Login />}
       </div>
     </div>
   );

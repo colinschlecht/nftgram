@@ -6,6 +6,7 @@ import {
 } from "../utils/SFInteract";
 
 import {
+  SET_DROPPED,
   ALERT,
   LOWER_ALERT,
   CREATE_ART,
@@ -81,6 +82,9 @@ export const openModal = (modal) => async (dispatch) => {
 };
 export const closeModal = () => async (dispatch) => {
   dispatch({ type: CLOSE_MODAL, payload: false });
+};
+export const setDropped = () => async (dispatch) => {
+  dispatch({ type: SET_DROPPED, payload: true });
 };
 export const lowerAlert = () => async (dispatch) => {
   window.setTimeout(() => {

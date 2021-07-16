@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { ethErrors } from 'eth-rpc-errors'
 import { Button, Icon } from "semantic-ui-react";
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { useDispatch } from "react-redux";
-import { connect, createUser, raiseAlert, lowerAlert } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { connect, createUser, raiseAlert, lowerAlert, setDropped } from "../../actions";
 import CopyButton from "./copyButton";
 // import { getNFTHistory } from "../../api/etherscan";
 
 const MetamaskButton = () => {
+  const drp = useSelector(state => state.UI.dropped)
   const dispatch = useDispatch();
   const { ethereum } = window;
   const onboarding = new MetaMaskOnboarding();
@@ -15,20 +16,30 @@ const MetamaskButton = () => {
   const [currentAcct, setCurrent] = useState("");
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
-  const [dropped, setDropped] = useState("");
+  const [dropped, setLDropped] = useState("");
 
   // const handleNFTload = async (acct) => {
   //   const load = await getNFTHistory(acct)
   //   console.log(load)
   // }
 
+  useEffect(() => {
+    if(drp){
+      setLDropped("dropped")
+    } else {
+      setLDropped("")
+    }
+ 
+  }, [drp])
+
   const handleDropdown = (e) => {
     e.preventDefault()
-    if(!dropped){
-      setDropped("dropped")
-    } else {
-      setDropped("")
-    }
+    // if(!dropped){
+    //   setDropped("dropped")
+    // } else {
+    //   setDropped("")
+    // }
+    dispatch(setDropped())
   }
 
   const clearMessage = () => {
@@ -124,7 +135,7 @@ const MetamaskButton = () => {
   };
 
   return (
-    <div className="menu" id="top-menu">
+    <>
         <a  href="/expand-menu" onClick={(e) =>handleDropdown(e)}><Icon name="angle down" id={`angled-icon-top${dropped}` } className="link-text"/></a>
       <div className="menu" id={`button-container${dropped}`}>
         {MetaMaskClientCheck()}
@@ -137,7 +148,7 @@ const MetamaskButton = () => {
           message
         )}
       </div>
-    </div>
+    </>
   );
 };
 
