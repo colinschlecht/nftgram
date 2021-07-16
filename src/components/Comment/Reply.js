@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Card, Image, Icon, Form } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 import { createCommentComment, raiseAlert, lowerAlert } from "../../actions";
-
+import Linkify from "react-linkify"
 const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
   const dispatch = useDispatch();
 
@@ -103,7 +103,7 @@ const Reply = ({ reply, commentType, replyFor, replyExtended }) => {
           </div>
         </Card.Content>
         <Card.Content>
-          <Card.Description>{reply.comment}</Card.Description>
+          <Card.Description><Linkify>{reply.comment}</Linkify></Card.Description>
         </Card.Content>
         {replying ? (
           <>

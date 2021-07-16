@@ -5,6 +5,7 @@ import Reply from "./Reply";
 import { Card, Image, Icon, Form } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
 import { createCommentComment, raiseAlert, lowerAlert } from "../../actions";
+import Linkify from "react-linkify"
 
 const Comment = ({ comment, extended, commentType }) => {
   const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const Comment = ({ comment, extended, commentType }) => {
           </div>
         </Card.Content>
         <Card.Content>
-          <Card.Description>{comment.comment}</Card.Description>
+          <Card.Description><Linkify>{comment.comment}</Linkify></Card.Description>
         </Card.Content>
         {replying ? (
           <>

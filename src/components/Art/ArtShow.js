@@ -18,15 +18,10 @@ import ShowLikes from "./ShowLikes";
 import ShowEvents from "./ShowEvents";
 import ShowComments from "../Comment/ShowComments";
 import ImageContainer from "./ImageContainer";
-import {
-  Header,
-  Icon,
-  Segment,
-  Divider,
-  Image,
-} from "semantic-ui-react";
+import { Header, Icon, Segment, Divider, Image } from "semantic-ui-react";
 import Cart from "./Cart";
 import Tag from "./Tag";
+import Linkify from "react-linkify"
 
 const ArtShow = ({ match }) => {
   const dispatch = useDispatch();
@@ -62,7 +57,6 @@ const ArtShow = ({ match }) => {
 
   const userAvi = `https://ipfs.io/ipfs/${art?.user?.avatar}`;
 
-  
   //on component mount - make api call and store art object in state
   useEffect(() => {
     dispatch(showArt(match.params.id)).then((resp) => {
@@ -81,7 +75,7 @@ const ArtShow = ({ match }) => {
     });
   }, [match.params.id, user, liked, dispatch]);
 
-  console.log(art)
+  console.log(art);
 
   useEffect(() => {
     return () => {
@@ -182,11 +176,11 @@ const ArtShow = ({ match }) => {
   };
 
   useEffect(() => {
-   if(arts[0] && arts[0] !== art){
-     setArt(arts[0])
-     if (arts[0].for_sale) dispatch(getOneSale(arts[0].tokenID))
-   }
-  }, [arts, art, dispatch])
+    if (arts[0] && arts[0] !== art) {
+      setArt(arts[0]);
+      if (arts[0].for_sale) dispatch(getOneSale(arts[0].tokenID));
+    }
+  }, [arts, art, dispatch]);
 
   useEffect(() => {
     if (art.for_sale) {
@@ -309,25 +303,24 @@ const ArtShow = ({ match }) => {
                 </h4>
               </Segment>
               <Segment attached="bottom" className="buy sell bottom">
-                
-                  <Tag
-                    scenario={tagScenario}
-                    sale={sale}
-                    art={art}
-                    handleCancelSale={handleCancelSale}
-                    handlePurchase={handlePurchase}
-                    handleList={handleList}
-                    handleShowPrice={handleShowPrice}
-                  />
-                  <Cart
-                    scenario={cartScenario}
-                    sale={sale}
-                    art={art}
-                    handleCancelSale={handleCancelSale}
-                    handlePurchase={handlePurchase}
-                    handleList={handleList}
-                    handleShowPrice={handleShowPrice}
-                  />
+                <Tag
+                  scenario={tagScenario}
+                  sale={sale}
+                  art={art}
+                  handleCancelSale={handleCancelSale}
+                  handlePurchase={handlePurchase}
+                  handleList={handleList}
+                  handleShowPrice={handleShowPrice}
+                />
+                <Cart
+                  scenario={cartScenario}
+                  sale={sale}
+                  art={art}
+                  handleCancelSale={handleCancelSale}
+                  handlePurchase={handlePurchase}
+                  handleList={handleList}
+                  handleShowPrice={handleShowPrice}
+                />
               </Segment>
             </Segment.Group>
           </div>
@@ -356,7 +349,7 @@ const ArtShow = ({ match }) => {
             Description
           </Segment>
           <Segment attached="bottom" className="artshowdetail description ">
-            {art.description}
+            <Linkify>{art.description}</Linkify>
           </Segment>
         </Segment>
 

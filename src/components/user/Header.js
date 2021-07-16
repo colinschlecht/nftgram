@@ -12,6 +12,7 @@ import {
 import CopyButton from "../header/copyButton";
 import { updateUser } from "../../actions";
 import AvatarDrop from "./AvatarDrop";
+import Linkify from "react-linkify"
 // import { Grid, Image } from "semantic-ui-react";
 
 require("dotenv").config();
@@ -235,6 +236,7 @@ const Header = ({ user }) => {
             />
           )}
           <div className="profile bio area">
+            <Linkify>
             {editingBio ? (
               <>
                 <UIForm className="edit-bio">
@@ -248,6 +250,7 @@ const Header = ({ user }) => {
             ) : (
               <p className="profile bio">{bio}</p>
             )}
+            </Linkify>
           </div>
           <Divider />
         </div>
