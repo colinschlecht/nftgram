@@ -152,6 +152,7 @@ const ArtForm = () => {
                 );
                 art = {
                   user_id: user.user.id,
+                  artist_id: user.user.id,
                   for_sale: false,
                   description: data.description,
                   caption: data.caption,
