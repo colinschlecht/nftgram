@@ -22,12 +22,12 @@ const ShowDetails = ({ art }) => {
         Created by
       </Header>
       <Segment attached className="artshow detail seg">
-        {art.artist?.name}
+        {art.artist?.username}
       </Segment>
       <Segment attached="bottom" className="artshow detail seg">
         <h5 className="trunc">
-          <CopyButton message={art.artist?.user?.metamask_account} />
-          {art.artist?.user?.metamask_account}
+          <CopyButton message={art.artist?.metamask_account} />
+          {art.artist?.metamask_account}
         </h5>
       </Segment>
       <Header className="artshow detail title" as="h4" attached="top" block>
