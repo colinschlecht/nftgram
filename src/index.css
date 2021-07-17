@@ -17,7 +17,8 @@ body.-side-bar-opened {
 
 textarea,
 .text,
-.area {
+.area,
+input {
   caret-color: black;
 }
 
@@ -169,8 +170,8 @@ html::-webkit-scrollbar {
 /*   *******************   */
 /*! -------- nav --------- */
 
-.hide-nav{
-  display:none !important;
+.hide-nav {
+  display: none !important;
 }
 
 #nav {
@@ -479,7 +480,6 @@ body.-side-bar-opened #nav {
 .side-menu.user-area:hover {
   box-shadow: inset 0 0 10px #79797914;
   background-color: rgba(228, 228, 228, 0.769);
-
 }
 .side-menu.user.image {
   margin: auto;
@@ -532,7 +532,7 @@ body.-side-bar-opened #nav {
   margin-top: -1em;
 }
 
-#side-menu-divider{
+#side-menu-divider {
   margin: 0;
 }
 /*! -------- explore art pictures and placeholder --------- */
@@ -712,6 +712,38 @@ body.-side-bar-opened #nav {
   color: #b0afaf !important;
 }
 
+/*!----------- Art Posting / Upload / Form ------- */
+/************ Art Posting / Upload / Form ******* */
+/*!----------- Art Posting / Upload / Form ------- */
+
+#arts-container.uploading-art {
+  width: 95vw;
+}
+#outer-mm-input {
+  align-content: stretch;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+#metamask-input {
+  border: none;
+  text-align: center;
+  width: 80%;
+}
+
+.name-category {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#art-upload-input {
+  border: none;
+}
+
+#upload-text-area {
+  border: none;
+}
 /*!----------- explore art card base ------- */
 /************ explore art card base ******* */
 /*!----------- explore art card base ------- */
@@ -808,20 +840,20 @@ body.-side-bar-opened #nav {
 /*! -------- explore art card comments --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card comments --------- */
-.description a{
-  color:black;
+.description a {
+  color: black;
   font-weight: 600;
 }
-.bio a{
-  color:black;
+.bio a {
+  color: black;
   font-weight: 600;
 }
-.description a:hover{
-  color:rgb(94, 94, 94);
+.description a:hover {
+  color: rgb(94, 94, 94);
   font-weight: 600;
 }
-.bio a:hover{
-  color:rgb(94, 94, 94);
+.bio a:hover {
+  color: rgb(94, 94, 94);
   font-weight: 600;
 }
 .hide.replies.trigger {
@@ -1568,4 +1600,67 @@ body.-side-bar-opened #nav {
   justify-content: space-around;
   max-height: 400px;
   overflow-y: scroll;
+}
+
+/*! -------- Documentation --------- */
+/*  ******** Documentation ********* */
+/*! -------- Documentation --------- */
+
+#outer-docs-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.docs-main {
+  width: 60vw;
+  height: 70vh;
+}
+.docs-holder {
+  border-left: 1px #000000 solid;
+  border-right: 1px #000000 solid;
+  border-bottom: 1px #000000 solid;
+  border-bottom-right-radius: .3em;
+  border-bottom-left-radius: .3em;
+  width: 60vw;
+  height: 70vh;
+}
+.docs-bar {
+  height: 4em;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docs-list {
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+.docs-list-item.focused{
+  border-top: 1px #000000 solid;
+  border-left: 1px #000000 solid;
+  border-right: 1px #000000 solid;
+  border-top-left-radius: .3em;
+  border-top-right-radius: .3em;
+  border-bottom: none;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.docs-list-item{
+  border-bottom: 1px #000000 solid;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
