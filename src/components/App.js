@@ -44,7 +44,7 @@ const App = () => {
               </div>
               <SideBar />
               <div id="main" className="ui centered grid">
-                <div id="nav">
+                <div id="nav" className="hide-nav">
                   <Nav />
                 </div>
                 <Route path="/" exact component={Explore} />

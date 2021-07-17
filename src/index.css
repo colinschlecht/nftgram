@@ -169,6 +169,10 @@ html::-webkit-scrollbar {
 /*   *******************   */
 /*! -------- nav --------- */
 
+.hide-nav{
+  display:none !important;
+}
+
 #nav {
   transition: all 0.2s ease-in-out;
   height: 10px;
@@ -383,7 +387,7 @@ html::-webkit-scrollbar {
 
 /*! Side Menu */
 
-body.-side-bar-opened #opened-background-effect{
+body.-side-bar-opened #opened-background-effect {
   margin: -5vh -5vw;
   z-index: 99;
   position: fixed;
@@ -395,7 +399,7 @@ body.-side-bar-opened #opened-background-effect{
   background-color: rgba(0, 0, 0, 0.558);
 }
 
-body.-side-bar-opened #nav{
+body.-side-bar-opened #nav {
   display: none;
 }
 /* 
@@ -423,29 +427,32 @@ body.-side-bar-opened #nav{
   } */
 /* } */
 
-#opened-background-effect{
+#opened-background-effect {
   display: none;
 }
 #side-menu- {
   transition: all 0.5s ease-in-out;
-  height: 100vh;
+  height: 110vh;
   min-width: 25ch;
   /* max-width: ; */
   z-index: 100;
-  top: 0;
+  top: -5vh;
   right: -26ch;
   position: fixed;
-  background-color: rgb(250, 177, 114);
+  background-color: #e4e4e4;
 }
 #side-menu-opened {
+  box-shadow: 0.01em 0.04em, 0.01em 0 0.9em rgb(47, 47, 47);
   transition: all 0.5s ease-in-out;
-  height: 100vh;
+  height: 110vh;
   min-width: 25ch;
   z-index: 100;
-  top: 0;
+  top: -5vh;
   right: 0;
   position: fixed;
-  background-color: rgb(250, 177, 114);
+  background-color: #e4e4e4;
+  overflow-y: auto;
+  border-left: 0px 0.3em;
 }
 #side-menu-button {
   z-index: 101;
@@ -461,6 +468,73 @@ body.-side-bar-opened #nav{
   transition: all 0.5s ease-in-out;
 }
 
+/*! Side Menu Items */
+.side-menu.user-area {
+  height: 26em;
+  padding: 0.3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.side-menu.user-area:hover {
+  box-shadow: inset 0 0 10px #79797914;
+  background-color: rgba(228, 228, 228, 0.769);
+
+}
+.side-menu.user.image {
+  margin: auto;
+  background-color: rgb(58 33 33 / 12%);
+  border-radius: 100%;
+  padding: 0.5em;
+}
+.side-menu.user.image:hover {
+  margin: auto;
+  background-color: rgb(148, 70, 70);
+  border-radius: 100%;
+  padding: 0.5em;
+}
+.side-user-info {
+  margin-top: -3.5em;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.side-bar-menu-item {
+  color: black;
+}
+.side-bar-menu-item.non-user:hover {
+  box-shadow: inset 0 0 10px #79797914;
+  background-color: (228, 228, 228, 0.769);
+}
+.side-bar-menu-item:hover {
+  color: rgb(148, 70, 70);
+}
+.non-user-links {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+.non-user {
+  height: 8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.non-user-title {
+  margin-top: -1em;
+}
+
+#side-menu-divider{
+  margin: 0;
+}
 /*! -------- explore art pictures and placeholder --------- */
 /* ******** explore art pictures and placeholder ********  */
 /*! -------- explore art pictures and placeholder --------- */
@@ -734,7 +808,22 @@ body.-side-bar-opened #nav{
 /*! -------- explore art card comments --------- */
 /* ************** ************** ***************/
 /*! -------- explore art card comments --------- */
-
+.description a{
+  color:black;
+  font-weight: 600;
+}
+.bio a{
+  color:black;
+  font-weight: 600;
+}
+.description a:hover{
+  color:rgb(94, 94, 94);
+  font-weight: 600;
+}
+.bio a:hover{
+  color:rgb(94, 94, 94);
+  font-weight: 600;
+}
 .hide.replies.trigger {
   margin-left: 2em;
 }
