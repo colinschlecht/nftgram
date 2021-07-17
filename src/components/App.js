@@ -18,6 +18,7 @@ import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
 import ContractQuery from "../utils/ContractQuery";
 import SideBar from "./header/SideBar";
+import Documentation from "./Docs/Documentation";
 // import { getSales } from "../actions";
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="/art/show/:id" exact component={ArtShow} />
               <Route path="/profile/:id" exact component={Profile} />
               <Route path="/admin/contracts/query" exact component={ContractQuery} />
+              <Route path="/documentation" exact component={Documentation} />
             </>
           </Switch>
         </>
