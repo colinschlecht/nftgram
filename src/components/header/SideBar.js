@@ -19,9 +19,17 @@ const SideBar = () => {
       return false;
     }
   });
+  const ad = useSelector((state) => state.auth.isAdmin);
 
+  
+  
+  const [admin, setAdmin] = useState(false);
   const [opened, setOpened] = useState("");
   const [localUser, setLocalUser] = useState("");
+  
+  useEffect(() => {
+    setAdmin(ad);
+  }, [ad]);
 
   useEffect(() => {
     if (opn) {
@@ -118,12 +126,18 @@ const SideBar = () => {
             <h4 className="non-user-title">Create a Post</h4>
           </Link>
           <Divider id="side-menu-divider"/>
-          <Link to="/art/new" className="side-bar-menu-item item non-user" onClick={()=>dispatch(setOpen())}>
+          <Link to="/documentation" className="side-bar-menu-item item non-user" onClick={()=>dispatch(setOpen())}>
               <h1>
               <Icon name="folder open" />
               </h1>
             <h4 className="non-user-title">Documentation</h4>
           </Link>
+          {admin && <Link to="/admin/contracts/query" className="side-bar-menu-item item non-user" onClick={()=>dispatch(setOpen())}>
+              <h1>
+              <Icon name="universal access" />
+              </h1>
+            <h4 className="non-user-title">Admin</h4>
+          </Link>}
         </div>
       </div>
     </>

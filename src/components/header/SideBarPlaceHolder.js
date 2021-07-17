@@ -76,16 +76,16 @@ const SideBarPlaceHolder = () => {
         </div>
         <Divider id="side-menu-divider" />
         <div className="non-user-links">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="side-bar-menu-item item non-user"
-            onClick={(e) => handleAttention(e)}
+            onClick={()=>dispatch(setOpen())}
           >
             <h1>
               <Icon name="object group" />
             </h1>
             <h4 className="non-user-title">Explore Art</h4>
-          </a>
+          </Link>
           <Divider id="side-menu-divider" />
           <Link
             to="/art/new"
@@ -99,9 +99,9 @@ const SideBarPlaceHolder = () => {
           </Link>
           <Divider id="side-menu-divider" />
           <Link
-            to="/art/new"
+            to="/documentation"
             className="side-bar-menu-item item non-user"
-            onClick={(e) => handleAttention(e)}
+            onClick={()=>dispatch(setOpen())}
           >
             <h1>
               <Icon name="folder open" />
