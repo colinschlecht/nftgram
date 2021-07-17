@@ -41,8 +41,8 @@ const App = () => {
               {modal && <OpenModal modal={modal} />}
               <div className="menu" id="top-menu">
               <MetamaskButton />
-              <SideBar />
               </div>
+              <SideBar />
               <div id="main" className="ui centered grid">
                 <div id="nav">
                   <Nav />

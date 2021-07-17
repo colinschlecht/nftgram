@@ -11,6 +11,9 @@ body {
 body.modal-open {
   overflow-y: hidden;
 }
+body.-side-bar-opened {
+  overflow-y: hidden;
+}
 
 textarea,
 .text,
@@ -40,6 +43,7 @@ textarea,
 .column {
   display: flex;
   justify-content: center;
+  max-width: 99vw;
 }
 
 html::-webkit-scrollbar {
@@ -279,7 +283,7 @@ html::-webkit-scrollbar {
   justify-content: flex-start;
   align-items: center;
   align-content: center;
-  width: 100vw;
+  width: fit-content;
   background: transparent;
   z-index: 100;
   position: fixed;
@@ -375,6 +379,86 @@ html::-webkit-scrollbar {
     font-size: 0.9em;
     max-width: 90vw;
   }
+}
+
+/*! Side Menu */
+
+body.-side-bar-opened #opened-background-effect{
+  margin: -5vh -5vw;
+  z-index: 99;
+  position: fixed;
+  width: 110vw !important;
+  height: 110% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.558);
+}
+
+body.-side-bar-opened #nav{
+  display: none;
+}
+/* 
+
+@media (hover: hover) and (pointer: fine) {
+  #side-menu-button:hover ~ #side-menu- {
+    transition: all 0.5s ease-in-out;
+    height: 100vh;
+    min-width: 25ch;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    position: fixed;
+    background-color: rgb(250, 177, 114);
+  }
+  #side-menu-:hover {
+    transition: all 0.5s ease-in-out;
+    height: 100vh;
+    min-width: 25ch;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    position: fixed;
+    background-color: rgb(250, 177, 114);
+  } */
+/* } */
+
+#opened-background-effect{
+  display: none;
+}
+#side-menu- {
+  transition: all 0.5s ease-in-out;
+  height: 100vh;
+  min-width: 25ch;
+  /* max-width: ; */
+  z-index: 100;
+  top: 0;
+  right: -26ch;
+  position: fixed;
+  background-color: rgb(250, 177, 114);
+}
+#side-menu-opened {
+  transition: all 0.5s ease-in-out;
+  height: 100vh;
+  min-width: 25ch;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  position: fixed;
+  background-color: rgb(250, 177, 114);
+}
+#side-menu-button {
+  z-index: 101;
+  top: 0.9em;
+  right: 0.9em;
+  position: fixed;
+}
+
+#side-open {
+  transition: all 0.5s ease-in-out;
+}
+#side-closed {
+  transition: all 0.5s ease-in-out;
 }
 
 /*! -------- explore art pictures and placeholder --------- */
@@ -1372,7 +1456,7 @@ html::-webkit-scrollbar {
 }
 
 .cartspan {
-  margin-bottom: -.5em;
+  margin-bottom: -0.5em;
   display: flex;
   flex-direction: column;
   align-items: center;

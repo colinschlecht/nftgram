@@ -7,6 +7,7 @@ import {
 
 import {
   SET_DROPPED,
+  SET_OPEN,
   ALERT,
   LOWER_ALERT,
   CREATE_ART,
@@ -85,6 +86,9 @@ export const closeModal = () => async (dispatch) => {
 };
 export const setDropped = () => async (dispatch) => {
   dispatch({ type: SET_DROPPED, payload: true });
+};
+export const setOpen = () => async (dispatch) => {
+  dispatch({ type: SET_OPEN, payload: true });
 };
 export const lowerAlert = () => async (dispatch) => {
   window.setTimeout(() => {
