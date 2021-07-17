@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Field } from "react-final-form";
 import Dropzone from "./Dropzone";
-import { TextArea, Button, Input } from "semantic-ui-react";
+import { TextArea, Button, Input, Icon, Divider } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import { createArt } from "../../actions";
+import { createArt, raiseAlert, lowerAlert, setDropped } from "../../actions";
 import {
   mintNFT,
   checkTransactionStatus,
   getTokenId,
 } from "../../utils/NFTInteract";
+
+import { Link } from "react-router-dom"
 
 require("dotenv").config();
 
@@ -27,6 +29,13 @@ const ArtForm = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  useEffect(() => {
+    if(uploadStatus){
+      dispatch(raiseAlert(uploadStatus))
+      dispatch(lowerAlert())
+    }
+    }, [uploadStatus, dispatch])
+
   //sets the uploaded file in local state
   const getFile = (file) => {
     setfile(file);
@@ -37,12 +46,25 @@ const ArtForm = () => {
   const pinata = pinataSDK(key, secret);
 
   const displayAccount = () => {
-    if (wallet.account) {
-      return `ETH account: ${wallet.account}`;
+    const w = window.innerWidth;
+    if (w < 560) {
+      if (wallet.account) {
+        return `${wallet.account.slice(0, 6)}.......${wallet.account.slice(
+          30
+        )}`;
+      } else {
+        return "Please connect MetaMask";
+      }
     } else {
-      return "Please connect MetaMask";
+      if (wallet.account) {
+        return `${wallet.account}`;
+      } else {
+        return "Please connect MetaMask";
+      }
     }
   };
+
+ 
 
   const handlePost = async (art) => {
     setStatus("NFT Minted, Posting...");
@@ -204,75 +226,107 @@ const ArtForm = () => {
               name="dropFile"
               component={Dropzone}
             />
-
+            <Divider />
             <Field name="account">
               {(props) => (
                 <>
-                  <Input
-                    value={displayAccount()}
-                    disabled={true}
-                    style={{ width: "100%" }}
-                  />
+                  <div id="outer-mm-input">
+                    <a
+                      id="link-text"
+                      href="/sign-in"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <Icon
+                        name="ethereum"
+                        onClick={() => dispatch(setDropped())}
+                      />
+                    </a>{" "}
+                    <Input
+                      value={displayAccount()}
+                      disabled={true}
+                      style={{ width: "100%" }}
+                      id="metamask-input"
+                    />{" "}
+                  </div>
                 </>
               )}
             </Field>
-            <Field name="name">
-              {(props) => (
-                <>
-                  <TextArea
-                    value={props.input.value}
-                    onChange={props.input.onChange}
-                    placeholder={`Name...`}
-                  />
-                </>
-              )}
-            </Field>
+            <Divider />
+            <div className="name-category">
+              <Field name="name">
+                {(props) => (
+                  <>
+                    <Input
+                      id="art-upload-input"
+                      value={props.input.value}
+                      onChange={props.input.onChange}
+                      placeholder={`Name...`}
+                    />
+                  </>
+                )}
+              </Field>
+
+              <Field name="category">
+                {(props) => (
+                  <>
+                    <Input
+                      id="art-upload-input"
+                      value={props.input.value}
+                      onChange={props.input.onChange}
+                      placeholder={`category...`}
+                    />
+                  </>
+                )}
+              </Field>
+            </div>
+            <Divider />
             <Field name="description">
               {(props) => (
                 <>
                   <TextArea
                     value={props.input.value}
                     onChange={props.input.onChange}
+                    id="upload-text-area"
                     placeholder={`Description...`}
                   />
                 </>
               )}
             </Field>
+            <Divider />
             <Field name="caption">
               {(props) => (
                 <>
                   <TextArea
                     value={props.input.value}
                     onChange={props.input.onChange}
+                    id="upload-text-area"
                     placeholder={`Caption...`}
                   />
                 </>
               )}
             </Field>
-            <Field name="category">
+            <Divider />
+            <Field name="Submit">
               {(props) => (
                 <>
-                  <TextArea
-                    value={props.input.value}
-                    onChange={props.input.onChange}
-                    placeholder={`category...`}
-                  />
-                  <Button
+                      {message === "Posted NFT to NFTgram!" ? null : <Button
                     loading={loading}
                     type="submit"
                     disabled={Object.keys(values).length < 5 || disabled}
                   >
                     Submit
-                  </Button>
+                  </Button>}
+
+                  
                 </>
               )}
             </Field>
-            {uploadStatus}
-            {/* <pre>{JSON.stringify(values)}</pre> */}
+            
           </form>
         )}
       />
-      {message}
+     <p>{message}</p> 
+      {message === "Posted NFT to NFTgram!" ? <Link to="/"> <Button>View Post</Button> </Link>: null}
     </>
   );
 };
