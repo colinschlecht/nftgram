@@ -25,8 +25,8 @@ const Header = ({ user }) => {
 
   const wallet = useSelector((state) => state.MetaMask);
   const [editing, setEditing] = useState(false);
-  const [bio, setBio] = useState(user.bio);
-  const [name, setName] = useState(user.username);
+  const [bio, setBio] = useState(user.bio || "");
+  const [name, setName] = useState(user.username || "");
   const [avatar, setAvatar] = useState(user.avatar);
   const [upload, setFile] = useState("");
 

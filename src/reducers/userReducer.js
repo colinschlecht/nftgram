@@ -25,7 +25,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isSignedIn: true,
         user: action.payload,
-        isAdmin: action.payload.user.metamask_account === "0x71e79463868d9f56a805ec82db59c3c848693eb1",
+        // isAdmin: action.payload.user.metamask_account === "0x71e79463868d9f56a805ec82db59c3c848693eb1",
       };
     // case SIGN_IN:
     //   return { ...state, isSignedIn: true, user: action.payload };
