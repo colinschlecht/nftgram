@@ -28,7 +28,7 @@ const NFT = () => {
           another 1 ETH / $1 USD."
         </p>
 
-        <h3 className="docs-text title">Okay, but why?</h3>
+        <h3 className="docs-text title">Okay, but hy?</h3>
         <p className="docs-text">
           There are many reasons for making an NFT. The majority of people using
           the internet today might not yet have a practical use case, but

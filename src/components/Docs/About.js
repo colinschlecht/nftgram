@@ -19,28 +19,26 @@ const About = () => {
 
         <span>
           <a href="https://colinschlecht.info/" className="text-link">
-            <Icon name="linkify" /> Personal Site{" "}
+            <Icon name="linkify" />
           </a>{" "}
           |{" "}
           <a href="https://github.com/colinschlecht" className="text-link">
-            <Icon name="github square" /> GitHub{" "}
+            <Icon name="github square" />
           </a>{" "}
           |{" "}
           <a
             href="https://www.linkedin.com/in/colin-schlecht-390916a8/"
             className="text-link"
           >
-            <Icon name="linkedin" /> LinkedIn{" "}
+            <Icon name="linkedin" />
           </a>{" "}
           |{" "}
           <a href="https://colinschlecht.medium.com/" className="text-link">
             <Icon name="medium" />
-            Medium{" "}
           </a>
           |{" "}
           <a href="https://twitter.com/colinthebigguns" className="text-link">
             <Icon name="twitter" />
-            Twitter{" "}
           </a>
         </span>
 
@@ -82,6 +80,39 @@ const About = () => {
           libraries. The Journey to learning just enough blockchain to build
           this is brought by udemy, hours of reading blogs/forums, and the good
           people at Alchemy, Open Zeppelin, and MetaMask.
+        </p>
+        <h6 className="docs-text title">The Contracts Involved</h6>
+        <p className="docs-text">
+          There are two verified smart contracts associated with NFTgramIO. The{" "}
+          <a href="https://rinkeby.etherscan.io/address/0x3032107eAcD70a6590b24A1FD8A53Ecf4E9c3692#code">
+            NFT Smart Contract
+          </a>
+          , and the{" "}
+          <a href="https://rinkeby.etherscan.io/address/0xC46578d68C8e876E8f6FB4759bd679A3B256D3c5#code">
+            SaleFactory Smart Contract
+          </a>
+          .<br></br>
+          <br></br>
+          The NFT smart contract is up to the official ERC-721 standard, as it
+          is a published and very lightly modified version available through{" "}
+          <a href="https://docs.openzeppelin.com/contracts/2.x/erc721">
+            OpenZeppelin
+          </a>
+          .<br></br>
+          <br></br>
+          The Sale Factory smart contract is based on various online resources
+          and available to examine on etherscan as well. The SaleFactory smart
+          contract creates a Sale contract, which handles all the transactions
+          regarding the transfer of token and ethereum for that particular sale.
+          <br></br>
+          <br></br>
+          The original sale contract can be viewed on{" "}
+          <a href="https://github.com/colinschlecht/nftgram/blob/master/contracts/Sales.sol">
+            GitHub
+          </a>
+          , which displays the sale and salefactory as one whole contract.
+          <br></br>
+          <br></br>
         </p>
       </div>
     </>

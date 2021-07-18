@@ -1701,3 +1701,11 @@ body.-side-bar-opened #nav {
   max-width: 200px;
   max-height: 200px;
 }
+
+.side-by-side{
+  display: flex;
+}
+
+.group-of-3{
+  display: flex;
+}
