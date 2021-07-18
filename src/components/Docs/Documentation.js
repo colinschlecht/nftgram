@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
+import About from "./About";
+import NFT from "./NFT";
+import MetaMask from "./MetaMask";
+import Usage from "./Usage";
+
 const Documentation = () => {
   const [about, setAbout] = useState(true);
-  const [NFT, setNFT] = useState(false);
+  const [nFT, setNFT] = useState(false);
   const [metaMask, setMetaMask] = useState(false);
   const [usage, setUsage] = useState(false);
-
-
-
 
   const handleDisplay = (e, display) => {
     e.preventDefault();
@@ -48,7 +50,7 @@ const Documentation = () => {
             About
           </li>
           <li
-            className={setChoice(NFT)}
+            className={setChoice(nFT)}
             id="NFT"
             onClick={(e) => handleDisplay(e, "NFT")}
           >
@@ -69,7 +71,14 @@ const Documentation = () => {
             Usage
           </li>
         </ul>
-        <div className="docs-holder"></div>
+        <div className="docs-holder">
+            <div className="inner-docs-holder">
+          {about && <About />}
+          {nFT && <NFT />}
+          {metaMask && <MetaMask />}
+          {usage && <Usage />}
+            </div>
+        </div>
       </div>
     </div>
   );

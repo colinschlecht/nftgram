@@ -860,6 +860,13 @@ body.-side-bar-opened #nav {
   margin-left: 2em;
 }
 
+.text-link {
+  color: black;
+}
+.text-link:hover {
+  color: #b0afaf;
+}
+
 #link-text {
   color: #b0afaf;
 }
@@ -1611,19 +1618,9 @@ body.-side-bar-opened #nav {
   justify-content: center;
   align-items: center;
 }
-
 .docs-main {
-  width: 60vw;
-  height: 70vh;
-}
-.docs-holder {
-  border-left: 1px #000000 solid;
-  border-right: 1px #000000 solid;
-  border-bottom: 1px #000000 solid;
-  border-bottom-right-radius: .3em;
-  border-bottom-left-radius: .3em;
-  width: 60vw;
-  height: 70vh;
+  width: 90vw;
+  height: 60vh;
 }
 .docs-bar {
   height: 4em;
@@ -1643,12 +1640,12 @@ body.-side-bar-opened #nav {
   padding-inline-start: 0;
 }
 
-.docs-list-item.focused{
+.docs-list-item.focused {
   border-top: 1px #000000 solid;
   border-left: 1px #000000 solid;
   border-right: 1px #000000 solid;
-  border-top-left-radius: .3em;
-  border-top-right-radius: .3em;
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
   border-bottom: none;
   height: 100%;
   width: 100%;
@@ -1656,11 +1653,51 @@ body.-side-bar-opened #nav {
   justify-content: center;
   align-items: center;
 }
-.docs-list-item{
+.docs-list-item {
   border-bottom: 1px #000000 solid;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.docs-holder {
+  border-left: 1px #000000 solid;
+  border-right: 1px #000000 solid;
+  border-bottom: 1px #000000 solid;
+  border-bottom-right-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  width: 90vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+.inner-docs-holder {
+  /* border: 1px black solid; */
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1em;
+}
+
+.docs-text {
+  max-width: 50ch;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.docs.article.area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.metamask-capture{
+  max-width: 200px;
+  max-height: 200px;
 }
