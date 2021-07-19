@@ -72,12 +72,12 @@ const Documentation = () => {
           </li>
         </ul>
         <div className="docs-holder">
-            <div className="inner-docs-holder">
-          {about && <About />}
-          {nFT && <NFT />}
-          {metaMask && <MetaMask />}
-          {usage && <Usage />}
-            </div>
+          <div className="inner-docs-holder">
+            {about && <About />}
+            {nFT && <NFT />}
+            {metaMask && <MetaMask />}
+            {usage && <Usage />}
+          </div>
         </div>
       </div>
     </div>

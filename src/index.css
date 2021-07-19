@@ -166,6 +166,10 @@ html::-webkit-scrollbar {
   justify-content: space-around;
   align-items: center;
 }
+
+.warning-text-mobile{
+  text-align: center;
+}
 /*!----------- nav ------- */
 /*   *******************   */
 /*! -------- nav --------- */

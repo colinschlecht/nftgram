@@ -4,6 +4,7 @@ import CancelSaleModal from "./CancelSaleModal";
 import Purchase from "./Purchase";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../actions/";
+import BrowserWarning from "./BrowserWarning";
 
 const OpenModal = ({ modal }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const OpenModal = ({ modal }) => {
         return <CancelSaleModal modal={modal} setLocked={setLocked}/>;
       case "purchase":
         return <Purchase modal={modal} setLocked={setLocked}/>;
+      case "mobile":
+        return <BrowserWarning modal={modal} setLocked={setLocked}/>;
       default:
         document.body.classList.remove("modal-open");
         break;

@@ -1,11 +1,12 @@
-import React, { 
-  // useEffect 
-} from "react";
-import { useSelector, 
+import React from // useEffect,
+// useBrowserStatus
+"react";
+import {
+  useSelector,
   // useDispatch
- } from "react-redux";
+} from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import useBrowserStatus from "./BrowserStatus";
 import Nav from "./header/Nav";
 import Explore from "./Explore";
 import CreateArt from "./Art/CreateArt";
@@ -26,11 +27,8 @@ const App = () => {
   const alerted = useSelector((state) => !!state.UI.messages.length);
   const modal = useSelector((state) => state.UI.modal);
 
-  // useEffect(() => {
-  //   dispatch(getSales());
-  // });
-
-
+  //custom hook to determine if browser or mobile
+  useBrowserStatus();
 
   return (
     <>
@@ -41,7 +39,7 @@ const App = () => {
               <div className="mm alerts container">{alerted && <Alert />}</div>
               {modal && <OpenModal modal={modal} />}
               <div className="menu" id="top-menu">
-              <MetamaskButton />
+                <MetamaskButton />
               </div>
               <SideBar />
               <div id="main" className="ui centered grid">
@@ -54,7 +52,11 @@ const App = () => {
               </div>
               <Route path="/art/show/:id" exact component={ArtShow} />
               <Route path="/profile/:id" exact component={Profile} />
-              <Route path="/admin/contracts/query" exact component={ContractQuery} />
+              <Route
+                path="/admin/contracts/query"
+                exact
+                component={ContractQuery}
+              />
               <Route path="/documentation" exact component={Documentation} />
             </>
           </Switch>
