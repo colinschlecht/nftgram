@@ -43,7 +43,7 @@ const SideBar = () => {
 
   useEffect(() => {
     if (user) {
-      setLocalUser(user.user);
+      setLocalUser(user);
     }
   }, [user]);
 

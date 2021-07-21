@@ -45,7 +45,7 @@ export const ArtCard = ({ art }) => {
   const [liked, setLiked] = useState(
     !!art.likes.find((like) => {
       if (user) {
-        return like.user_id === user.user.id;
+        return like.user_id === user.id;
       } else {
         return false;
       }
@@ -68,7 +68,7 @@ export const ArtCard = ({ art }) => {
     setLiked(
       !!art.likes.find((like) => {
         if (user) {
-          return like.user_id === user.user.id;
+          return like.user_id === user.id;
         } else {
           return false;
         }
@@ -84,14 +84,14 @@ export const ArtCard = ({ art }) => {
         setLiked(!liked);
         dispatch(
           createArtLike({
-            user_id: user.user.id,
+            user_id: user.id,
             likeable_type: "Art",
             likeable_id: art.id,
           })
         );
       } else {
         setLiked(!liked);
-        let disLike = art.likes.find((like) => like.user_id === user.user.id);
+        let disLike = art.likes.find((like) => like.user_id === user.id);
         dispatch(destroyArtLike(disLike.id, disLike));
       }
     } else {
@@ -110,7 +110,7 @@ export const ArtCard = ({ art }) => {
       dispatch(
         createComment({
           comment: cmt,
-          user_id: user.user.id,
+          user_id: user.id,
           commentable_id: art.id,
           commentable_type: "Art",
         })

@@ -39,7 +39,7 @@ const Comment = ({ comment, extended, commentType }) => {
       dispatch(
         createCommentComment({
           comment: cmt,
-          user_id: user.user.id,
+          user_id: user.id,
           commentable_id: comment.id,
           commentable_type: "Comment",
         })

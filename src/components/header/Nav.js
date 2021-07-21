@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 export default function Nav() {
   const user = useSelector((state) => {
     if (!!state.auth.user) {
-      return state.auth.user.user;
+      return state.auth.user;
     } else {
       return false;
     }

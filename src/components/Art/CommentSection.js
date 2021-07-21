@@ -35,7 +35,7 @@ export const CommentSection = ({ art }) => {
       dispatch(
         createComment({
           ...formValues,
-          user_id: user.user.id,
+          user_id: user.id,
           commentable_id: art.id,
           commentable_type: "Art",
         }));

@@ -31,7 +31,7 @@ export const Comment = ({ comment }) => {
   const [liked, setLiked] = useState(
     !!comment.likes.find((like) => {
       if (user) {
-        return like.user_id === user.user.id;
+        return like.user_id === user.id;
       } else {
         return false;
       }
@@ -41,7 +41,7 @@ export const Comment = ({ comment }) => {
   useEffect(() => {
     setLiked(!!comment.likes.find((like) => {
      if (user) {
-       return like.user_id === user.user.id;
+       return like.user_id === user.id;
      } else {
        return false;
      }
@@ -63,7 +63,7 @@ export const Comment = ({ comment }) => {
       dispatch(
         createCommentComment({
           ...formValues,
-          user_id: user.user.id,
+          user_id: user.id,
           commentable_id: comment.id,
           commentable_type: "Comment",
         })
@@ -83,7 +83,7 @@ export const Comment = ({ comment }) => {
         setLiked(!liked);
         dispatch(
           createCommentLike({
-            user_id: user.user.id,
+            user_id: user.id,
             likeable_type: "Comment",
             likeable_id: comment.id,
           })
@@ -91,7 +91,7 @@ export const Comment = ({ comment }) => {
       } else {
         setLiked(!liked);
         let disLikedComment = comment.likes.find(
-          (like) => like.user_id === user.user.id
+          (like) => like.user_id === user.id
         );
         dispatch(destroyCommentLike(disLikedComment.id, disLikedComment));
       }

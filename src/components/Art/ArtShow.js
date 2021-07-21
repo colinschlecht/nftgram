@@ -48,7 +48,7 @@ const ArtShow = ({ match }) => {
   const [liked, setLiked] = useState(
     !!art.likes?.find((like) => {
       if (user) {
-        return like.user_id === user.user.id;
+        return like.user_id === user.id;
       } else {
         return false;
       }
@@ -64,7 +64,7 @@ const ArtShow = ({ match }) => {
       setLiked(
         !!resp.data.likes?.find((like) => {
           if (user) {
-            return like.user_id === user.user.id;
+            return like.user_id === user.id;
           } else {
             return false;
           }
@@ -104,14 +104,14 @@ const ArtShow = ({ match }) => {
         setLiked(!liked);
         dispatch(
           createArtLike({
-            user_id: user.user.id,
+            user_id: user.id,
             likeable_type: "Art",
             likeable_id: art.id,
           })
         );
       } else {
         setLiked(!liked);
-        let disLike = art.likes.find((like) => like.user_id === user.user.id);
+        let disLike = art.likes.find((like) => like.user_id === user.id);
         dispatch(destroyArtLike(disLike.id, disLike));
       }
     } else {
