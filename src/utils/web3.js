@@ -10,4 +10,11 @@ export const getTransaction = async (txHash) => {
   return transaction;
 };
 
+
+
+export const getProvider = async () => {
+  const provider = await web3.eth.getChainId()
+  return provider
+};
+
 export default web3;

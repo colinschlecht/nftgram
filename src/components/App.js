@@ -1,5 +1,6 @@
-import React from // useEffect,
-// useBrowserStatus
+import React
+//, {useEffect}
+from
 "react";
 import {
   useSelector,
@@ -20,6 +21,7 @@ import OpenModal from "./modals/OpenModal";
 import ContractQuery from "../utils/ContractQuery";
 import SideBar from "./header/SideBar";
 import Documentation from "./Docs/Documentation";
+// import { getProvider } from "../utils/web3";
 // import { getSales } from "../actions";
 
 const App = () => {
