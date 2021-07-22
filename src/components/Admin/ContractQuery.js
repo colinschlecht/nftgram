@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Segment, Button, Input, Icon, Label, List } from "semantic-ui-react";
-import { getSales } from "../actions";
-import { getSaleSummary } from "./SaleInteract";
+import { getSales } from "../../actions";
+import { getSaleSummary } from "../../utils/SaleInteract";
 
-import web3 from "./web3";
+import web3 from "../../utils/web3";
 
 ///admin/contracts/query
 
@@ -28,7 +28,6 @@ const ContractQuery = () => {
     setLoading(true);
     try {
       const res = await getSaleSummary(contract);
-      console.log(res);
       setLoading(false);
       setSummary(res);
     } catch (error) {
@@ -89,6 +88,9 @@ const ContractQuery = () => {
                 <List.Item>Price: {web3.utils.fromWei(summary[4])}</List.Item>
                 <List.Item>
                   Status: {web3.utils.hexToAscii(summary[5])}
+                </List.Item>
+                <List.Item>
+                  Purchaser: {(summary[6])}
                 </List.Item>
               </List>
             )}

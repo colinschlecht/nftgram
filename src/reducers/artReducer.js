@@ -20,11 +20,9 @@ import {
 const checkNextLevel = (comment, newcomment) => {
   comment.comments.map((com) => {
     if (com.id !== newcomment.commentable_id) {
-      console.log("running check function inside check function");
       checkNextLevel(com, newcomment);
       return com;
     } else {
-      console.log("updating inside of check function");
       let newCom = { ...com };
       newCom.comments.push(newcomment);
       return {
@@ -131,11 +129,9 @@ const artReducer = (state = INITIAL_STATE, action) => {
         arts: state.arts.map((art) => {
           art.comments.map((com) => {
             if (com.id !== action.payload.commentable_id) {
-              console.log("running check function");
               checkNextLevel(com, action.payload);
               return com;
             } else {
-              console.log("updating");
               let newCom = { ...com };
               newCom.comments.push(action.payload);
               return {

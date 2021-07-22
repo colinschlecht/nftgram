@@ -63,7 +63,6 @@ export const checkTransactionStatus = async (txHash) => {
   if (!transaction) {
     return null;
   } else {
-    console.log(transaction);
     return { status: transaction.status };
   }
 };

@@ -40,7 +40,6 @@ const ArtForm = () => {
   const getFile = (file) => {
     setfile(file);
   };
-  console.log(wallet.account);
 
   const pinataSDK = require("@pinata/sdk");
   const pinata = pinataSDK(key, secret);
@@ -70,7 +69,6 @@ const ArtForm = () => {
     setStatus("NFT Minted, Posting...");
     try {
       dispatch(createArt({ art }));
-      console.log("posted");
       return {
         success: true,
         message: "Posted NFT to NFTgram!",
@@ -133,7 +131,6 @@ const ArtForm = () => {
 
       //! Pins image via Pinata SDK - used to persist image CID, & NFT Metadata on Pinata
       const pinResponse = await pinata.pinJSONToIPFS(body);
-      console.log(pinResponse);
 
       //! call to mint the NFT
       const mintResponse = await mintNFT(`ipfs://${pinResponse.IpfsHash}`);

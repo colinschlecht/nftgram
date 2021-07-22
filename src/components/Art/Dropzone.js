@@ -28,7 +28,6 @@ const Dropzone = ({ input, getFile }) => {
   })
   const onDrop = useCallback(
     (acceptedFiles) => {
-      console.log(acceptedFiles)
       input.onChange(acceptedFiles);
       const upload = new File(acceptedFiles, acceptedFiles[0].name,{
         type: acceptedFiles[0].type

@@ -5,7 +5,6 @@ import React from "react";
 class LogOut extends React.Component {
   handleClick = () => {
     localStorage.clear();
-    console.log(this.props.match)
     // window.location.reload()
   };
   render() {

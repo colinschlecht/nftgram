@@ -6,6 +6,7 @@ import {
 } from "../utils/SFInteract";
 
 import {
+  ALL_USERS,
   SET_DROPPED,
   SET_OPEN,
   ALERT,
@@ -108,9 +109,18 @@ export const showUser = async (id) => {
   // dispatch({ type: SHOW_USER, payload: response.data });
   return response;
 };
+export const getUsers = () => async (dispatch)  => {
+  const response = await API_BASE.get(`/users/`);
+  dispatch({ type: ALL_USERS, payload: response.data });
+  return response;
+};
 export const updateUser = (id, userInfo) => async (dispatch) => {
   const response = await API_BASE.patch(`/users/${id}`, { ...userInfo });
   dispatch({ type: UPDATE_USER, payload: response.data });
+  return response;
+};
+export const updateUserAdmin = (id, userInfo) => async () => {
+  const response = await API_BASE.patch(`/users/${id}`, { ...userInfo });
   return response;
 };
 export const generate = async () => {

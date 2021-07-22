@@ -167,7 +167,7 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 
-.warning-text-mobile{
+.warning-text-mobile {
   text-align: center;
 }
 /*!----------- nav ------- */
@@ -1701,15 +1701,57 @@ body.-side-bar-opened #nav {
   align-content: center;
 }
 
-.metamask-capture{
+.metamask-capture {
   max-width: 200px;
   max-height: 200px;
 }
 
-.side-by-side{
+.side-by-side {
   display: flex;
 }
 
-.group-of-3{
+.group-of-3 {
   display: flex;
+}
+
+/* Admin */
+
+.ui.pagination.menu .item.shaded {
+  box-shadow: inset 0 0 10px #8591e725;
+}
+
+#check-box {
+  padding: 0.1em;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+.check-box-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: stretch;
+}
+
+/* .outer-check-box-false{
+ display: none;
+} */
+.outer-check-box-true{
+  padding: .2em;
+ display: flex;
+ position: absolute;
+ margin-left: 2em;
+ background-color: rgb(255, 255, 255);
+ z-index: 100;
+ box-shadow: 0.01em 0.04em, 0.01em 0 0.4em rgba(47, 47, 47, 0.639);
+border-radius: .3em;
+overflow-y: auto;
+
+}
+
+.edit-cell{
+  width: 5em;
+}
+
+.drop-icon{
+  width: fit-content;
 }

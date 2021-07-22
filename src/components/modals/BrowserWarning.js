@@ -5,7 +5,6 @@ import { Segment, Button, Icon } from "semantic-ui-react";
 const BrowserWarning = () => {
   const dispatch = useDispatch();
 
-  console.log("");
 
   const cancelCancel = () => {
     dispatch(closeModal());

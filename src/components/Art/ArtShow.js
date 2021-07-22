@@ -75,7 +75,6 @@ const ArtShow = ({ match }) => {
     });
   }, [match.params.id, user, liked, dispatch]);
 
-  console.log(art);
 
   useEffect(() => {
     return () => {

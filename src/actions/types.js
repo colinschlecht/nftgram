@@ -5,6 +5,7 @@ export const SIGN_OUT = "SIGN_OUT";
 export const GET_USER = "GET_USER";
 export const SHOW_USER = "SHOW_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const ALL_USERS = "ALL_USERS";
 
 //!ART
 export const FETCH_ARTS = "FETCH_ARTS";

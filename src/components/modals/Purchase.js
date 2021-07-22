@@ -39,7 +39,6 @@ const CancelSaleModal = ({ setLocked }) => {
   };
 
   const purchaseProcessing = async (txHash) => {
-    console.log(txHash);
     const transaction = await getTransaction(txHash);
     //if transaction has not processed, recursively search again for transaction
     if (!transaction) {
@@ -49,9 +48,8 @@ const CancelSaleModal = ({ setLocked }) => {
     } else {
       //if transaction and successful update art and exit modal
       if (transaction.status) {
-        console.log("success");
         dispatch(
-          updateArt(art.id, { for_sale: false, user_id: user?.user?.id })
+          updateArt(art.id, { for_sale: false, user_id: user.id })
         );
         cancelCancel();
         dispatch(raiseAlert("Purchase Completed"));

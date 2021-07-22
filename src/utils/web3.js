@@ -4,9 +4,7 @@ const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 
 export const getTransaction = async (txHash) => {
-  console.log("geting transaction");
   let transaction = await web3.eth.getTransactionReceipt(txHash);
-  console.log(`transaction: ${transaction}`);
   return transaction;
 };
 

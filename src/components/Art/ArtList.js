@@ -27,8 +27,6 @@ const ArtList = () => {
 
   //checks if art-container element bottom is within window height
   const isBottom = (el) => {
-    console.log(window.innerHeight);
-    console.log(el.getBoundingClientRect().bottom);
     return (
       el.getBoundingClientRect().bottom <= window.innerHeight ||
       el.getBoundingClientRect().bottom - window.innerHeight < 1

@@ -18,7 +18,7 @@ import UserEdit from "./user/UserEdit";
 import MetamaskButton from "./header/MetamaskButton";
 import Alert from "./header/Alert";
 import OpenModal from "./modals/OpenModal";
-import ContractQuery from "../utils/ContractQuery";
+import Dash from "./Admin/Dash";
 import SideBar from "./header/SideBar";
 import Documentation from "./Docs/Documentation";
 // import { getProvider } from "../utils/web3";
@@ -57,7 +57,7 @@ const App = () => {
               <Route
                 path="/admin/contracts/query"
                 exact
-                component={ContractQuery}
+                component={Dash}
               />
               <Route path="/documentation" exact component={Documentation} />
             </>
