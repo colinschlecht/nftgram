@@ -8,6 +8,7 @@ import {
   Divider,
   Form,
   Loader,
+  Label,
 } from "semantic-ui-react";
 import {
   createComment,
@@ -155,6 +156,18 @@ export const ArtCard = ({ art }) => {
       <div id="art-card-container">
         <Segment.Group id="art-card">
           <Header as="h4" attached="top" className="artshow detail title" block>
+            {art.for_sale && (
+              <Label id="sale-ribbon" color="red" ribbon>
+                <Link
+                  id="art-show-link"
+                  key={art.id + "a"}
+                  to={`/art/show/${art.id}`}
+                >
+                  {" "}
+                  Buy Me!{" "}
+                </Link>
+              </Label>
+            )}
             <Link
               id="art-show-link"
               key={art.id + "a"}
@@ -277,6 +290,7 @@ export const ArtCard = ({ art }) => {
                 art={art}
                 extended={extended}
                 handleDisplay={handleDisplay}
+                hasComments={art.comments.length > 0}
               />
             )}
             {likes && <ArtCardLikesSection art={art} />}

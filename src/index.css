@@ -694,6 +694,11 @@ body.-side-bar-opened #nav {
 }
 /* ^^^ SALE MODAL */
 
+
+#sale-ribbon{
+  position: absolute;
+  left: -1.9em;
+}
 .explore.picture.placeholder {
   width: 100%;
   height: 100%;
@@ -910,6 +915,12 @@ body.-side-bar-opened #nav {
   overflow-y: scroll;
   background: #f7f7f738;
 }
+.explore.art.card.comment.holder.false {
+  height: 2em;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: #02000017;
+}
 
 .comment.section.top {
   display: flex;
@@ -936,6 +947,12 @@ body.-side-bar-opened #nav {
   background-color: rgba(175, 168, 134, 0.071) !important;
 }
 
+
+
+.comment-card.comment-likes {
+  position: absolute;
+  right: 4em;
+}
 /*! -------- Comments --------- */
 /* ********* Comments VVVVV from showpage ***********/
 /*! -------- Comments --------- */

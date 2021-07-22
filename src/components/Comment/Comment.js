@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Reply from "./Reply";
+import CommentLikes from "../Like/CommentLikes";
 import { Card, Image, Icon, Form } from "semantic-ui-react";
 import logo from "../../images/ethcam.svg";
-import { createCommentComment, raiseAlert, lowerAlert } from "../../actions";
-import Linkify from "react-linkify"
+import {
+  createCommentComment,
+  raiseAlert,
+  lowerAlert,
+  createCommentLike,
+  destroyCommentLike,
+} from "../../actions";
+import Linkify from "react-linkify";
 
 const Comment = ({ comment, extended, commentType }) => {
   const dispatch = useDispatch();
@@ -14,9 +21,7 @@ const Comment = ({ comment, extended, commentType }) => {
   const [replying, setReplying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const userAvi = comment.user.avatar
-    ? `https://ipfs.io/ipfs/${comment.user.avatar}`
-    : logo;
+  const [replyExtended, setExtended] = useState(extended);
 
   const user = useSelector((state) => {
     if (!!state.auth.user) {
@@ -26,11 +31,37 @@ const Comment = ({ comment, extended, commentType }) => {
     }
   });
 
-  const [replyExtended, setExtended] = useState(extended);
+  //! Sets liked status in local state
+  const [liked, setLiked] = useState(
+    !!comment.likes.find((like) => {
+      if (user) {
+        return like.user_id === user.id;
+      } else {
+        return false;
+      }
+    })
+  );
 
   useEffect(() => {
     setExtended(extended);
   }, [extended]);
+
+  useEffect(() => {
+    //! Sets liked status in local state on render
+    setLiked(
+      !!comment.likes.find((like) => {
+        if (user) {
+          return like.user_id === user.id;
+        } else {
+          return false;
+        }
+      })
+    );
+  }, [user, comment]);
+
+  const userAvi = comment.user.avatar
+    ? `https://ipfs.io/ipfs/${comment.user.avatar}`
+    : logo;
 
   const handleReply = async (e) => {
     e.preventDefault();
@@ -69,6 +100,28 @@ const Comment = ({ comment, extended, commentType }) => {
 
   const handleCommentLike = (e) => {
     e.preventDefault();
+    e.preventDefault();
+    if (user) {
+      if (!liked) {
+        setLiked(!liked);
+        dispatch(
+          createCommentLike({
+            user_id: user.id,
+            likeable_type: "Comment",
+            likeable_id: comment.id,
+          })
+        );
+      } else {
+        setLiked(!liked);
+        let disLikedComment = comment.likes.find(
+          (like) => like.user_id === user.id
+        );
+        dispatch(destroyCommentLike(disLikedComment.id, disLikedComment));
+      }
+    } else {
+      dispatch(raiseAlert("Please connect to MetaMask to interact"));
+      dispatch(lowerAlert());
+    }
   };
   const handleReplyClick = (e) => {
     e.preventDefault();
@@ -79,6 +132,7 @@ const Comment = ({ comment, extended, commentType }) => {
     e.preventDefault();
     setExtended(!replyExtended);
   };
+
   return (
     <>
       <Card className={`comment card ${commentType}`} id={`comment-card`}>
@@ -106,7 +160,9 @@ const Comment = ({ comment, extended, commentType }) => {
           </div>
         </Card.Content>
         <Card.Content>
-          <Card.Description><Linkify>{comment.comment}</Linkify></Card.Description>
+          <Card.Description>
+            <Linkify>{comment.comment}</Linkify>
+          </Card.Description>
         </Card.Content>
         {replying ? (
           <>
@@ -163,7 +219,10 @@ const Comment = ({ comment, extended, commentType }) => {
                       href="/viewreplies"
                       onClick={(e) => handleExtend(e)}
                     >
-                      View {comment.comments.length} Replies
+                      View{" "}
+                      {comment.comments.length > 1
+                        ? `${comment.comments.length} replies`
+                        : `${comment.comments.length} reply`}
                     </a>
                   )}
                 </>
@@ -175,6 +234,9 @@ const Comment = ({ comment, extended, commentType }) => {
               >
                 <Icon name="fire" />
               </a>
+              <span className="comment-card comment-likes">
+                <CommentLikes likes={comment.likes.length} />
+              </span>
             </Card.Content>
           </>
         )}

@@ -5,13 +5,13 @@ import Comment from "../Comment/Comment";
 
 const oddOrEven = (index) => (index % 2 === 0 ? "even" : "odd");
 
-const ArtCardCommentSection = ({ art, extended, handleDisplay }) => {
+const ArtCardCommentSection = ({ art, extended, handleDisplay, hasComments}) => {
   return (
     <>
       <Segment attached="top" className="comment section top" id="link-text">
-        {extended ? "Comments and Replies" : "Comments"}
+        {extended ? `${!hasComments ? "No Comments or Replies" : "Comments and Replies" }` : `${!hasComments ? "No " : "" }Comments`}
       </Segment>
-      <div className="explore art card comment holder">
+      <div className={`explore art card comment holder ${hasComments}`} >
         {extended
           ? art.comments.map((comment, index) => (
               <Segment
