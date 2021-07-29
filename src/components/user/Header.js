@@ -49,11 +49,10 @@ const Header = ({ user }) => {
       cidVersion: 1,
       hashAlg: "sha2-256",
     });
-
     pinata.pinByHash(cid.string);
     setAvatar(cid.string);
     setEditingIMG(false);
-    
+    await ipfs.stop();
   };
 
   const handleEditingChange = async (e) => {
